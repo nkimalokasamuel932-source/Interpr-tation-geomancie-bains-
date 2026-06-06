@@ -88,7 +88,7 @@ DICTIONNAIRE_FIGURES = {
         "psaume_nom": "Psaume 4",
         "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.9) du Psaume 4.",
         "verset_biblique": "Néhémie 8:10 — 'Ne vous affligez pas, car la joie de l'Éternel sera votre force.'",
-        "texte_salomonique": "2e Pentacle de Jupiter — 'Pour acquérir la gloire, les honneurs, les richesses, avec une paix d'esprit absolue.'",
+        "texte_salomonique": "2e Pentacle de Jupiter — 'Pour acquérir la gloire, les honneurs, les riches, avec une paix d'esprit absolue.'",
         "encre": "Encre bleue céleste ou encre traditionnelle mélangée à du musc blanc.",
         "parfum": "Musc Blanc pur (pour la douceur et l'attraction).",
         "huiles_essentielles": "Bergamote ou Orange Douce (7 gouttes mélangées dans une cuillère de miel).",
@@ -380,14 +380,12 @@ else:
     st.write("---")
 
     if st.button("🔮 INTERPRÉTER LE THÈME ET CALCULER LES 16 MAISONS"):
-        # CORRECTION DU CALCUL DES FILLES (M5 à M8)
-        # Transposition rigoureuse : M5 prend les têtes (ligne 0) de M1, M2, M3, M4
+        # Calcul mathématique rigoureux des Filles et des Nièces
         m5 = [m1[0], m2[0], m3[0], m4[0]]
         m6 = [m1[1], m2[1], m3[1], m4[1]]
         m7 = [m1[2], m2[2], m3[2], m4[2]]
         m8 = [m1[3], m2[3], m3[3], m4[3]]
         
-        # Copula et calculs d'additions binaires
         m9 = additionner_figures(m1, m2)
         m10 = additionner_figures(m3, m4)
         m11 = additionner_figures(m5, m6)
@@ -400,6 +398,7 @@ else:
 
         theme_complet = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16]
         
+        m1_fig = identifier_figure(m1)
         juge = identifier_figure(m15)
         sentence = identifier_figure(m16)
         
@@ -410,10 +409,49 @@ else:
         id_p_sent = extraire_numero_psaume(sentence['psaume_nom'])
 
         # =====================================================================
-        # VISUALISATION DES 16 MAISONS GÉOMANTIQUES
+        # NOUVELLE SECTION 1 : DE QUOI PARLE LE THÈME (SYNTHÈSE DU SUJET)
         # =====================================================================
-        st.header("📊 Cartographie Complète des 16 Maisons du Thème")
-        st.markdown(f"**Analyse vibratoire pour :** *{question}*")
+        st.header("📖 Orientation Globale : De quoi parle le thème ?")
+        
+        # Petit paragraphe logique d'interprétation contextuelle
+        st.write(f"**Analyse de l'intention :** Le consultant se présente sous l'influence spirituelle de la figure **{m1_fig['nom']}** en Maison I. Cela montre que son état d'esprit actuel ou sa situation de départ est marquée par : *{m1_fig['signification']}*")
+        st.write(f"**Le Message du Verdict :** Le Juge suprême (**{juge['nom']}**) indique que la réponse définitive à votre préoccupation majeure (*{question}*) s'articule autour de l'énergie suivante : *{juge['signification']}*")
+
+        st.write("---")
+
+        # =====================================================================
+        # NOUVELLE SECTION 2 : DETECTEUR AUTOMATIQUE DE DOUBLONS (PASSATIONS)
+        # =====================================================================
+        st.header("🔄 Analyse des Passations (Messages Cachés des Doublons)")
+        st.write("Lorsque la même figure apparaît dans plusieurs maisons, elle crée un pont spirituel direct et transmet un message important d'interdépendance :")
+
+        # Recherche algorithmique des correspondances de doublons
+        passations_trouvees = {}
+        for idx_a in range(16):
+            nom_a = identifier_figure(theme_complet[idx_a])['nom']
+            for idx_b in range(idx_a + 1, 16):
+                nom_b = identifier_figure(theme_complet[idx_b])['nom']
+                if nom_a == nom_b:
+                    if nom_a not in passations_trouvees:
+                        passations_trouvees[nom_a] = []
+                    passations_trouvees[nom_a].append((idx_a, idx_b))
+
+        if not passations_trouvees:
+            st.info("✨ Aucune passation détectée. Les énergies de chaque maison agissent de manière indépendante et pure.")
+        else:
+            for fig_nom, occurrences in passations_trouvees.items():
+                for (maison_orig, maison_dest) in occurrences:
+                    st.markdown(f"#### 🔁 Passation de **{fig_nom}**")
+                    st.markdown(f"👉 Voyage entre **{NOMS_MAISONS[maison_orig]}** et **{NOMS_MAISONS[maison_dest]}**")
+                    st.caption(f"💡 *Interprétation :* L'énergie ou le problème lié à votre {NOMS_MAISONS[maison_orig].split(' : ')[1]} influence directement et de manière invisible l'évolution de votre {NOMS_MAISONS[maison_dest].split(' : ')[1]}. Vous devez soigner ou équilibrer la première maison pour libérer la seconde.")
+                st.write("")
+
+        st.write("---")
+
+        # =====================================================================
+        # CARTOGRAPHIE VISUELLE DES 16 MAISONS GÉOMANTIQUES
+        # =====================================================================
+        st.header("📊 Cartographie Complète des 16 Maisons")
         
         # --- BLOC 1 : LES MÈRES (M1 à M4) ---
         st.subheader("🧱 Les 4 Maisons Mères")
