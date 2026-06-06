@@ -1,7 +1,7 @@
 import streamlit as st
 
 # 1. Configuration de la page de l'application
-st.set_page_config(page_title="Oracle Géomantique PRO", page_icon="🔮", layout="centered")
+st.set_page_config(page_title="Oracle Géomantique PRO", page_icon="🔮", layout="wide")
 
 # =====================================================================
 # REPERTOIRE THEURGIQUE COMPLET DES 16 FIGURES GÉOMANTIQUES
@@ -76,7 +76,7 @@ DICTIONNAIRE_FIGURES = {
         "texte_salomonique": "5e Pentacle de Vénus — \"Quand on le montre à n'importe quelle personne, cela invite à l'amour et au respect instantané.\"",
         "encre": "Encre marron terre ou encre traditionnelle adoucie à l'eau de source.",
         "parfum": "Ambre précieux ou essence de Myrte.",
-        "huiles_essentielles": "Lavande Vraie ou Sauge Sclaréee (5 gouttes dans du gros sel).",
+        "huiles_essentielles": "Lavande Vraie ou Sauge Sclarée (5 gouttes dans du gros sel).",
         "plantes": "Feuilles de Sauge et Feuilles de Thym frais.",
         "encens": "Muscade râpée ou résine de Mastic.",
         "moment": "Vendredi soir après le coucher du soleil.",
@@ -121,7 +121,7 @@ DICTIONNAIRE_FIGURES = {
         "texte_salomonique": "4e Pentacle du Soleil — 'Pour voir les esprits invisibles et acquérir une renommée ou un secours céleste immédiat.'",
         "encre": "Encre Orange ou Jaune vif (Curcuma concentré dans de l'eau bénite).",
         "parfum": "Musc Ambre ou huile essentielle de Bergamote.",
-        "huiles_essentielles": "Orange Douce ou Bergamote (5 gouttes dans une cuillère de miel).",
+        "huiles_essentielles": "Orange Douce ou Bergamote (5 gouttes dans du crème).",
         "plantes": "Écorces d'Orange séchées et feuilles de Romarin.",
         "encens": "Oliban pur en larmes.",
         "moment": "À l'aube un jeudi ou un dimanche pour déblocage sous 48 heures.",
@@ -250,10 +250,10 @@ DICTIONNAIRE_FIGURES = {
 }
 
 NOMS_MAISONS = [
-    "M1 : Le Consultant / L'Âme", "M2 : Les Gains / L'Argent", "M3 : L'Entourage / Les Déplacements", "M4 : Le Foyer / Le Patrimoine",
-    "M5 : Les Amours / Les Enfants", "M6 : Les Blocages / La Santé", "M7 : Le Conjoint / Les Associés", "M8 : La Transformation / La Mort",
-    "M9 : Les Voyages / La Spiritualité", "M10 : La Carrière / Le Succès", "M11 : Les Appuis / Les Espoirs", "M12 : Les Épreuves / Les Obstacles",
-    "M13 : Témoin Droit (Passé récent)", "M14 : Témoin Gauche (Avenir proche)", "M15 : Le Juge (Le Verdict)", "M16 : La Sentence (L'Issue Ultime)"
+    "M1 : Consultant / Âme", "M2 : Gains / Argent", "M3 : Entourage / Échanges", "M4 : Foyer / Patrimoine",
+    "M5 : Amours / Enfants", "M6 : Maladie / Obstacles", "M7 : Conjoint / Associés", "M8 : Mort / Changements",
+    "M9 : Voyages / Spiritualité", "M10 : Carrière / Honneurs", "M11 : Appuis / Espoirs", "M12 : Épreuves / Secrets",
+    "M13 : Témoin Droit (Passé)", "M14 : Témoin Gauche (Futur)", "M15 : Le Juge (Verdict)", "M16 : La Sentence (Issue)"
 ]
 
 # =====================================================================
@@ -300,89 +300,94 @@ def extraire_numero_psaume(psaume_str):
     return int(chiffres) if chiffres else 40
 
 # =====================================================================
-# INTERFACE D'ACCÈS SÉCURISÉ (ADMINISTRATEUR VIA st.secrets)
+# INTERFACE D'ACCÈS DOUBLE (ADMINISTRATEUR ET CLIENTS)
 # =====================================================================
 if "authentifie" not in st.session_state:
     st.session_state["authentifie"] = False
 
 if not st.session_state["authentifie"]:
-    st.subheader("🔐 Espace Membres Privé")
-    st.write("Veuillez vous connecter pour activer le Radar de consultation.")
+    st.subheader("🔐 Espace Sécurisé d'Oracle Géomantique")
+    st.write("Veuillez entrer vos identifiants d'accès pour activer le Radar de consultation.")
     
-    with st.form("formulaire_connexion_admin"):
+    with st.form("formulaire_connexion_multi"):
         user_saisi = st.text_input("Nom d'utilisateur :")
         pass_saisi = st.text_input("Mot de passe :", type="password")
-        bouton_validation = st.form_submit_button("🔑 Se connecter au Radar")
+        bouton_validation = st.form_submit_button("🔑 Se connecter")
         
         if bouton_validation:
             try:
-                # Lecture dynamique depuis l'environnement sécurisé Streamlit
-                username_attendu = st.secrets["credentials"]["username"]
-                password_attendu = st.secrets["credentials"]["password"]
+                admin_user = st.secrets["credentials"]["username"]
+                admin_pass = st.secrets["credentials"]["password"]
+                client_user = st.secrets["client_credentials"]["username"]
+                client_pass = st.secrets["client_credentials"]["password"]
                 
-                if user_saisi == username_attendu and pass_saisi == password_attendu:
+                if (user_saisi == admin_user and pass_saisi == admin_pass) or (user_saisi == client_user and pass_saisi == client_pass):
                     st.session_state["authentifie"] = True
-                    st.success("Accès Administrateur validé ! Chargement du moteur...")
+                    st.success("Accès validé ! Lancement du moteur...")
                     st.rerun()
                 else:
                     st.error("❌ Identifiants incorrects. Accès refusé.")
             except KeyError:
-                st.error("⚠️ Erreur de configuration : Le fichier des secrets est introuvable ou mal configuré.")
+                st.error("⚠️ Erreur de configuration : Un des profils d'accès dans la section Secrets est manquant.")
 
 # =====================================================================
 # ZONE PRINCIPALE DE L'APPLICATION (ACCESSIBLE APRÈS CONNEXION)
 # =====================================================================
 else:
-    st.title("Mon Oracle Géomantique PRO")
-    st.write("Espace Administrateur connecté — Moteur théurgique complet.")
+    st.title("🔮 Système Expert d'Oracle Géomantique PRO")
+    st.write("Moteur de calcul théurgique configuré en mode étendu (16 Maisons).")
 
-    question = st.text_input("✍️ Quelle est votre question ou intention ?", "Thème général")
+    question = st.text_input("✍️ Saisir le sujet ou le nom du consultant :", "Thème général")
 
     st.write("---")
-    st.write("👉 Saisissez vos 4 Maisons Mères (1 = Un point, 2 = Deux points)")
+    st.markdown("### 🛠️ Configuration des 4 Maisons Mères")
+    st.write("Saisissez la structure des 4 premières figures (1 = Un point, 2 = Deux points)")
 
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        st.write("**Maison I**")
-        m1_1 = st.selectbox("L1", [1, 2], key="m1_1")
-        m1_2 = st.selectbox("L2", [1, 2], key="m1_2")
-        m1_3 = st.selectbox("L3", [1, 2], key="m1_3")
-        m1_4 = st.selectbox("L4", [1, 2], key="m1_4")
+        st.write("**Maison I (M1)**")
+        m1_1 = st.selectbox("Ligne 1", [1, 2], key="m1_1")
+        m1_2 = st.selectbox("Ligne 2", [1, 2], key="m1_2")
+        m1_3 = st.selectbox("Ligne 3", [1, 2], key="m1_3")
+        m1_4 = st.selectbox("Ligne 4", [1, 2], key="m1_4")
         m1 = [m1_1, m1_2, m1_3, m1_4]
 
     with col2:
-        st.write("**Maison II**")
-        m2_1 = st.selectbox("L1", [1, 2], key="m2_1")
-        m2_2 = st.selectbox("L2", [1, 2], key="m2_2")
-        m2_3 = st.selectbox("L3", [1, 2], key="m2_3")
-        m2_4 = st.selectbox("L4", [1, 2], key="m2_4")
+        st.write("**Maison II (M2)**")
+        m2_1 = st.selectbox("Ligne 1", [1, 2], key="m2_1")
+        m2_2 = st.selectbox("Ligne 2", [1, 2], key="m2_2")
+        m2_3 = st.selectbox("Ligne 3", [1, 2], key="m2_3")
+        m2_4 = st.selectbox("Ligne 4", [1, 2], key="m2_4")
         m2 = [m2_1, m2_2, m2_3, m2_4]
 
     with col3:
-        st.write("**Maison III**")
-        m3_1 = st.selectbox("L1", [1, 2], key="m3_1")
-        m3_2 = st.selectbox("L2", [1, 2], key="m3_2")
-        m3_3 = st.selectbox("L3", [1, 2], key="m3_3")
-        m3_4 = st.selectbox("L4", [1, 2], key="m3_4")
+        st.write("**Maison III (M3)**")
+        m3_1 = st.selectbox("Ligne 1", [1, 2], key="m3_1")
+        m3_2 = st.selectbox("Ligne 2", [1, 2], key="m3_2")
+        m3_3 = st.selectbox("Ligne 3", [1, 2], key="m3_3")
+        m3_4 = st.selectbox("Ligne 4", [1, 2], key="m3_4")
         m3 = [m3_1, m3_2, m3_3, m3_4]
 
     with col4:
-        st.write("**Maison IV**")
-        m4_1 = st.selectbox("L1", [1, 2], key="m4_1")
-        m4_2 = st.selectbox("L2", [1, 2], key="m4_2")
-        m4_3 = st.selectbox("L3", [1, 2], key="m4_3")
-        m4_4 = st.selectbox("L4", [1, 2], key="m4_4")
+        st.write("**Maison IV (M4)**")
+        m4_1 = st.selectbox("Ligne 1", [1, 2], key="m4_1")
+        m4_2 = st.selectbox("Ligne 2", [1, 2], key="m4_2")
+        m4_3 = st.selectbox("Ligne 3", [1, 2], key="m4_3")
+        m4_4 = st.selectbox("Ligne 4", [1, 2], key="m4_4")
         m4 = [m4_1, m4_2, m4_3, m4_4]
 
     st.write("---")
 
-    if st.button("🔮 CALCULER LE THÈME GÉOMANTIQUE"):
+    if st.button("🔮 INTERPRÉTER LE THÈME ET CALCULER LES 16 MAISONS"):
+        # CORRECTION DU CALCUL DES FILLES (M5 à M8)
+        # Transposition rigoureuse : M5 prend les têtes (ligne 0) de M1, M2, M3, M4
         m5 = [m1[0], m2[0], m3[0], m4[0]]
         m6 = [m1[1], m2[1], m3[1], m4[1]]
         m7 = [m1[2], m2[2], m3[2], m4[2]]
         m8 = [m1[3], m2[3], m3[3], m4[3]]
         
+        # Copula et calculs d'additions binaires
         m9 = additionner_figures(m1, m2)
         m10 = additionner_figures(m3, m4)
         m11 = additionner_figures(m5, m6)
@@ -404,26 +409,69 @@ else:
         id_p_juge = extraire_numero_psaume(juge['psaume_nom'])
         id_p_sent = extraire_numero_psaume(sentence['psaume_nom'])
 
-        st.header("⚖️ Tribunal Décisionnel")
-        st.markdown(f"**Intention analysée :** {question}")
+        # =====================================================================
+        # VISUALISATION DES 16 MAISONS GÉOMANTIQUES
+        # =====================================================================
+        st.header("📊 Cartographie Complète des 16 Maisons du Thème")
+        st.markdown(f"**Analyse vibratoire pour :** *{question}*")
         
-        col_j, col_s = st.columns(2)
-        with col_j:
-            st.subheader(f"JUGE (M15) : {juge['nom']}")
-            st.text(format_visuel_text(m15))
-            st.caption(juge['signification'])
-            
-        with col_s:
-            st.subheader(f"SENTENCE (M16) : {sentence['nom']}")
-            st.text(format_visuel_text(m16))
-            st.caption(sentence['signification'])
+        # --- BLOC 1 : LES MÈRES (M1 à M4) ---
+        st.subheader("🧱 Les 4 Maisons Mères")
+        g1_1, g1_2, g1_3, g1_4 = st.columns(4)
+        for idx, col in enumerate([g1_1, g1_2, g1_3, g1_4]):
+            fig = identifier_figure(theme_complet[idx])
+            with col:
+                st.markdown(f"**{NOMS_MAISONS[idx]}**")
+                st.code(format_visuel_text(theme_complet[idx]))
+                st.markdown(f"🔹 **{fig['nom']}**")
+                st.caption(fig['signification'])
 
+        # --- BLOC 2 : LES FILLES (M5 à M8) ---
+        st.subheader("🌿 Les 4 Maisons Filles")
+        g2_1, g2_2, g2_3, g2_4 = st.columns(4)
+        for idx, col in enumerate([g2_1, g2_2, g2_3, g2_4]):
+            real_idx = idx + 4
+            fig = identifier_figure(theme_complet[real_idx])
+            with col:
+                st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
+                st.code(format_visuel_text(theme_complet[real_idx]))
+                st.markdown(f"🔹 **{fig['nom']}**")
+                st.caption(fig['signification'])
+
+        # --- BLOC 3 : LES NIÈCES (M9 à M12) ---
+        st.subheader("🍃 Les 4 Maisons Nièces")
+        g3_1, g3_2, g3_3, g3_4 = st.columns(4)
+        for idx, col in enumerate([g3_1, g3_2, g3_3, g3_4]):
+            real_idx = idx + 8
+            fig = identifier_figure(theme_complet[real_idx])
+            with col:
+                st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
+                st.code(format_visuel_text(theme_complet[real_idx]))
+                st.markdown(f"🔹 **{fig['nom']}**")
+                st.caption(fig['signification'])
+
+        # --- BLOC 4 : LE TRIBUNAL SPIRITUEL (M13 à M16) ---
+        st.subheader("⚖️ L'Aéropage & Le Tribunal Décisionnel")
+        g4_1, g4_2, g4_3, g4_4 = st.columns(4)
+        for idx, col in enumerate([g4_1, g4_2, g4_3, g4_4]):
+            real_idx = idx + 12
+            fig = identifier_figure(theme_complet[real_idx])
+            with col:
+                st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
+                st.code(format_visuel_text(theme_complet[real_idx]))
+                st.markdown(f"🔥 **{fig['nom']}**")
+                st.caption(fig['signification'])
+
+        st.write("---")
+
+        # =====================================================================
+        # REMÈDES ET COUPLAGE THÉURGIQUE (JUGE ET SENTENCE)
+        # =====================================================================
         st.header("🛡️ Ordonnance Spirituelle & Guide des Bains")
         tab1, tab2, tab3, tab4 = st.tabs(["📝 Écritures de Base", "🧪 Préparation du Bain", "📐 Carrés (Hatims)", "📦 Sacrifices (Saraka)"])
         
         with tab1:
             st.subheader("📋 Textes à tracer sur l'ardoise ou le papier")
-            
             st.markdown(f"### 🏛️ POUR LE JUGE ({juge['nom']}) — À répéter **{num_ecritures_juge} fois** :")
             st.info(f"**1. Clé du Psaume :** {juge['cle_psaume']}\n\n**2. Ancrage Biblique :** {juge['verset_biblique']}\n\n**3. Sceau Salomonique :** {juge['texte_salomonique']}")
             
@@ -432,22 +480,19 @@ else:
 
         with tab2:
             st.subheader("🧪 Alchimie des Plantes, Encens et Parfums")
-            
             st.markdown(f"### 🚿 Protocole pour le Juge ({juge['nom']}) :")
             st.write(f"🎨 **Encre conseillée :** {juge['encre']}")
-            st.write(f"🧴 **Parfum de charge (sans alcool) :** {juge['parfum']}")
-            st.write(f"💧 **Huiles Essentielles :** {juge['huiles_essentielles']} *(À mélanger au préalable dans du lait, du miel ou du sel)*")
-            st.write(f"🌿 **Plantes naturelles pour l'eau :** {juge['plantes']}")
+            st.write(f"🧴 **Parfum de charge :** {juge['parfum']}")
+            st.write(f"💧 **Huiles Essentielles :** {juge['huiles_essentielles']}")
+            st.write(f"🌿 **Plantes naturelles :** {juge['plantes']}")
             st.write(f"💨 **Encens d'activation :** {juge['encens']}")
             st.write(f"⏰ **Moment idéal :** {juge['moment']}")
-            
             st.markdown("---")
-            
             st.markdown(f"### 🚿 Protocole pour la Sentence ({sentence['nom']}) :")
             st.write(f"🎨 **Encre conseillée :** {sentence['encre']}")
-            st.write(f"🧴 **Parfum de charge (sans alcool) :** {sentence['parfum']}")
-            st.write(f"💧 **Huiles Essentielles :** {sentence['huiles_essentielles']} *(À mélanger au préalable dans du lait, du miel ou du sel)*")
-            st.write(f"🌿 **Plantes naturelles pour l'eau :** {sentence['plantes']}")
+            st.write(f"🧴 **Parfum de charge :** {sentence['parfum']}")
+            st.write(f"💧 **Huiles Essentielles :** {sentence['huiles_essentielles']}")
+            st.write(f"🌿 **Plantes naturelles :** {sentence['plantes']}")
             st.write(f"💨 **Encens d'activation :** {sentence['encens']}")
             st.write(f"⏰ **Moment idéal :** {sentence['moment']}")
 
@@ -460,9 +505,3 @@ else:
         with tab4:
             st.success(f"📦 **Aumône Juge ({juge['nom']}) :** {juge['saraka']}")
             st.warning(f"📦 **Aumône Sentence ({sentence['nom']}) :** {sentence['saraka']}")
-
-        st.header("📋 Registre Général des 16 Maisons")
-        with st.expander("Ouvrir le registre complet"):
-            for i, maison_points in enumerate(theme_complet):
-                fig_detail = identifier_figure(maison_points)
-                st.write(f"**{NOMS_MAISONS[i]}** : {fig_detail['nom']} (`{'.'.join(map(str, maison_points))}`)")
