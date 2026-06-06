@@ -88,7 +88,7 @@ DICTIONNAIRE_FIGURES = {
         "psaume_nom": "Psaume 4",
         "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.9) du Psaume 4.",
         "verset_biblique": "Néhémie 8:10 — 'Ne vous affligez pas, car la joie de l'Éternel sera votre force.'",
-        "texte_salomonique": "2e Pentacle de Jupiter — 'Pour acquérir la gloire, les honneurs, les riches, avec une paix d'esprit absolue.'",
+        "texte_salomonique": "2e Pentacle de Jupiter — 'Pour acquérir la gloire, les honneurs, les richesses, avec une paix d'esprit absolue.'",
         "encre": "Encre bleue céleste ou encre traditionnelle mélangée à du musc blanc.",
         "parfum": "Musc Blanc pur (pour la douceur et l'attraction).",
         "huiles_essentielles": "Bergamote ou Orange Douce (7 gouttes mélangées dans une cuillère de miel).",
@@ -159,7 +159,7 @@ DICTIONNAIRE_FIGURES = {
     },
     "2.1.2.1": {
         "nom": "Ousmane (Acquisitio)",
-        "signification": "Le Gain, l'Abondance financière. Réussite commerciale, profits en hausse, héritages et commerce de grande envergure.",
+        "signification": "Le Gain, l'Abondance financière. RéUSSITE commerciale, profits en hausse, héritages et commerce de grande envergure.",
         "psaume_nom": "Psaume 112",
         "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.10) du Psaume 112.",
         "verset_biblique": "Deutéronome 28:12 — 'L'Éternel t'ouvrira son bon trésor, le ciel, pour envoyer à ton pays la pluie en son temps et pour bénir le travail de tes mains.'",
@@ -300,7 +300,7 @@ def extraire_numero_psaume(psaume_str):
     return int(chiffres) if chiffres else 40
 
 # =====================================================================
-# INTERFACE D'ACCÈS DOUBLE (ADMINISTRATEUR ET CLIENTS)
+# INTERFACE D'ACCÈS
 # =====================================================================
 if "authentifie" not in st.session_state:
     st.session_state["authentifie"] = False
@@ -330,9 +330,6 @@ if not st.session_state["authentifie"]:
             except KeyError:
                 st.error("⚠️ Erreur de configuration : Un des profils d'accès dans la section Secrets est manquant.")
 
-# =====================================================================
-# ZONE PRINCIPALE DE L'APPLICATION (ACCESSIBLE APRÈS CONNEXION)
-# =====================================================================
 else:
     st.title("🔮 Système Expert d'Oracle Géomantique PRO")
     st.write("Moteur de calcul théurgique configuré en mode étendu (16 Maisons).")
@@ -341,10 +338,8 @@ else:
 
     st.write("---")
     st.markdown("### 🛠️ Configuration des 4 Maisons Mères")
-    st.write("Saisissez la structure des 4 premières figures (1 = Un point, 2 = Deux points)")
 
     col1, col2, col3, col4 = st.columns(4)
-
     with col1:
         st.write("**Maison I (M1)**")
         m1_1 = st.selectbox("Ligne 1", [1, 2], key="m1_1")
@@ -380,7 +375,7 @@ else:
     st.write("---")
 
     if st.button("🔮 INTERPRÉTER LE THÈME ET CALCULER LES 16 MAISONS"):
-        # Calcul mathématique rigoureux des Filles et des Nièces
+        # Calculs logiques
         m5 = [m1[0], m2[0], m3[0], m4[0]]
         m6 = [m1[1], m2[1], m3[1], m4[1]]
         m7 = [m1[2], m2[2], m3[2], m4[2]]
@@ -409,23 +404,36 @@ else:
         id_p_sent = extraire_numero_psaume(sentence['psaume_nom'])
 
         # =====================================================================
-        # NOUVELLE SECTION 1 : DE QUOI PARLE LE THÈME (SYNTHÈSE DU SUJET)
+        # SECTION 1 : DE QUOI PARLE LE THÈME
         # =====================================================================
         st.header("📖 Orientation Globale : De quoi parle le thème ?")
-        
-        # Petit paragraphe logique d'interprétation contextuelle
         st.write(f"**Analyse de l'intention :** Le consultant se présente sous l'influence spirituelle de la figure **{m1_fig['nom']}** en Maison I. Cela montre que son état d'esprit actuel ou sa situation de départ est marquée par : *{m1_fig['signification']}*")
         st.write(f"**Le Message du Verdict :** Le Juge suprême (**{juge['nom']}**) indique que la réponse définitive à votre préoccupation majeure (*{question}*) s'articule autour de l'énergie suivante : *{juge['signification']}*")
 
         st.write("---")
 
         # =====================================================================
-        # NOUVELLE SECTION 2 : DETECTEUR AUTOMATIQUE DE DOUBLONS (PASSATIONS)
+        # NOUVELLE SECTION 1B : LA CONCLUSION DU THÈME (MAISON 16)
+        # =====================================================================
+        st.header("👑 Sceau de l'Issue : La Conclusion du Thème")
+        st.markdown(
+            f"En géomancie sacrée, la **Maison XVI (La Sentence)** combine l'élan initial du Consultant (M1) et la sentence du Juge (M15). "
+            f"Elle représente l'étape ultime, le décret invisible qui valide la stabilité future de la situation."
+        )
+        
+        st.error(
+            f"**L'Issue Finale est régie par : {sentence['nom']}**\n\n"
+            f"📌 **Verdict de l'avenir :** {sentence['signification']}\n\n"
+            f"💡 *Conseil de l'Oracle :* Pour fixer cette conclusion positivement et dissoudre les derniers pièges, "
+            f"l'application stricte des bains rituels liés au Psaume de la Sentence est obligatoire."
+        )
+
+        st.write("---")
+
+        # =====================================================================
+        # SECTION 2 : DETECTEUR AUTOMATIQUE DE DOUBLONS (PASSATIONS)
         # =====================================================================
         st.header("🔄 Analyse des Passations (Messages Cachés des Doublons)")
-        st.write("Lorsque la même figure apparaît dans plusieurs maisons, elle crée un pont spirituel direct et transmet un message important d'interdépendance :")
-
-        # Recherche algorithmique des correspondances de doublons
         passations_trouvees = {}
         for idx_a in range(16):
             nom_a = identifier_figure(theme_complet[idx_a])['nom']
@@ -437,23 +445,22 @@ else:
                     passations_trouvees[nom_a].append((idx_a, idx_b))
 
         if not passations_trouvees:
-            st.info("✨ Aucune passation détectée. Les énergies de chaque maison agissent de manière indépendante et pure.")
+            st.info("✨ Aucune passation détectée. Les énergies agissent de manière indépendante.")
         else:
             for fig_nom, occurrences in passations_trouvees.items():
                 for (maison_orig, maison_dest) in occurrences:
                     st.markdown(f"#### 🔁 Passation de **{fig_nom}**")
                     st.markdown(f"👉 Voyage entre **{NOMS_MAISONS[maison_orig]}** et **{NOMS_MAISONS[maison_dest]}**")
-                    st.caption(f"💡 *Interprétation :* L'énergie ou le problème lié à votre {NOMS_MAISONS[maison_orig].split(' : ')[1]} influence directement et de manière invisible l'évolution de votre {NOMS_MAISONS[maison_dest].split(' : ')[1]}. Vous devez soigner ou équilibrer la première maison pour libérer la seconde.")
+                    st.caption(f"💡 *Interprétation :* L'énergie liée à votre {NOMS_MAISONS[maison_orig].split(' : ')[1]} influence directement l'évolution de votre {NOMS_MAISONS[maison_dest].split(' : ')[1]}. Vous devez équilibrer la première maison pour libérer la seconde.")
                 st.write("")
 
         st.write("---")
 
         # =====================================================================
-        # CARTOGRAPHIE VISUELLE DES 16 MAISONS GÉOMANTIQUES
+        # CARTOGRAPHIE VISUELLE DES 16 MAISONS
         # =====================================================================
         st.header("📊 Cartographie Complète des 16 Maisons")
         
-        # --- BLOC 1 : LES MÈRES (M1 à M4) ---
         st.subheader("🧱 Les 4 Maisons Mères")
         g1_1, g1_2, g1_3, g1_4 = st.columns(4)
         for idx, col in enumerate([g1_1, g1_2, g1_3, g1_4]):
@@ -462,9 +469,7 @@ else:
                 st.markdown(f"**{NOMS_MAISONS[idx]}**")
                 st.code(format_visuel_text(theme_complet[idx]))
                 st.markdown(f"🔹 **{fig['nom']}**")
-                st.caption(fig['signification'])
 
-        # --- BLOC 2 : LES FILLES (M5 à M8) ---
         st.subheader("🌿 Les 4 Maisons Filles")
         g2_1, g2_2, g2_3, g2_4 = st.columns(4)
         for idx, col in enumerate([g2_1, g2_2, g2_3, g2_4]):
@@ -474,9 +479,7 @@ else:
                 st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
                 st.code(format_visuel_text(theme_complet[real_idx]))
                 st.markdown(f"🔹 **{fig['nom']}**")
-                st.caption(fig['signification'])
 
-        # --- BLOC 3 : LES NIÈCES (M9 à M12) ---
         st.subheader("🍃 Les 4 Maisons Nièces")
         g3_1, g3_2, g3_3, g3_4 = st.columns(4)
         for idx, col in enumerate([g3_1, g3_2, g3_3, g3_4]):
@@ -486,9 +489,7 @@ else:
                 st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
                 st.code(format_visuel_text(theme_complet[real_idx]))
                 st.markdown(f"🔹 **{fig['nom']}**")
-                st.caption(fig['signification'])
 
-        # --- BLOC 4 : LE TRIBUNAL SPIRITUEL (M13 à M16) ---
         st.subheader("⚖️ L'Aéropage & Le Tribunal Décisionnel")
         g4_1, g4_2, g4_3, g4_4 = st.columns(4)
         for idx, col in enumerate([g4_1, g4_2, g4_3, g4_4]):
@@ -498,46 +499,32 @@ else:
                 st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
                 st.code(format_visuel_text(theme_complet[real_idx]))
                 st.markdown(f"🔥 **{fig['nom']}**")
-                st.caption(fig['signification'])
 
         st.write("---")
 
         # =====================================================================
-        # REMÈDES ET COUPLAGE THÉURGIQUE (JUGE ET SENTENCE)
+        # REMÈDES ET COUPLAGE THÉURGIQUE
         # =====================================================================
         st.header("🛡️ Ordonnance Spirituelle & Guide des Bains")
         tab1, tab2, tab3, tab4 = st.tabs(["📝 Écritures de Base", "🧪 Préparation du Bain", "📐 Carrés (Hatims)", "📦 Sacrifices (Saraka)"])
         
         with tab1:
-            st.subheader("📋 Textes à tracer sur l'ardoise ou le papier")
+            st.subheader("📋 Textes à tracer")
             st.markdown(f"### 🏛️ POUR LE JUGE ({juge['nom']}) — À répéter **{num_ecritures_juge} fois** :")
             st.info(f"**1. Clé du Psaume :** {juge['cle_psaume']}\n\n**2. Ancrage Biblique :** {juge['verset_biblique']}\n\n**3. Sceau Salomonique :** {juge['texte_salomonique']}")
-            
             st.markdown(f"### 👑 POUR LA SENTENCE ({sentence['nom']}) — À répéter **{num_ecritures_sentence} fois** :")
             st.info(f"**1. Clé du Psaume :** {sentence['cle_psaume']}\n\n**2. Ancrage Biblique :** {sentence['verset_biblique']}\n\n**3. Sceau Salomonique :** {sentence['texte_salomonique']}")
 
         with tab2:
-            st.subheader("🧪 Alchimie des Plantes, Encens et Parfums")
+            st.subheader("🧪 Alchimie des Plantes")
             st.markdown(f"### 🚿 Protocole pour le Juge ({juge['nom']}) :")
-            st.write(f"🎨 **Encre conseillée :** {juge['encre']}")
-            st.write(f"🧴 **Parfum de charge :** {juge['parfum']}")
-            st.write(f"💧 **Huiles Essentielles :** {juge['huiles_essentielles']}")
-            st.write(f"🌿 **Plantes naturelles :** {juge['plantes']}")
-            st.write(f"💨 **Encens d'activation :** {juge['encens']}")
-            st.write(f"⏰ **Moment idéal :** {juge['moment']}")
+            st.write(f"🎨 **Encre :** {juge['encre']} | 🧴 **Parfum :** {juge['parfum']} | 🌿 **Plantes :** {juge['plantes']}")
             st.markdown("---")
             st.markdown(f"### 🚿 Protocole pour la Sentence ({sentence['nom']}) :")
-            st.write(f"🎨 **Encre conseillée :** {sentence['encre']}")
-            st.write(f"🧴 **Parfum de charge :** {sentence['parfum']}")
-            st.write(f"💧 **Huiles Essentielles :** {sentence['huiles_essentielles']}")
-            st.write(f"🌿 **Plantes naturelles :** {sentence['plantes']}")
-            st.write(f"💨 **Encens d'activation :** {sentence['encens']}")
-            st.write(f"⏰ **Moment idéal :** {sentence['moment']}")
+            st.write(f"🎨 **Encre :** {sentence['encre']} | 🧴 **Parfum :** {sentence['parfum']} | 🌿 **Plantes :** {sentence['plantes']}")
 
         with tab3:
-            st.write(f"📊 **Hatim pour la feuille du Juge ({juge['psaume_nom']}) :**")
             st.text(generer_carre_magique(id_p_juge))
-            st.write(f"📊 **Hatim pour la feuille de la Sentence ({sentence['psaume_nom']}) :**")
             st.text(generer_carre_magique(id_p_sent))
 
         with tab4:
