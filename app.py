@@ -76,32 +76,38 @@ def extraire_numero_psaume(psaume_str):
     return int(chiffres) if chiffres else 40
 
 # =====================================================================
-# INTERFACE SÉCURISÉE ET CODE PRINCIPAL
+# INTERFACE D'ACCÈS SÉCURISÉ (ADMINISTRATEUR)
 # =====================================================================
-# Définition du mot de passe
-MOT_DE_PASSE_CORRECT = "MonCodeSecret123"
-
+# Initialisation de l'état de connexion s'il n'existe pas
 if "authentifie" not in st.session_state:
     st.session_state["authentifie"] = False
 
-# Écran de verrouillage si pas connecté
+# Écran de verrouillage Administrateur
 if not st.session_state["authentifie"]:
-    st.subheader("🔐 Accès Sécurisé")
-    st.write("Veuillez entrer le code d'accès pour consulter l'oracle.")
+    st.subheader("🔐 Espace Membres Privé")
+    st.write("Veuillez vous connecter pour activer le Radar de consultation.")
     
-    mot_de_passe_saisi = st.text_input("Mot de passe :", type="password")
-    
-    if st.button("Se connecter"):
-        if mot_de_passe_saisi == MOT_DE_PASSE_CORRECT:
-            st.session_state["authentifie"] = True
-            st.success("Connexion réussie ! Cliquez à nouveau sur le bouton pour entrer.")
-        else:
-            st.error("❌ Mot de passe incorrect. Accès refusé.")
+    # Le formulaire garantit qu'aucune erreur "Press Enter" ne survienne sur smartphone
+    with st.form("formulaire_connexion_admin"):
+        user_saisi = st.text_input("Nom d'utilisateur :")
+        pass_saisi = st.text_input("Mot de passe :", type="password")
+        bouton_validation = st.form_submit_button("🔑 Se connecter au Radar")
+        
+        if bouton_validation:
+            # Vérification stricte des identifiants d'après vos paramètres
+            if user_saisi == "Boss4512" and pass_saisi == "PassRadarV45042212!!":
+                st.session_state["authentifie"] = True
+                st.success("Accès Administrateur validé ! Chargement du moteur...")
+                st.rerun()
+            else:
+                st.error("❌ Identifiants incorrects. Accès refusé.")
 
-# Si l'utilisateur est authentifié, on affiche toute l'application
+# =====================================================================
+# ZONE PRINCIPALE DE L'APPLICATION (ACCESSIBLE APRÈS CONNEXION)
+# =====================================================================
 else:
     st.title("Mon Oracle Géomantique")
-    st.write("Calculez votre blason complet et générez vos ordonnances de bains numériques.")
+    st.write("Espace Administrateur connecté — Calcul des blasons et Hatims numériques.")
 
     question = st.text_input("✍️ Quelle est votre question ou intention ?", "Thème général")
 
