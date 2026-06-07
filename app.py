@@ -1,377 +1,280 @@
-
-import json
-import sys
+import streamlit as st
 
 # =====================================================================
-# 1. BASE DE DONNÉES ET CORRESPONDANCES DU COURS DE SOMADJELY
+# 1. DICTIONNAIRE DE RÉFÉRENCE DES 16 FIGURES (Géomancie Ramrou)
 # =====================================================================
+# Données extraites rigoureusement des manuels de référence (Ramrou & Kamagaté)
 FIGURES_DB = {
-    "1121": {
-        "nom": "Youssouf (Sedjou / Puer)", "sexe": "Mâle", "temps_naturel": "Passé",
-        "arbres": ["Djala", "N'zèrènidjè", "Djatiguifaga", "Zaban", "Balanzan"],
-        "plantes_sacrees": "Zaban, Balanzan, Poudre de fusil",
-        "psaume": "Psaume 35", "verset": "Exode 15 v.3", "sceau": "2e Pentacle de Mars", 
-        "jour_sacrifice": "Mardi", "destinataire_sac": "Handicapés ou personnes s'étant blessées",
-        "elements_sac": "Cola rouge, bélier au cou rouge, maïs rouge"
+    "Youssouf": {
+        "numero": 1,
+        "element": "Feu",
+        "nature": "Feu de braise",
+        "polarite": "Diable (Mauvais)",
+        "sacrifice": "Pagne ou tissu noir, 1 litre de lait, 3 ou 7 colas blancs. À donner à un homme le jeudi matin.",
+        "plantes": "Balanzan (Acacia albida), Diatigui Faga (Ficus sp.)"
     },
-    "1222": {
-        "nom": "Adama (Letitia / La joie)", "sexe": "Mâle", "temps_naturel": "Passé",
-        "arbres": ["Sana", "Gounan", "Frogofraga", "N'gouna", "Sérétoro"],
-        "plantes_sacrees": "Frogofraga, N'gouna, Sérétoro",
-        "psaume": "Psaume 4", "verset": "Néhémie 8 v.10", "sceau": "2e Pentacle de Jupiter", 
-        "jour_sacrifice": "Jeudi", "destinataire_sac": "Plusieurs personnes (Groupe)",
-        "elements_sac": "Fruits secs, longs animaux"
+    "Adama": {
+        "numero": 2,
+        "element": "Feu",
+        "nature": "Mer / Courant électrique / Lumière",
+        "polarite": "Diable (Bon)",
+        "sacrifice": "Tissu noir, 1 litre de lait, 3 ou 7 colas blancs. À donner à un homme le jeudi matin ou mercredi.",
+        "plantes": "N'gouna (Scléroarya birréa), Djalan (Khaya senegalensis), Zeguelin"
     },
-    "2111": {
-        "nom": "Mahamadou / Malidjou (Caput Draconis)", "sexe": "Femelle", "temps_naturel": "Futur",
-        "arbres": ["Djoulassounkalani", "Sébé", "Arbres sur colline", "Djoun"],
-        "plantes_sacrees": "Arbres qui poussent sur colline ou toile, Djoun",
-        "psaume": "Psaume 128", "verset": "Exode 20 v.12", "sceau": "1er Pentacle de la Terre", 
-        "jour_sacrifice": "Jeudi", "destinataire_sac": "Plusieurs personnes (Groupe)",
-        "elements_sac": "Fruits secs, longs animaux"
+    "Mahdy": {
+        "numero": 3,
+        "element": "Air",
+        "nature": "Vent fort, tornade",
+        "polarite": "Diable (Bon)",
+        "sacrifice": "7 kg de sel, une paire de chaussures noires à donner à une femme entre 17h et 21h (Lundi ou Jeudi).",
+        "plantes": "Sébé (Rônier / Borassus aethiopum), Tabacouba (Detarium senegalense)"
     },
-    "2212": {
-        "nom": "Idrissa (Albayaro / Albus)", "sexe": "Mâle", "temps_naturel": "Futur",
-        "arbres": ["Dougalén", "N'gokou", "Arbres des fleuves"],
-        "plantes_sacrees": "N'gokou, tous les arbres qui vivent sur les fleuves",
-        "psaume": "Psaume 119 (Beth)", "verset": "Isaïe 1 v.18", "sceau": "2e Pentacle de Mercure", 
-        "jour_sacrifice": "Vendredi", "destinataire_sac": "Enfants",
-        "elements_sac": "Bijoux, objets précieux, offrandes libres"
+    "Idriss": {
+        "numero": 4,
+        "element": "Eau",
+        "nature": "Fleuve",
+        "polarite": "Diable (Bon)",
+        "sacrifice": "7 kg de sel, une paire de chaussures noires à donner à une femme entre 22h et 00h (Lundi ou Jeudi).",
+        "plantes": "N'Gokoun (Nénuphar / Nymphaea lotus)"
     },
-    "1111": {
-        "nom": "Ibrahima (Taliki / Via)", "sexe": "Mâle", "temps_naturel": "Présent",
-        "arbres": ["Tièkala", "Zongnè", "Zondjè", "Arbres des sources d'eau"],
-        "plantes_sacrees": "Zondjè, arbres poussant au bord des sources d'eau",
-        "psaume": "Psaume 120", "verset": "Psaume 121 v.8", "sceau": "5e Pentacle de la Lune", 
-        "jour_sacrifice": "Lundi", "destinataire_sac": "Religieux ou personnes s'occupant de la religion",
-        "elements_sac": "Fruits frais, graines de céréales, animaux féminins"
+    "Ibrahima": {
+        "numero": 5,
+        "element": "Eau",
+        "nature": "Vent maléfique",
+        "polarite": "Humain (Bon)",
+        "sacrifice": "6 litres de lait avec un coq rouge ou un mouton. À donner à un homme le lundi entre 13h et 15h.",
+        "plantes": "Zaba (Landolphia owariensis), Karo"
     },
-    "1212": {
-        "nom": "Issa (Nabbi Issa / Amissio)", "sexe": "Mâle", "temps_naturel": "Passé",
-        "arbres": ["N'gagnaka", "Sourou N'tomo", "Niama", "Chi"],
-        "plantes_sacrees": "N'gagnaka, Niama, Chi",
-        "psaume": "Psaume 102", "verset": "Joël 2 v.25", "sceau": "5e Pentacle de Vénus", 
-        "jour_sacrifice": "Mercredi", "destinataire_sac": "Chanteur, griot ou muezzin",
-        "elements_sac": "Choses à plusieurs couleurs (pintade, fonio, poule tachetée)"
+    "Inssa": {
+        "numero": 6,
+        "element": "Eau",
+        "nature": "La pluie",
+        "polarite": "Humain (Mauvais)",
+        "sacrifice": "6 litres de lait avec un coq blanc ou une chèvre. À donner à un homme le mardi entre 17h et 18h.",
+        "plantes": "Kèlètiguè yiri, Triqi (Combretum glutinosum)"
     },
-    "2122": {
-        "nom": "Oumarou (Lomara / Rubeus)", "sexe": "Femelle", "temps_naturel": "Passé",
-        "arbres": ["Gabablen", "Foronto", "Wo", "Djati tgui fa djiri", "Gaba blé"],
-        "plantes_sacrees": "Gaba blé, Djati tgui fa djiri",
-        "psaume": "Psaume 29", "verset": "Cantique 8 v.6", "sceau": "4e Pentacle de Mars", 
-        "jour_sacrifice": "Mardi", "destinataire_sac": "Handicapés ou personnes s'étant blessées",
-        "elements_sac": "Cola rouge, bélier au cou rouge, maïs rouge"
+    "Omar": {
+        "numero": 7,
+        "element": "Air",
+        "nature": "Vent",
+        "polarite": "Diable (Mauvais)",
+        "sacrifice": "Chèvre ou mouton blanc, ou coq rouge. À donner à une femme le mardi ou samedi entre 22h et 00h.",
+        "plantes": "Kaba houlé (Ficus platyphylla)"
     },
-    "2221": {
-        "nom": "Ayouba (Almangoussi / Tristitia)", "sexe": "Mâle", "temps_naturel": "Futur",
-        "arbres": ["Koronifing", "Koto", "Ngokou", "Herbes de tombeau"],
-        "plantes_sacrees": "Herbes qui poussent sur tombeau, Koroni fin",
-        "psaume": "Psaume 40", "verset": "Isaïe 61 v.3", "sceau": "5e Pentacle de Saturne", 
-        "jour_sacrifice": "Samedi", "destinataire_sac": "Vieilles et vieux",
-        "elements_sac": "Tout ce qu'on trouve sous la terre, savon, sel"
+    "Ayoub": {
+        "numero": 8,
+        "element": "Terre",
+        "nature": "La tombe",
+        "polarite": "Diable (Mauvais)",
+        "sacrifice": "Mouton blanc ou coq blanc. À donner à un homme le mardi ou samedi entre 10h et 12h.",
+        "plantes": "Plantes de cimetière, racines profondes"
     },
-    "1122": {
-        "nom": "Qala-llahou (Aboubakr Sidik / Fortuna Minor)", "sexe": "Mâle", "temps_naturel": "Passé",
-        "arbres": ["Alladjô", "Congo Sirani", "Racines coupant la route"],
-        "plantes_sacrees": "Aladjon, racines d'arbres coupant la route",
-        "psaume": "Psaume 121", "verset": "Psaume 46 v.2", "sceau": "4e Pentacle du Soleil", 
-        "jour_sacrifice": "Dimanche", "destinataire_sac": "Personnages de grande renommée, chefs",
-        "elements_sac": "Cola blanc, habit blanc, bélier blanc"
+    "Allahou": {
+        "numero": 9,
+        "element": "Feu",
+        "nature": "Le désert",
+        "polarite": "Humain (Mauvais)",
+        "sacrifice": "Un boubou ou pagne déjà porté, de la viande. À donner à des hommes le dimanche entre 13h et 15h.",
+        "plantes": "Plantes épineuses du désert"
     },
-    "1221": {
-        "nom": "Solomana (Manssa Souleymane / Carcer)", "sexe": "Femelle", "temps_naturel": "Présent",
-        "arbres": ["Zamba", "Sira (Baobab)", "Mandé sounsoun", "Sounsoun"],
-        "plantes_sacrees": "Mandé sounsoun, Sounsoun",
-        "psaume": "Psaume 142", "verset": "Isaïe 22 v.22", "sceau": "7e Pentacle de Saturne", 
-        "jour_sacrifice": "Samedi", "destinataire_sac": "Vieilles et vieux",
-        "elements_sac": "Tout ce qu'on trouve sous la terre, savon, sel"
+    "Soulaymane": {
+        "numero": 10,
+        "element": "Terre",
+        "nature": "Montagne",
+        "polarite": "Humain (Bon)",
+        "sacrifice": "3 plats de riz avec de la viande. À donner à une femme entre 18h et 20h, peu importe le jour.",
+        "plantes": "Arbres massifs à écorce dure"
     },
-    "2112": {
-        "nom": "Badra (Badra Aliou / Conjunctio)", "sexe": "Femelle", "temps_naturel": "Présent",
-        "arbres": ["Triki", "Gouélé"],
-        "plantes_sacrees": "Guélé",
-        "psaume": "Psaume 133", "verset": "Ruth 1 v.16", "sceau": "4e Pentacle de Mercure", 
-        "jour_sacrifice": "Mercredi", "destinataire_sac": "Chanteur, griot ou muezzin",
-        "elements_sac": "Choses à plusieurs couleurs (pintade, fonio, poule)"
+    "Aliou": {
+        "numero": 11,
+        "element": "Air",
+        "nature": "Fumée",
+        "polarite": "Humain (Mauvais)",
+        "sacrifice": "3 kilos de riz, 3 kilos de mil, 7 colas blancs. À donner à un homme entre 18h et 22h.",
+        "plantes": "Plantes à sève laiteuse"
     },
-    "2211": {
-        "nom": "Nouhou (Nouhoum / Cauda Draconis)", "sexe": "Femelle", "temps_naturel": "Futur",
-        "arbres": ["Koudjè", "Zèguènè", "Goundjè"],
-        "plantes_sacrees": "Goundjè",
-        "psaume": "Psaume 59", "verset": "Psaume 68 v.2", "sceau": "6e Pentacle de Saturne", 
-        "jour_sacrifice": "Dimanche", "destinataire_sac": "Renommés, grands personnages",
-        "elements_sac": "Cola blanc, habit blanc, bélier blanc"
+    "Nouhou": {
+        "numero": 12,
+        "element": "Terre",
+        "nature": "Vent",
+        "polarite": "Humain (Bon)",
+        "sacrifice": "Un coq rouge, 3 kilos de maïs, 7 colas rouges. À donner à une femme le vendredi entre 20h et 22h.",
+        "plantes": "Plantes de nettoyage ou de lavage spirituel"
     },
-    "1112": {
-        "nom": "Laoussana (Alhoussein / Puella)", "sexe": "Femelle", "temps_naturel": "Passé",
-        "arbres": ["Herbes des vieux puits", "Les ravins", "Rigoles", "Plantes gluantes", "Djoulasonkalani"],
-        "plantes_sacrees": "Djoulasonkalani",
-        "psaume": "Psaume 119 (Aleph)", "verset": "Cantique 4 v.7", "sceau": "2e Pentacle de Vénus", 
-        "jour_sacrifice": "Samedi", "destinataire_sac": "Vieilles et vieux",
-        "elements_sac": "Tout ce qu'on trouve sous la terre, savon, sel"
+    "Assane": {
+        "numero": 13,
+        "element": "Eau",
+        "nature": "Le sable",
+        "polarite": "Diable (Mauvais)",
+        "sacrifice": "Un plat de riz avec de la viande de coq. À donner à des femmes le samedi entre 10h et 12h.",
+        "plantes": "Plantes rampantes des zones sablonneuses"
     },
-    "1211": {
-        "nom": "Ousmane (Mory Zoumana / Acquisitio)", "sexe": "Mâle", "temps_naturel": "Futur",
-        "arbres": ["Troubala", "Dougalen", "Chou Toro", "N'doubalé", "Frogofraga"],
-        "plantes_sacrees": "N'doubalé, Frogofraga",
-        "psaume": "Psaume 23", "verset": "Psaume 23 v.1", "sceau": "3e Pentacle de Jupiter", 
-        "jour_sacrifice": "Jeudi", "destinataire_sac": "Plusieurs personnes (Groupe)",
-        "elements_sac": "Fruits secs, longs animaux"
+    "Younouss": {
+        "numero": 14,
+        "element": "Terre",
+        "nature": "Vent froid et lourd",
+        "polarite": "Diable (Bon)",
+        "sacrifice": "Un plat de riz avec un cola blanc. À donner à une femme le vendredi entre 13h et 15h.",
+        "plantes": "Plantes de récolte ou arbres fruitiers"
     },
-    "2121": {
-        "nom": "Younouss (Tontigui)", "sexe": "Femelle", "temps_naturel": "Futur",
-        "arbres": ["Fogofogo", "N'tomotigui", "Zondjè"],
-        "plantes_sacrees": "N'tomotigui, Zondjè",
-        "psaume": "Psaume 112", "verset": "Deutéronome 28 v.12", "sceau": "6e Pentacle de Jupiter", 
-        "jour_sacrifice": "Vendredi", "destinataire_sac": "Enfants",
-        "elements_sac": "Bijoux, parures ou objets brillants"
+    "Ousmane": {
+        "numero": 15,
+        "element": "Air",
+        "nature": "Eau de puits",
+        "polarite": "Humain (Bon)",
+        "sacrifice": "3 plats de riz avec 10 colas blancs. À donner à des hommes le dimanche entre 17h et 18h.",
+        "plantes": "Plantes aquatiques douces, lianes d'eau"
     },
-    "2222": {
-        "nom": "Moussa (Djama / Populus)", "sexe": "Femelle", "temps_naturel": "Présent",
-        "arbres": ["Tomy", "Sounzoufing", "N'tomi", "N'galama"],
-        "plantes_sacrees": "N'tomi, N'galama",
-        "psaume": "Psaume 47", "verset": "Genèse 22 v.17", "sceau": "1er Pentacle de la Lune", 
-        "jour_sacrifice": "Lundi", "destinataire_sac": "Religieux ou gardiens du culte",
-        "elements_sac": "Fruits frais, graines de céréales, animaux féminins"
+    "Moussa": {
+        "numero": 16,
+        "element": "Feu",
+        "nature": "La cendre",
+        "polarite": "Humain (Mauvais)",
+        "sacrifice": "Tissu blanc, un coq blanc, de la viande de chèvre. À donner à des hommes le dimanche à 06h du matin.",
+        "plantes": "Arbres produisant beaucoup de cendre, plantes de protection"
     }
 }
 
-MAISONS_META = {
-    1: {"nom": "M1 (Consultant / Tête)", "temps_maison": "Présent"},
-    2: {"nom": "M2 (Gains / Argent / Chance)", "temps_maison": "Présent"},
-    3: {"nom": "M3 (Entourage / Frères)", "temps_maison": "Présent"},
-    4: {"nom": "M4 (Foyer / Patrimoine / Fin)", "temps_maison": "Présent"},
-    5: {"nom": "M5 (Enfants / Amours / Nouvelles)", "temps_maison": "Présent"},
-    6: {"nom": "M6 (Maladie / Obstacles / Serviteurs)", "temps_maison": "Présent"},
-    7: {"nom": "M7 (Conjoint / Mariage / Adversaire)", "temps_maison": "Présent"},
-    8: {"nom": "M8 (Mort / Transformations / Craintes)", "temps_maison": "Présent"},
-    9: {"nom": "M9 (Voyages lointains / Spiritualité)", "temps_maison": "Passé"},
-    10: {"nom": "M10 (Carrière / Pouvoir / Chef)", "temps_maison": "Passé"},
-    11: {"nom": "M11 (Appuis / Amis / Espoirs)", "temps_maison": "Futur"},
-    12: {"nom": "M12 (Épreuves / Ennemis cachés)", "temps_maison": "Futur"},
-    13: {"nom": "M13 (Chambre du consultant / Témoin Droit)", "temps_maison": "Passé"},
-    14: {"nom": "M14 (Ressources futures / Témoin Gauche)", "temps_maison": "Futur"},
-    15: {"nom": "M15 (Le Juge final)", "temps_maison": "Présent"},
-    16: {"nom": "M16 (La Sentence / Issue ultime)", "temps_maison": "Passé"}
+MAISONS_NOMS = {
+    1: "Maison de l'âme (M1)",
+    2: "Maison de la chance / Fortune (M2)",
+    3: "Maison des frères / Mères / Entourage (M3)",
+    4: "Maison du patrimoine / Pères / Foyer (M4)",
+    5: "Maison des enfants / Amours (M5)",
+    6: "Maison des maladies / Obstacles (M6)",
+    7: "Maison du mariage / Associés (M7)",
+    8: "Maison de la mort / Changement (M8)",
+    9: "Maison des voyages / Dieu (M9)",
+    10: "Maison du pouvoir / Succès professionnel (M10)",
+    11: "Maison des espoirs / Amis (M11)",
+    12: "Maison des ennemis / Blocages secrets (M12)",
+    13: "Maison du lit / Intimité / Argent présent (M13)",
+    14: "Maison des gains futurs / Clôture (M14)",
+    15: "Maison du juge / Clarté du thème (M15)",
+    16: "Maison de la sentence finale / Issue (M16)"
 }
 
-
 # =====================================================================
-# 2. MOTEUR MATHÉMATIQUE GÉOMANTIQUE CORRIGÉ
+# 2. LOGIQUE D'INTERPRÉTATION MATRICIELLE DES 4 ÉLÉMENTS
 # =====================================================================
-class EngineGeomancyPro:
-    def __init__(self, m1, m2, m3, m4, question):
-        self.question = str(question).strip()
-        self.maisons = {
-            1: str(m1).strip(),
-            2: str(m2).strip(),
-            3: str(m3).strip(),
-            4: str(m4).strip()
-        }
-        self._engendrer_le_theme()
-        self.passations = self._calculer_passations()
-
-    def _addition_geomantique(self, code1, code2):
-        nouveau_code = ""
-        for i in range(4):
-            l1 = int(code1[i])
-            l2 = int(code2[i])
-            nouveau_code += "2" if (l1 + l2) % 2 == 0 else "1"
-        return nouveau_code
-
-    def _engendrer_le_theme(self):
-        for i in [1, 2, 3, 4]:
-            if len(self.maisons[i]) != 4 or not set(self.maisons[i]).issubset({"1", "2"}):
-                raise ValueError(f"Maison M{i} incorrecte. Saisir obligatoirement 4 chiffres composés de 1 et 2 (Ex: 1121).")
-
-        # Extraction verticale stricte pour générer les filles M5 à M8
-        self.maisons[5] = self.maisons[1][0] + self.maisons[2][0] + self.maisons[3][0] + self.maisons[4][0]
-        self.maisons[6] = self.maisons[1][1] + self.maisons[2][1] + self.maisons[3][1] + self.maisons[4][1]
-        self.maisons[7] = self.maisons[1][2] + self.maisons[2][2] + self.maisons[3][2] + self.maisons[4][2]
-        self.maisons[8] = self.maisons[1][3] + self.maisons[2][3] + self.maisons[3][3] + self.maisons[4][3]
-
-        # Calcul des neveux M9 à M12
-        self.maisons[9]  = self._addition_geomantique(self.maisons[1], self.maisons[2])
-        self.maisons[10] = self._addition_geomantique(self.maisons[3], self.maisons[4])
-        self.maisons[11] = self._addition_geomantique(self.maisons[5], self.maisons[6])
-        self.maisons[12] = self._addition_geomantique(self.maisons[7], self.maisons[8])
-
-        # Calcul des Témoins, Juge et Sentence
-        self.maisons[13] = self._addition_geomantique(self.maisons[9], self.maisons[10])
-        self.maisons[14] = self._addition_geomantique(self.maisons[11], self.maisons[12])
-        self.maisons[15] = self._addition_geomantique(self.maisons[13], self.maisons[14])
-        self.maisons[16] = self._addition_geomantique(self.maisons[15], self.maisons[1])
-
-    def _calculer_passations(self):
-        carte = {}
-        for m, code in self.maisons.items():
-            if code not in carte: carte[code] = []
-            carte[code].append(m)
-        return {code: m_list for code, m_list in carte.items() if len(m_list) > 1}
-
-    def verifier_veracite_theme(self):
-        alertes = []
-        for code, m_list in self.passations.items():
-            fig_nom = FIGURES_DB.get(code, {"nom": "Inconnue"})["nom"]
-            if "Almangoussi" in fig_nom and 1 in m_list and 8 in m_list:
-                alertes.append("❌ REJET FORMEL (Mensonge) : Almangoussi ne passera jamais de M1 à M8.")
-            if "Youssouf" in fig_nom and 1 in m_list and 7 in m_list:
-                alertes.append("❌ REJET FORMEL (Mensonge) : Youssouf ne passera jamais de M1 à M7.")
-            if "Issa" in fig_nom and 1 in m_list and 6 in m_list:
-                alertes.append("❌ REJET FORMEL (Mensonge) : Issa ne passera jamais de M1 à M6.")
-
-        juge_nom = FIGURES_DB.get(self.maisons[15], {}).get("nom", "")
-        if any(d in juge_nom for d in ["Nouhou", "Almangoussi"]):
-            alertes.append(f"❌ THÈME REJETÉ : Un Djin ({juge_nom}) ne peut pas siéger en Maison 15 (Juge).")
-
-        cop_1_7 = self._addition_geomantique(self.maisons[1], self.maisons[7])
-        cop_4_10 = self._addition_geomantique(self.maisons[4], self.maisons[10])
-        fig_verite = self._addition_geomantique(cop_1_7, cop_4_10)
-        if fig_verite not in self.maisons.values():
-            alertes.append(f"⚠️ CONCORDANCE FAIBLE : La figure témoin de vérité ({FIGURES_DB.get(fig_verite, {}).get('nom')}) n'apparaît pas dans le tracé.")
-
-        return alertes
-
-    def interpreter_temps_et_sacrifices(self):
-        interpretations = []
-        for code, m_list in self.passations.items():
-            fig_data = FIGURES_DB.get(code)
-            if not fig_data: continue
-            for m in m_list:
-                t_maison = MAISONS_META[m]["temps_maison"]
-                t_figure = fig_data["temps_naturel"]
-                if t_figure == "Passé" and t_maison == "Passé":
-                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Événement consommé. Offrir le sacrifice aux VIEILLES ET VIEUX.")
-                elif t_figure == "Passé" and t_maison == "Présent":
-                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Une vieille affaire resurgit au présent. Offrir aux VIEILLES ET VIEUX.")
-                elif t_figure == "Présent" and t_maison == "Présent":
-                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Action immédiate en cours de traitement. Offrir à vos PAIRS (Même âge).")
-                elif t_figure == "Futur" and t_maison == "Futur":
-                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Projet d'avenir solide. Offrir aux ENFANTS.")
-        return interpretations
-
-    def analyser_axe_mariage(self):
-        m1 = self.maisons[1]
-        m7 = self.maisons[7]
-        if m1 == m7 or (m1 in self.passations and 7 in self.passations[m1]):
-            return f"💍 MARIAGE VERROUILLÉ : Passation directe validée de M1 à M7 avec la figure {FIGURES_DB[m1]['nom']}."
-        if FIGURES_DB[m1]["sexe"] == "Mâle" and FIGURES_DB[m7]["sexe"] == "Femelle":
-            return "⏳ HARMONIE NATURELLE : M1 est Mâle et M7 est Femelle. L'accord est favorable mais demande une ouverture de route."
-        return "❌ BLOCAGE D'ALLIANCE : Aucune passation ni polarité harmonieuse détectée sur l'axe M1-M7."
-
-    def calculer_part_de_fortune_exacte(self):
-        total_points = sum(int(caractere) for m_code in self.maisons.values() for caractere in m_code)
-        reste = total_points % 12
-        maison_chute = 12 if reste == 0 else reste
+def interpreter_importance_element(element_str):
+    """Génère l'analyse de l'importance de l'élément de la sentence finale (M16)."""
+    if "Feu" in element_str:
         return {
-            "total_points": total_points,
-            "maison_cible": f"M{maison_chute} ({MAISONS_META[maison_chute]['nom']})",
-            "figure": FIGURES_DB.get(self.maisons[maison_chute], {"nom": "Inconnue"})["nom"]
+            "icone": "🔥",
+            "titre": "Élément FEU - Dynamique d'Action Absolue et de Rapidité",
+            "analyse": "La conclusion de votre thème est dominée par le Feu. Cela indique une résolution tranchante, immédiate ou exigeant de vous un courage martial. Les blocages se consument vite sous cette influence, mais attention aux risques d'emportement, de litiges ou de stress intense.",
+            "conseil": "Agissez promptement. Privilégiez les purifications matinales, l'utilisation de l'encens sacré, et l'action directe sans hésitation."
+        }
+    elif "Air" in element_str:
+        return {
+            "icone": "💨",
+            "titre": "Élément AIR - Dynamique de Mouvement, d'Esprit et de Parole",
+            "analyse": "Votre issue est portée par les courants de l'Air. Votre situation est extrêmement mobile et dépend de contrats, de négociations, d'écrits ou de l'influence de votre entourage. L'instabilité actuelle précède une transition importante.",
+            "conseil": "Misez sur la communication claire, l'onction de parfums subtils et l'élévation de l'esprit pour stabiliser et orienter cette énergie volatile."
+        }
+    elif "Eau" in element_str:
+        return {
+            "icone": "💧",
+            "titre": "Élément EAU - Dynamique de Fluidité, d'Abondance et de Purification",
+            "analyse": "L'Eau gouverne votre sentence finale. C'est le symbole des bénédictions fertiles, de la richesse fluide, des réconciliations amicales ou amoureuses. Les difficultés tenaces se dissolvent naturellement comme le sel dans l'eau, bien que l'évolution puisse demander de la patience.",
+            "conseil": "Le bain thérapeutique (Nassi) et l'utilisation de décoctions liquides purificatrices constituent le cœur stratégique de vos remèdes."
+        }
+    elif "Terre" in element_str:
+        return {
+            "icone": "🌱",
+            "titre": "Élément TERRE - Dynamique d'Ancrage, de Secret et de Temps",
+            "analyse": "La Terre scelle votre dénouement. Les résultats obtenus sous cette influence seront solides et pérennes, mais ils sont soumis aux lois du temps, à de lourdes résistances ou à des secrets. Les retards administratifs ou matériels font partie du processus.",
+            "conseil": "Ne forcez pas les événements. Honorez scrupuleusement les aumônes matérielles lourdes (Saraka), les graines, et utilisez les racines de plantes pour débloquer le sol."
+        }
+    else:
+        return {
+            "icone": "✨",
+            "titre": "Élément Équilibré / Neutre",
+            "analyse": "L'influence élémentaire demande un rééquilibrage global des différentes forces en présence.",
+            "conseil": "Suivez rigoureusement l'ensemble des prescriptions sans sauter d'étape."
         }
 
-    def compiler_fiche_theurgique(self, maison_index):
-        code = self.maisons[maison_index]
-        data = FIGURES_DB.get(code)
-        if not data: return {}
+# =====================================================================
+# 3. INTERFACE UTILISATEUR STREAMLIT
+# =====================================================================
+st.set_page_config(page_title="Oracle Ramrou Pro", page_icon="🔮", layout="wide")
+
+st.title("🔮 Oracle de Géomancie Ramrou - Ordonnance Spirituelle Avancée")
+st.write("Saisissez la figure présente dans la **Maison 16 (Sentence finale)** pour générer l'analyse complète, l'évaluation élémentaire et les remèdes sacrés.")
+
+# Sélection de la figure finale
+figure_choisie = st.selectbox(
+    "Choisissez la figure de la Maison 16 (Issue du thème) :",
+    options=list(FIGURES_DB.keys())
+)
+
+if figure_choisie:
+    data = FIGURES_DB[figure_choisie]
+    
+    # Affichage de la carte d'identité de la figure
+    st.subheader(f"📊 Fiche Technique : Figure {figure_choisie}")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric(label="Numéro Unique", value=f"N° {data['numero']}")
+    with col2:
+        st.metric(label="Élément Majeur", value=data['element'])
+    with col3:
+        st.metric(label="Nature Symbolique", value=data['nature'])
+    with col4:
+        st.metric(label="Polarité Spirituelle", value=data['polarite'])
+
+    st.markdown("---")
+
+    # =====================================================================
+    # NOUVEAU BLOC : L'IMPORTANCE DE L'ÉLÉMENT (Correction de l'erreur)
+    # =====================================================================
+    st.header("🔬 Analyse Élémentaire de l'Issue (L'Importance Matricielle)")
+    
+    # Correction de l'erreur : On passe directement l'élément propre de la base de données
+    info_element = interpreter_importance_element(data['element'])
+    
+    with st.expander(f"{info_element['icone']} {info_element['titre']}", expanded=True):
+        st.markdown(f"**Impact vibratoire sur votre vie :** {info_element['analyse']}")
+        st.markdown(f"💡 **Recommandation stratégique :** *{info_element['conseil']}*")
+
+    st.markdown("---")
+
+    # =====================================================================
+    # 4. ONGLETS DE PRESCRIPTION PROTOCOLAIRE (L'Ordonnance)
+    # =====================================================================
+    st.header("📜 Votre Ordonnance Spirituelle Personnalisée")
+    st.write("Appliquez ces directives dans l'ordre pour canaliser positivement l'énergie de la sentence.")
+    
+    tab1, tab2, tab3 = st.tabs([
+        "🐑 1. Sacrifices & Aumônes (Saraka)",
+        "🌿 2. Pharmacopée & Plantes Associées",
+        "📝 3. Directives Protocolaires Rituelles"
+    ])
+    
+    with tab1:
+        st.subheader("Plan d'Aumône Expiatoire ou d'Ouverture")
+        st.info(f"**Action requise :** {data['sacrifice']}")
+        st.caption("Note : Respectez impérativement les créneaux horaires et les profils des destinataires indiqués pour valider le travail vibratoire.")
         
-        num_psaume = int("".join([c for c in data["psaume"] if c.isdigit()]))
-        cle = 7 if (num_psaume % 9) in [1, 4, 8] else (9 if (num_psaume % 9) in [3, 6, 0] else 3)
-        somme_mystique = num_psaume + cle
+    with tab2:
+        st.subheader("Plantes Sacrées Liées à la Figure")
+        st.success(f"**Végétaux à utiliser (Bains, Nassi ou Fumigations) :** {data['plantes']}")
+        st.markdown("""
+        **Comment exploiter ces plantes ?**
+        * **En Bain (Nassi) :** Écrire la figure le nombre de fois requis, rincer le support avec de l'eau, puis y infuser ou piler les feuilles des plantes indiquées avant le lavage[cite: 23, 26].
+        * **En Fumigation :** Faire sécher les écorces ou feuilles pour les consumer sur des braises de purification.
+        """)
         
-        base = (somme_mystique - 12) // 3
-        reste = (somme_mystique - 12) % 3
-        c1, c2, c3, c4, c5, c6, c7, c8, c9 = [base + i for i in range(9)]
-        if reste == 1: c7 += 1; c8 += 1; c9 += 1
-        elif reste == 2: c4 += 1; c5 += 1; c6 += 1; c7 += 2; c8 += 2; c9 += 2
+    with tab3:
+        st.subheader("Règles d'Or pour le Praticien et le Consultant")
+        st.markdown(f"""
+        1. **Alignement :** La figure finale exprime l'aboutissement de la Maison 15 (Juge). Ne tentez pas de contrecarrer une figure de Terre par la précipitation, ni une figure de Feu par l'inaction.
+        2. **Intention :** Avant toute manipulation des plantes ou distribution de l'aumône, formulez clairement votre vœu à l'Est[cite: 910, 915, 916].
+        3. **Pureté :** Opérez toujours en état de purification corporelle et spirituelle complète[cite: 910, 914].
+        """)
 
-        carre_visuel = f"| {c4} | {c9} | {c2} | \\n | {c3} | {c5} | {c7} | \\n | {c8} | {c1} | {c6} |"
-
-        return {
-            "figure": data["nom"],
-            "arbres_sacres": data["arbres"],
-            "feuilles_plantes": data["plantes_sacrees"],
-            "theurgie": {
-                "psaume_a_tracer": data["psaume"],
-                "verset_de_verrouillage": data["verset"],
-                "sceau_salomon": data["sceau"],
-                "jour_de_vibration": data["jour_sacrifice"],
-                "destinataire": data["destinataire_sac"],
-                "elements_a_offrir": data["elements_sac"]
-            },
-            "carre_magique_ghazali": {"somme_mystique": somme_mystique, "matrice_3x3": carre_visuel}
-        }
-
-    def generer_rapport_complet(self):
-        alertes = self.verifier_veracite_theme()
-        cartographie = {f"Maison {m} ({MAISONS_META[m]['nom']})": FIGURES_DB.get(code, {"nom": "Inconnue"})["nom"] for m, code in self.maisons.items()}
-
-        return {
-            "statut_du_theme": "VALIDE" if not alertes else "REJET / CONTRADICTION",
-            "question_analysee": self.question,
-            "verifications_traditionnelles": alertes if alertes else ["Le thème respecte parfaitement toutes les lois de vérité."],
-            "cartographie_des_16_maisons": cartographie,
-            "analyse_temporelle_et_sacrifices": self.interpreter_temps_et_sacrifices(),
-            "axe_mariage_et_accords": self.analyser_axe_mariage(),
-            "part_de_fortune": self.calculer_part_de_fortune_exacte(),
-            "remedes_theurgiques": {
-                "le_juge_m15": self.compiler_fiche_theurgique(15),
-                "la_sentence_m16": self.compiler_fiche_theurgique(16)
-            }
-        }
-
-
-def executer_consultation_geomantique(mere1, mere2, mere3, mere4, question_texte):
-    try:
-        moteur = EngineGeomancyPro(mere1, mere2, mere3, mere4, question_texte)
-        return moteur.generer_rapport_complet()
-    except Exception as fatal_error:
-        return {
-            "statut_du_theme": "ERREUR CRITIQUE",
-            "message_erreur": str(fatal_error),
-            "conseil": "Vérifier la validité binaire des 4 mères fournies."
-        }
-
-
-# =====================================================================
-# 3. INTERFACE VISUELLE D'AFFICHAGE ET TABLEAU DE CONNEXION (CONSOLE)
-# =====================================================================
-def run_app_interface():
-    # Définition des identifiants d'accès d'usine
-    ADMIN_USER = "admin"
-    ADMIN_PASS = "Somadjely2026"
-
-    print("==========================================================")
-    print("         SST SYSTEM - PANNEAU D'ACCÈS SÉCURISÉ            ")
-    print("==========================================================")
-    
-    username = input("👤 Entrez votre Identifiant : ").strip()
-    password = input("🔑 Entrez votre Mot de Passe : ").strip()
-
-    if username != ADMIN_USER or password != ADMIN_PASS:
-        print("\n❌ ACCÈS REFUSÉ : Identifiant ou mot de passe incorrect.")
-        return
-
-    print("\n✅ ACCÈS ACCORDÉ. Initialisation du moteur traditionnel...")
-    print("==========================================================")
-    print("           BIENVENUE SUR VOTRE INTERFACE SST              ")
-    print("==========================================================")
-    
-    question = input("\n📝 Saisissez la question de consultation : ")
-    print("\n[Entrez les 4 mères ligne par ligne, ex: 1121 (1=impair, 2=pair)]")
-    m1 = input("➡️ Figure M1 : ").strip()
-    m2 = input("➡️ Figure M2 : ").strip()
-    m3 = input("➡️ Figure M3 : ").strip()
-    m4 = input("➡️ Figure M4 : ").strip()
-
-    print("\n[Calcul en cours... Génération du tableau d'affichage]")
-    rapport = executer_consultation_geomantique(m1, m2, m3, m4, question)
-    
-    print("\n==========================================================")
-    print("                 TABLEAU DES RÉSULTATS                    ")
-    print("==========================================================")
-    print(json.dumps(rapport, indent=4, ensure_ascii=False))
-    print("==========================================================")
-
-
-if __name__ == "__main__":
-    run_app_interface()
+    # Pied de page applicatif
+    st.markdown("---")
+    st.caption("Application Pro d'Interprétation Ramrou — Basée sur la tradition géomantique authentique d'Afrique de l'Ouest[cite: 1, 1089, 1092].")
