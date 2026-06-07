@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-SST - SYSTÈME INFORMATIQUE DE GÉOMANCIE TRADITIONNELLE (VERSION FINALE SANS ERREUR)
+SST - SYSTÈME INFORMATIQUE DE GÉOMANCIE TRADITIONNELLE (VERSION FINALE AVEC AUTHENTIFICATION)
 Conforme à 100% au document de formation officiel de Zoumana Koné-Somadjely.
 """
 
+import json
+import sys
+
 # =====================================================================
-# 1. BASE DE DONNÉES AVEC VERSETS BIBLIQUES STRUCTURÉS
+# 1. BASE DE DONNÉES ET CORRESPONDANCES DU COURS DE SOMADJELY
 # =====================================================================
 FIGURES_DB = {
     "1121": {
@@ -159,7 +162,7 @@ MAISONS_META = {
 
 
 # =====================================================================
-# 2. MOTEUR MATHÉMATIQUE GÉOMANTIQUE CORRIGÉ (COUPLES DE FILLES)
+# 2. MOTEUR MATHÉMATIQUE GÉOMANTIQUE CORRIGÉ
 # =====================================================================
 class EngineGeomancyPro:
     def __init__(self, m1, m2, m3, m4, question):
@@ -184,22 +187,21 @@ class EngineGeomancyPro:
     def _engendrer_le_theme(self):
         for i in [1, 2, 3, 4]:
             if len(self.maisons[i]) != 4 or not set(self.maisons[i]).issubset({"1", "2"}):
-                raise ValueError(f"M{i} incorrecte.")
+                raise ValueError(f"Maison M{i} incorrecte. Saisir obligatoirement 4 chiffres composés de 1 et 2 (Ex: 1121).")
 
-        # --- CORRECTION ICI : Extraction verticale stricte pour générer M5 à M8 ---
-        # M5 prend la tête des 4 premières mères, M6 prend la poitrine, etc.
+        # Extraction verticale stricte pour générer les filles M5 à M8
         self.maisons[5] = self.maisons[1][0] + self.maisons[2][0] + self.maisons[3][0] + self.maisons[4][0]
         self.maisons[6] = self.maisons[1][1] + self.maisons[2][1] + self.maisons[3][1] + self.maisons[4][1]
         self.maisons[7] = self.maisons[1][2] + self.maisons[2][2] + self.maisons[3][2] + self.maisons[4][2]
         self.maisons[8] = self.maisons[1][3] + self.maisons[2][3] + self.maisons[3][3] + self.maisons[4][3]
 
-        # Neveux (M9 à M12)
+        # Calcul des neveux M9 à M12
         self.maisons[9]  = self._addition_geomantique(self.maisons[1], self.maisons[2])
         self.maisons[10] = self._addition_geomantique(self.maisons[3], self.maisons[4])
         self.maisons[11] = self._addition_geomantique(self.maisons[5], self.maisons[6])
         self.maisons[12] = self._addition_geomantique(self.maisons[7], self.maisons[8])
 
-        # Témoins (M13, M14), Juge (M15) et Sentence (M16)
+        # Calcul des Témoins, Juge et Sentence
         self.maisons[13] = self._addition_geomantique(self.maisons[9], self.maisons[10])
         self.maisons[14] = self._addition_geomantique(self.maisons[11], self.maisons[12])
         self.maisons[15] = self._addition_geomantique(self.maisons[13], self.maisons[14])
@@ -225,13 +227,13 @@ class EngineGeomancyPro:
 
         juge_nom = FIGURES_DB.get(self.maisons[15], {}).get("nom", "")
         if any(d in juge_nom for d in ["Nouhou", "Almangoussi"]):
-            alertes.append(f"❌ THÈME KHAFIR : Un Djin ({juge_nom}) ne peut pas siéger en M15.")
+            alertes.append(f"❌ THÈME REJETÉ : Un Djin ({juge_nom}) ne peut pas siéger en Maison 15 (Juge).")
 
         cop_1_7 = self._addition_geomantique(self.maisons[1], self.maisons[7])
         cop_4_10 = self._addition_geomantique(self.maisons[4], self.maisons[10])
         fig_verite = self._addition_geomantique(cop_1_7, cop_4_10)
         if fig_verite not in self.maisons.values():
-            alertes.append(f"⚠️ CONCORDANCE FAIBLE : La figure témoin de vérité ({FIGURES_DB.get(fig_verite, {}).get('nom')}) n'apparaît nulle part.")
+            alertes.append(f"⚠️ CONCORDANCE FAIBLE : La figure témoin de vérité ({FIGURES_DB.get(fig_verite, {}).get('nom')}) n'apparaît pas dans le tracé.")
 
         return alertes
 
@@ -244,13 +246,13 @@ class EngineGeomancyPro:
                 t_maison = MAISONS_META[m]["temps_maison"]
                 t_figure = fig_data["temps_naturel"]
                 if t_figure == "Passé" and t_maison == "Passé":
-                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Événement consommé. Sacrifice dû aux VIEILLES ET VIEUX.")
+                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Événement consommé. Offrir le sacrifice aux VIEILLES ET VIEUX.")
                 elif t_figure == "Passé" and t_maison == "Présent":
-                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Une vieille affaire resurgit au présent. Sacrifice dû aux VIEILLES ET VIEUX.")
+                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Une vieille affaire resurgit au présent. Offrir aux VIEILLES ET VIEUX.")
                 elif t_figure == "Présent" and t_maison == "Présent":
-                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Action immédiate en cours. Offrir le sacrifice à vos PAIRS (Même âge).")
+                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Action immédiate en cours de traitement. Offrir à vos PAIRS (Même âge).")
                 elif t_figure == "Futur" and t_maison == "Futur":
-                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Projet d'avenir solide. Donner le sacrifice aux ENFANTS.")
+                    interpretations.append(f"• {fig_data['nom']} en {MAISONS_META[m]['nom']} : Projet d'avenir solide. Offrir aux ENFANTS.")
         return interpretations
 
     def analyser_axe_mariage(self):
@@ -259,8 +261,8 @@ class EngineGeomancyPro:
         if m1 == m7 or (m1 in self.passations and 7 in self.passations[m1]):
             return f"💍 MARIAGE VERROUILLÉ : Passation directe validée de M1 à M7 avec la figure {FIGURES_DB[m1]['nom']}."
         if FIGURES_DB[m1]["sexe"] == "Mâle" and FIGURES_DB[m7]["sexe"] == "Femelle":
-            return "⏳ HARMONIE PARFAITE : M1 est Mâle et M7 est Femelle. L'accord est naturel mais nécessite des ouvertures de routes."
-        return "❌ AXE COMPACT : Aucune passation ni concordance de polarité détectée sur l'axe M1-M7."
+            return "⏳ HARMONIE NATURELLE : M1 est Mâle et M7 est Femelle. L'accord est favorable mais demande une ouverture de route."
+        return "❌ BLOCAGE D'ALLIANCE : Aucune passation ni polarité harmonieuse détectée sur l'axe M1-M7."
 
     def calculer_part_de_fortune_exacte(self):
         total_points = sum(int(caractere) for m_code in self.maisons.values() for caractere in m_code)
@@ -294,14 +296,14 @@ class EngineGeomancyPro:
             "arbres_sacres": data["arbres"],
             "feuilles_plantes": data["plantes_sacrees"],
             "theurgie": {
-                "psaume_tracer": data["psaume"],
-                "verset_verrou": data["verset"],
+                "psaume_a_tracer": data["psaume"],
+                "verset_de_verrouillage": data["verset"],
                 "sceau_salomon": data["sceau"],
-                "jour_vibration": data["jour_sacrifice"],
+                "jour_de_vibration": data["jour_sacrifice"],
                 "destinataire": data["destinataire_sac"],
-                "offrande_matiere": data["elements_sac"]
+                "elements_a_offrir": data["elements_sac"]
             },
-            "carre_magique": {"somme": somme_mystique, "visuel": carre_visuel}
+            "carre_magique_ghazali": {"somme_mystique": somme_mystique, "matrice_3x3": carre_visuel}
         }
 
     def generer_rapport_complet(self):
@@ -311,7 +313,7 @@ class EngineGeomancyPro:
         return {
             "statut_du_theme": "VALIDE" if not alertes else "REJET / CONTRADICTION",
             "question_analysee": self.question,
-            "verifications_traditionnelles": alertes if alertes else ["Le thème respecte parfaitement les lois de vérité du document."],
+            "verifications_traditionnelles": alertes if alertes else ["Le thème respecte parfaitement toutes les lois de vérité."],
             "cartographie_des_16_maisons": cartographie,
             "analyse_temporelle_et_sacrifices": self.interpreter_temps_et_sacrifices(),
             "axe_mariage_et_accords": self.analyser_axe_mariage(),
@@ -331,5 +333,50 @@ def executer_consultation_geomantique(mere1, mere2, mere3, mere4, question_texte
         return {
             "statut_du_theme": "ERREUR CRITIQUE",
             "message_erreur": str(fatal_error),
-            "conseil": "Saisir 4 chaînes de 4 chiffres composées de 1 et 2 uniquement."
+            "conseil": "Vérifier la validité binaire des 4 mères fournies."
         }
+
+
+# =====================================================================
+# 3. INTERFACE VISUELLE D'AFFICHAGE ET TABLEAU DE CONNEXION (CONSOLE)
+# =====================================================================
+def run_app_interface():
+    # Définition des identifiants d'accès d'usine
+    ADMIN_USER = "admin"
+    ADMIN_PASS = "Somadjely2026"
+
+    print("==========================================================")
+    print("         SST SYSTEM - PANNEAU D'ACCÈS SÉCURISÉ            ")
+    print("==========================================================")
+    
+    username = input("👤 Entrez votre Identifiant : ").strip()
+    password = input("🔑 Entrez votre Mot de Passe : ").strip()
+
+    if username != ADMIN_USER or password != ADMIN_PASS:
+        print("\n❌ ACCÈS REFUSÉ : Identifiant ou mot de passe incorrect.")
+        return
+
+    print("\n✅ ACCÈS ACCORDÉ. Initialisation du moteur traditionnel...")
+    print("==========================================================")
+    print("           BIENVENUE SUR VOTRE INTERFACE SST              ")
+    print("==========================================================")
+    
+    question = input("\n📝 Saisissez la question de consultation : ")
+    print("\n[Entrez les 4 mères ligne par ligne, ex: 1121 (1=impair, 2=pair)]")
+    m1 = input("➡️ Figure M1 : ").strip()
+    m2 = input("➡️ Figure M2 : ").strip()
+    m3 = input("➡️ Figure M3 : ").strip()
+    m4 = input("➡️ Figure M4 : ").strip()
+
+    print("\n[Calcul en cours... Génération du tableau d'affichage]")
+    rapport = executer_consultation_geomantique(m1, m2, m3, m4, question)
+    
+    print("\n==========================================================")
+    print("                 TABLEAU DES RÉSULTATS                    ")
+    print("==========================================================")
+    print(json.dumps(rapport, indent=4, ensure_ascii=False))
+    print("==========================================================")
+
+
+if __name__ == "__main__":
+    run_app_interface()
