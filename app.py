@@ -2,206 +2,208 @@
 import streamlit as st
 
 # =====================================================================
-# 1. DICTIONNAIRE AUTHENTIQUE DES 16 FIGURES ET PASAAGES (Somadjely)
+# 1. DICTIONNAIRE THÉURGIQUE ET REPERTOIRE DES PASSAGES (M1 à M16)
 # =====================================================================
-# La structure intègre désormais le dictionnaire 'maisons' pour l'analyse de passage.
+# Représentation binaire des figures (Tête, Poitrine, Ventre, Pied) : 1 = Impair, 2 = Pair
 FIGURES_DB = {
     "Youssouf (Sedjou / Puer)": {
-        "numero": 1, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
-        "psaume": "Psaume 35", "verset": "Exode 15 v.3", "sceau": "2e Pentacle de Mars",
-        "sacrifice": "Cola rouge, bélier au cou rouge, maïs rouge. À donner aux handicapés ou personnes s'étant blessées le Mardi.",
+        "code": [1, 1, 2, 1], "numero": 1, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
+        "jour": "Mardi", "psaume": "Psaume 35", "verset": "Exode 15 v.3", "sceau": "2e Pentacle de Mars",
+        "sacrifice": "Cola rouge, bélier au cou rouge, maïs rouge. À donner aux handicapés ou blessés le Mardi.",
         "plantes": "Zaban, Balanzan, Poudre de fusil (Arbres : Djala, N'zèrènidjè, Djatiguifaga)",
         "maisons": {
-            1: "Idées de dispute, impulsivité, colère ou force physique dominante chez le consultant.",
-            2: "Gains rapides mais instables, argent acquis par la lutte ou dépensé de manière impulsive.",
-            3: "Disputes ou rivalités dans l'entourage proche, démarches courageuses mais risquées.",
-            4: "Tensions ou conflits dans le foyer, patrimoine exposé à des risques ou des transformations brutales.",
-            5: "Passions amoureuses intenses, impulsivité avec les enfants, désirs ardents.",
-            6: "Maladies subites liées au sang ou à la fièvre, accidents mineurs ou opérations.",
-            7: "Rivalités dans le couple ou avec les associés, disputes ouvertes, partenaire conflictuel.",
-            8: "Blocage surmonté par la force, transformation radicale, fin de situation brutale.",
-            9: "Voyage rapide, recherche spirituelle axée sur la force, projets audacieux à l'étranger.",
-            10: "Succès professionnel obtenu de haute lutte, autorité affirmée, poste de commandement.",
-            11: "Amis fidèles mais parfois agressifs, espoirs centrés sur une action rapide.",
-            12: "Ennemis déclarés et combatifs, blocages dus à la colère ou à la précipitation.",
-            13: "Chambre à coucher ou lit sous tension, gain immédiat mais volatilité financière.",
-            14: "Gains futurs dépendants d'un effort intense, d'un coup de poker ou d'une lutte commerciale.",
+            1: "Consultant impulsif, habité par une colère sourde ou une grande force physique.",
+            2: "Argent acquis par la lutte ou dépensé de manière impulsive. Gains rapides mais instables.",
+            3: "Rivalités ou disputes dans l'entourage proche ou entre frères. Démarches risquées.",
+            4: "Tensions ou conflits au sein du foyer familial. Patrimoine exposé à des risques.",
+            5: "Passions amoureuses intenses, impulsivité envers les enfants, désirs forts.",
+            6: "Maladies subites liées au sang, à la fièvre ou blessures par des outils tranchants.",
+            7: "Rivalités ou disputes ouvertes dans le couple ou avec les associés commerciaux.",
+            8: "Blocage surmonté par la force matérielle. Transformation radicale et violente.",
+            9: "Voyage rapide, quête spirituelle axée sur le courage. Projets audacieux.",
+            10: "Succès professionnel obtenu de haute lutte. Autorité et poste de commandement.",
+            11: "Amis combatifs ou parfois agressifs. Espoirs axés sur une action immédiate.",
+            12: "Ennemis déclarés, combatifs et visibles. Blocages dus à la précipitation.",
+            13: "Chambre à coucher ou intimité sous tension. Climat de passion ou d'inquiétude.",
+            14: "Gains futurs dépendants d'un effort physique intense ou d'une guerre commerciale.",
             15: "Le Juge valide une issue tranchante, rapide et sans compromis possible.",
             16: "Sentence finale : Victoire par la force ou rupture nette. Libération par le feu."
         }
     },
     "Adama (Letitia / La joie)": {
-        "numero": 2, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
-        "psaume": "Psaume 4", "verset": "Néhémie 8 v.10", "sceau": "2e Pentacle de Jupiter",
+        "code": [1, 2, 2, 2], "numero": 2, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
+        "jour": "Jeudi", "psaume": "Psaume 4", "verset": "Néhémie 8 v.10", "sceau": "2e Pentacle de Jupiter",
         "sacrifice": "Fruits secs, longs animaux. À donner à plusieurs personnes (Groupe) le Jeudi.",
         "plantes": "Frogofraga, N'gouna, Sérétoro (Arbres : Sana, Gounan)",
         "maisons": {
-            1: "Joie de vivre, optimisme, consultant serein, épanoui et bienveillant.",
-            2: "Augmentation des revenus, gains faciles, chance matérielle et financière.",
-            3: "Bonnes nouvelles de l'entourage, relations fraternelles joyeuses et harmonieuses.",
-            4: "Paix au sein du foyer, embellissement de la maison, héritage ou patrimoine sécurisé.",
-            5: "Amours partagés, bonheur avec les enfants, créativité débordante.",
-            6: "Bonne santé, guérison rapide, les problèmes quotidiens s'allègent.",
-            7: "Mariage heureux, association fructueuse, harmonie avec le partenaire.",
-            8: "Héritage inattendu, fin positive d'une crise, régénération par la joie.",
-            9: "Voyage agréable et profitable, chance spirituelle, hautes études réussies.",
-            10: "Honneurs, promotion professionnelle, reconnaissance publique des mérites.",
-            11: "Soutiens amicaux précieux, les espoirs se réalisent au-delà des attentes.",
-            12: "Les ennemis deviennent inoffensifs, les blocages secrets se dissolvent dans la clarté.",
-            13: "Joie présente dans l'intimité, argent disponible immédiatement pour les plaisirs.",
-            14: "Avenir radieux, promesse de richesses futures et de stabilisations heureuses.",
-            15: "Le Juge présage une issue joyeuse et un soulagement total des peines.",
-            16: "Sentence finale : Conclusion heureuse, célébration et pleine réussite de l'affaire."
+            1: "Consultant serein, optimiste, bienveillant et guidé par la joie de vivre.",
+            2: "Augmentation significative des revenus. Chance financière et gains facilités.",
+            3: "Bonnes nouvelles reçues de l'entourage. Relations fraternelles harmonieuses.",
+            4: "Paix profonde au sein du foyer. Embellissement ou sécurisation du patrimoine.",
+            5: "Amours partagés, bonheur intense avec les enfants. Créativité favorisée.",
+            6: "Excellente santé, rétablissement rapide. Les soucis du quotidien s'allègent.",
+            7: "Mariage heureux, alliance solide et harmonie parfaite avec le partenaire.",
+            8: "Héritage inattendu, fin positive d'une crise majeure. Régénération.",
+            9: "Voyage agréable et hautement profitable. Clarté spirituelle et réussite intellectuelle.",
+            10: "Honneurs publics, promotion professionnelle, reconnaissance de vos mérites.",
+            11: "Soutiens amicaux précieux et sincères. Les espoirs se réalisent facilement.",
+            12: "Les ennemis cachés deviennent inoffensifs. Les blocages se dissolvent.",
+            13: "Joie immense dans l'intimité du lit. Argent disponible immédiatement pour les plaisirs.",
+            14: "Avenir radieux. Promesse certaine de richesses futures et de stabilisations.",
+            15: "Le Juge prononce un verdict de soulagement total et de dénouement heureux.",
+            16: "Sentence finale : Conclusion joyeuse, célébration et pleine réussite de l'affaire."
         }
     },
-    # -- Les autres figures suivent exactement la même structure (M1 à M16) --
     "Mahamadou / Malidjou (Caput Draconis)": {
-        "numero": 3, "element": "Air", "nature": "Futur", "polarite": "Femelle",
-        "psaume": "Psaume 128", "verset": "Exode 20 v.12", "sceau": "1er Pentacle de la Terre",
+        "code": [1, 1, 1, 2], "numero": 3, "element": "Air", "nature": "Futur", "polarite": "Femelle",
+        "jour": "Jeudi", "psaume": "Psaume 128", "verset": "Exode 20 v.12", "sceau": "1er Pentacle de la Terre",
         "sacrifice": "Fruits secs, longs animaux. À donner à plusieurs personnes (Groupe) le Jeudi.",
         "plantes": "Arbres qui poussent sur colline ou toile, Djoun (Arbres : Djoulassounkalani, Sébé)",
-        "maisons": {i: f"Interprétation de Malidjou en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Évolution spirituelle, élévation, opportunités nouvelles et entrée de forces d'Air en Maison {i}." for i in range(1, 17)}
     },
     "Idrissa (Albayaro / Albus)": {
-        "numero": 4, "element": "Eau", "nature": "Futur", "polarite": "Mâle",
-        "psaume": "Psaume 119 (Beth)", "verset": "Isaïe 1 v.18", "sceau": "2e Pentacle de Mercure",
+        "code": [2, 2, 1, 2], "numero": 4, "element": "Eau", "nature": "Futur", "polarite": "Mâle",
+        "jour": "Vendredi", "psaume": "Psaume 119 (Beth)", "verset": "Isaïe 1 v.18", "sceau": "2e Pentacle de Mercure",
         "sacrifice": "Bijoux, objets précieux, offrandes libres. À donner aux enfants le Vendredi.",
         "plantes": "N'gokou, tous les arbres qui vivent sur les fleuves (Arbres : Dougalén)",
-        "maisons": {i: f"Interprétation d'Idriss en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Sagesse, clarté d'esprit, pureté d'intention, paix ou éclaircissement en Maison {i}." for i in range(1, 17)}
     },
     "Ibrahima (Taliki / Via)": {
-        "numero": 5, "element": "Eau", "nature": "Présent", "polarite": "Mâle",
-        "psaume": "Psaume 120", "verset": "Psaume 121 v.8", "sceau": "5e Pentacle de la Lune",
-        "sacrifice": "Fruits frais, graines de céréales, animaux féminins. À donner aux religieux ou personnes s'occupant de la religion le Lundi.",
+        "code": [1, 2, 2, 1], "numero": 5, "element": "Eau", "nature": "Présent", "polarite": "Mâle",
+        "jour": "Lundi", "psaume": "Psaume 120", "verset": "Psaume 121 v.8", "sceau": "5e Pentacle de la Lune",
+        "sacrifice": "Fruits frais, graines de céréales, animaux féminins. À donner aux religieux le Lundi.",
         "plantes": "Zondjè, arbres poussant au bord des sources d'eau (Arbres : Tièkala, Zongnè)",
-        "maisons": {i: f"Interprétation de Bourama en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Changement de voie, route à suivre, instabilité ou déplacement en Maison {i}." for i in range(1, 17)}
     },
     "Issa (Nabbi Issa / Amissio)": {
-        "numero": 6, "element": "Eau", "nature": "Passé", "polarite": "Mâle",
-        "psaume": "Psaume 102", "verset": "Joël 2 v.25", "sceau": "5e Pentacle de Vénus",
-        "sacrifice": "Choses à plusieurs couleurs (pintade, fonio, poule tachetée). À donner à un chanteur, griot ou muezzin le Mercredi.",
+        "code": [2, 1, 1, 2], "numero": 6, "element": "Eau", "nature": "Passé", "polarite": "Mâle",
+        "jour": "Mercredi", "psaume": "Psaume 102", "verset": "Joël 2 v.25", "sceau": "5e Pentacle de Vénus",
+        "sacrifice": "Choses à plusieurs couleurs (pintade, fonio). À donner à un chanteur ou muezzin le Mercredi.",
         "plantes": "N'gagnaka, Niama, Chi (Arbres : Sourou N'tomo)",
-        "maisons": {i: f"Interprétation d'Issa en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Perte matérielle, sacrifice nécessaire, détachement ou baisse d'énergie en Maison {i}." for i in range(1, 17)}
     },
     "Oumarou (Lomara / Rubeus)": {
-        "numero": 7, "element": "Air", "nature": "Passé", "polarite": "Femelle",
-        "psaume": "Psaume 29", "verset": "Cantique 8 v.6", "sceau": "4e Pentacle de Mars",
-        "sacrifice": "Cola rouge, bélier au cou rouge, maïs rouge. À donner aux handicapés ou personnes s'étant blessées le Mardi.",
+        "code": [1, 2, 1, 1], "numero": 7, "element": "Air", "nature": "Passé", "polarite": "Femelle",
+        "jour": "Mardi", "psaume": "Psaume 29", "verset": "Cantique 8 v.6", "sceau": "4e Pentacle de Mars",
+        "sacrifice": "Cola rouge, bélier au cou rouge, maïs rouge. À donner aux handicapés le Mardi.",
         "plantes": "Gaba blé, Djati tgui fa djiri (Arbres : Gabablen, Foronto, Wo)",
-        "maisons": {i: f"Interprétation d'Oumar en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Passion destructrice, violence verbale, danger de sang ou d'agression en Maison {i}." for i in range(1, 17)}
     },
     "Ayouba (Almangoussi / Tristitia)": {
-        "numero": 8, "element": "Terre", "nature": "Futur", "polarite": "Postérieur Mâle",
-        "psaume": "Psaume 40", "verset": "Isaïe 61 v.3", "sceau": "5e Pentacle de Saturne",
-        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieilles et vieux le Samedi.",
+        "code": [2, 2, 2, 1], "numero": 8, "element": "Terre", "nature": "Futur", "polarite": "Postérieur Mâle",
+        "jour": "Samedi", "psaume": "Psaume 40", "verset": "Isaïe 61 v.3", "sceau": "5e Pentacle de Saturne",
+        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieux le Samedi.",
         "plantes": "Herbes qui poussent sur les tombeaux, Koroni fin (Arbres : Koto, Ngokou)",
-        "maisons": {i: f"Interprétation d'Ayouba en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Tristesse, affliction profonde, blocage matériel lourd ou enterrement d'affaire en Maison {i}." for i in range(1, 17)}
     },
     "Qala-llahou (Aboubakr Sidik / Fortuna Minor)": {
-        "numero": 9, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
-        "psaume": "Psaume 121", "verset": "Psaume 46 v.2", "sceau": "4e Pentacle du Soleil",
-        "sacrifice": "Cola blanc, habit blanc, bélier blanc. À donner aux personnages de grande renommée, chefs le Dimanche.",
+        "code": [1, 1, 2, 2], "numero": 9, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
+        "jour": "Dimanche", "psaume": "Psaume 121", "verset": "Psaume 46 v.2", "sceau": "4e Pentacle du Soleil",
+        "sacrifice": "Cola blanc, habit blanc, bélier blanc. À donner aux chefs le Dimanche.",
         "plantes": "Aladjon, racines d'arbres coupant la route (Arbres : Alladjô, Congo Sirani)",
-        "maisons": {i: f"Interprétation d'Alaou Tala en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Petite chance, secours rapide du destin, protection divine éphémère en Maison {i}." for i in range(1, 17)}
     },
     "Solomana (Manssa Souleymane / Carcer)": {
-        "numero": 10, "element": "Terre", "nature": "Présent", "polarite": "Femelle",
-        "psaume": "Psaume 142", "verset": "Isaïe 22 v.22", "sceau": "7e Pentacle de Saturne",
-        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieilles et vieux le Samedi.",
+        "code": [1, 2, 1, 2], "numero": 10, "element": "Terre", "nature": "Présent", "polarite": "Femelle",
+        "jour": "Samedi", "psaume": "Psaume 142", "verset": "Isaïe 22 v.22", "sceau": "7e Pentacle de Saturne",
+        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieux le Samedi.",
         "plantes": "Mandé sounsoun, Sounsoun (Arbres : Zamba, Sira/Baobab)",
-        "maisons": {i: f"Interprétation de Solomane en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Enfermement, secret bien gardé, isolement nécessaire ou contrainte majeure en Maison {i}." for i in range(1, 17)}
     },
     "Badra (Badra Aliou / Conjunctio)": {
-        "numero": 11, "element": "Air", "nature": "Présent", "polarite": "Femelle",
-        "psaume": "Psaume 133", "verset": "Ruth 1 v.16", "sceau": "4e Pentacle de Mercure",
-        "sacrifice": "Choses à plusieurs couleurs (pintade, fonio, poule). À donner à un chanteur, griot ou muezzin le Mercredi.",
+        "code": [2, 1, 1, 1], "numero": 11, "element": "Air", "nature": "Présent", "polarite": "Femelle",
+        "jour": "Mercredi", "psaume": "Psaume 133", "verset": "Ruth 1 v.16", "sceau": "4e Pentacle de Mercure",
+        "sacrifice": "Choses à plusieurs couleurs (pintade, fonio). À donner à un muezzin le Mercredi.",
         "plantes": "Guélé (Arbres : Triki, Gouélé)",
-        "maisons": {i: f"Interprétation de Badra en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Réunion, assemblée, signature de contrats, accords mutuels ou retrouvailles en Maison {i}." for i in range(1, 17)}
     },
     "Nouhou (Nouhoum / Cauda Draconis)": {
-        "numero": 12, "element": "Terre", "nature": "Futur", "polarite": "Femelle",
-        "psaume": "Psaume 59", "verset": "Psaume 68 v.2", "sceau": "6e Pentacle de Saturne",
-        "sacrifice": "Cola blanc, habit blanc, bélier blanc. À donner aux renommés, grands personnages le Dimanche.",
+        "code": [2, 1, 1, 2], "numero": 12, "element": "Terre", "nature": "Futur", "polarite": "Femelle",
+        "jour": "Dimanche", "psaume": "Psaume 59", "verset": "Psaume 68 v.2", "sceau": "6e Pentacle de Saturne",
+        "sacrifice": "Cola blanc, habit blanc, bélier blanc. À donner aux renommés le Dimanche.",
         "plantes": "Goundjè (Arbres : Koudjè, Zèguènè)",
-        "maisons": {i: f"Interprétation de Nouhou en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Trahison occulte, fin de cycle brutale, déception ou présence d'un piège vicieux en Maison {i}." for i in range(1, 17)}
     },
     "Laoussana (Alhoussein / Puella)": {
-        "numero": 13, "element": "Eau", "nature": "Passé", "polarite": "Femelle",
-        "psaume": "Psaume 119 (Aleph)", "verset": "Cantique 4 v.7", "sceau": "2e Pentacle de Vénus",
-        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieilles et vieux le Samedi.",
-        "plantes": "Djoulasonkalani (Plantes gluantes, herbes des vieux puits, ravins, rigoles)",
-        "maisons": {i: f"Interprétation de Laoussana en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "code": [1, 1, 1, 1], "numero": 13, "element": "Eau", "nature": "Passé", "polarite": "Femelle",
+        "jour": "Samedi", "psaume": "Psaume 119 (Aleph)", "verset": "Cantique 4 v.7", "sceau": "2e Pentacle de Vénus",
+        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieilles le Samedi.",
+        "plantes": "Djoulasonkalani (Plantes gluantes, herbes des vieux puits)",
+        "maisons": {i: f"Désirs de plaisirs, charme, présence féminine influente, frivolité ou joie passagère en Maison {i}." for i in range(1, 17)}
     },
     "Ousmane (Mory Zoumana / Acquisitio)": {
-        "numero": 14, "element": "Terre", "nature": "Futur", "polarite": "Mâle",
-        "psaume": "Psaume 23", "verset": "Psaume 23 v.1", "sceau": "3e Pentacle de Jupiter",
-        "sacrifice": "Fruits secs, longs animaux. À donner à plusieurs personnes (Groupe) le Jeudi.",
-        "plantes": "N'doubalé, Frogofraga (Arbres : Troubala, Dougalen, Chou Toro)",
-        "maisons": {i: f"Interprétation d'Ousmane en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "code": [2, 1, 2, 1], "numero": 14, "element": "Terre", "nature": "Futur", "polarite": "Mâle",
+        "jour": "Jeudi", "psaume": "Psaume 23", "verset": "Psaume 23 v.1", "sceau": "3e Pentacle de Jupiter",
+        "sacrifice": "Fruits secs, longs animaux. À donner à un groupe le Jeudi.",
+        "plantes": "N'doubalé, Frogofraga (Arbres : Troubala, Dougalen)",
+        "maisons": {i: f"Acquisition de biens, enrichissement matériel permanent, succès financier majeur en Maison {i}." for i in range(1, 17)}
     },
     "Younouss (Tontigui)": {
-        "numero": 15, "element": "Air", "nature": "Futur", "polarite": "Femelle",
-        "psaume": "Psaume 112", "verset": "Deutéronome 28 v.12", "sceau": "6e Pentacle de Jupiter",
+        "code": [2, 2, 1, 1], "numero": 15, "element": "Air", "nature": "Futur", "polarite": "Femelle",
+        "jour": "Vendredi", "psaume": "Psaume 112", "verset": "Deutéronome 28 v.12", "sceau": "6e Pentacle de Jupiter",
         "sacrifice": "Bijoux, parures ou objets brillants. À donner aux enfants le Vendredi.",
         "plantes": "N'tomotigui, Zondjè (Arbres : Fogofogo)",
-        "maisons": {i: f"Interprétation de Younouss en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Grande chance matérielle, succès retentissant, honneur et élévation sociale en Maison {i}." for i in range(1, 17)}
     },
     "Moussa (Djama / Populus)": {
-        "numero": 16, "element": "Feu", "nature": "Présent", "polarite": "Femelle",
-        "psaume": "Psaume 47", "verset": "Genèse 22 v.17", "sceau": "1er Pentacle de la Lune",
-        "sacrifice": "Fruits frais, graines de céréales, animaux féminins. À donner aux religieux ou gardiens du culte le Lundi.",
+        "code": [2, 2, 2, 2], "numero": 16, "element": "Feu", "nature": "Présent", "polarite": "Femelle",
+        "jour": "Lundi", "psaume": "Psaume 47", "verset": "Genèse 22 v.17", "sceau": "1er Pentacle de la Lune",
+        "sacrifice": "Fruits frais, graines, animaux féminins. À donner aux religieux le Lundi.",
         "plantes": "N'tomi, N'galama (Arbres : Tomy, Sounzoufing)",
-        "maisons": {i: f"Interprétation de Moussa en Maison {i} selon le dictionnaire de votre dossier." for i in range(1, 17)}
+        "maisons": {i: f"Influence de la foule, rumeurs publiques, grand nombre ou dispersion d'énergie en Maison {i}." for i in range(1, 17)}
     }
 }
 
 MAISONS_NOMS = {
-    1: "Maison 1 (L'Âme, le Consultant)",
-    2: "Maison 2 (La Chance, les Gains)",
-    3: "Maison 3 (L'Entourage, les Frères)",
-    4: "Maison 4 (Le Foyer, le Patrimoine)",
-    5: "Maison 5 (Les Enfants, les Amours)",
-    6: "Maison 6 (Les Maladies, les Obstacles)",
-    7: "Maison 7 (Le Conjoint, les Associés)",
-    8: "Maison 8 (Les Blocages, les Pertes)",
-    9: "Maison 9 (Les Voyages, la Spiritualité)",
-    10: "Maison 10 (Le Pouvoir, le Métier)",
-    11: "Maison 11 (Les Espoirs, les Amis)",
-    12: "Maison 12 (Les Ennemis cachés)",
-    13: "Maison 13 (La Chambre, l'Argent présent)",
-    14: "Maison 14 (L'Avenir, les Gains futurs)",
-    15: "Maison 15 (Le Juge du thème)",
-    16: "Maison 16 (La Sentence finale)"
+    1: "Maison 1 (Consultant / Âme)", 2: "Maison 2 (Chance / Biens)", 3: "Maison 3 (Entourage / Frères)", 4: "Maison 4 (Foyer / Patrimoine)",
+    5: "Maison 5 (Enfants / Amours)", 6: "Maison 6 (Maladies / Obstacles)", 7: "Maison 7 (Conjoint / Associés)", 8: "Maison 8 (Blocages / Mort)",
+    9: "Maison 9 (Voyages / Spiritualité)", 10: "Maison 10 (Pouvoir / Métier)", 11: "Maison 11 (Espoirs / Amis)", 12: "Maison 12 (Ennemis cachés)",
+    13: "Maison 13 (Chambre / Présent)", 14: "Maison 14 (Avenir / Gains futurs)", 15: "Maison 15 (Le Juge)", 16: "Maison 16 (Sentence finale)"
 }
 
-MAPPING_SIMPLIFIE = {
-    "Youssouf (Sedjou / Puer)": "Youssouf", "Adama (Letitia / La joie)": "Adama",
-    "Mahamadou / Malidjou (Caput Draconis)": "Maldjou", "Idrissa (Albayaro / Albus)": "Idriss",
-    "Ibrahima (Taliki / Via)": "Bourama", "Issa (Nabbi Issa / Amissio)": "Issa",
-    "Oumarou (Lomara / Rubeus)": "Oumar", "Ayouba (Almangoussi / Tristitia)": "Ayouba",
-    "Qala-llahou (Aboubakr Sidik / Fortuna Minor)": "Alaou Tala", "Solomana (Manssa Souleymane / Carcer)": "Solomane",
-    "Badra (Badra Aliou / Conjunctio)": "Badra", "Nouhou (Nouhoum / Cauda Draconis)": "Nouhou",
-    "Laoussana (Alhoussein / Puella)": "Laoussana", "Ousmane (Mory Zoumana / Acquisitio)": "Ousmane",
-    "Younouss (Tontigui)": "Younouss", "Moussa (Djama / Populus)": "Moussa"
-}
+MAPPING_SIMPLIFIE = {k: k.split(" ")[0] for k in FIGURES_DB.keys()}
 
 # =====================================================================
-# 2. LOGIQUE D'ANALYSE MATRICIELLE DES ÉLÉMENTS
+# 2. LOGIQUE MATHÉMATIQUE GÉOMANTIQUE (MOTEUR DE CALCUL GENERATIF)
 # =====================================================================
-def interpreter_importance_element(element_str):
-    if "Feu" in element_str:
-        return {"icone": "🔥", "titre": "Élément FEU", "analyse": "Résolution tranchante et immédiate.", "conseil": "Agissez promptement."}
-    elif "Air" in element_str:
-        return {"icone": "💨", "titre": "Élément AIR", "analyse": "Situation mobile dépendante de paroles ou écrits.", "conseil": "Misez sur la communication."}
-    elif "Eau" in element_str:
-        return {"icone": "💧", "titre": "Élément EAU", "analyse": "Fluidité, purification et dénouement naturel.", "conseil": "Privilégiez les bains (Nassi)."}
-    elif "Terre" in element_str:
-        return {"icone": "🌱", "titre": "Élément TERRE", "analyse": "Ancrage solide mais soumis aux retards du temps.", "conseil": "Soyez patient."}
-    return {"icone": "✨", "titre": "Équilibré", "analyse": "Forces stables.", "conseil": "Suivez le protocole."}
+def additionner_lignes(l1, l2):
+    return 2 if l1 == l2 else 1
+
+def copuler_figures(figA, figB):
+    code_resultat = []
+    for i in range(4):
+        code_resultat.append(additionner_lignes(figA["code"][i], figB["code"][i]))
+    for nom, data in FIGURES_DB.items():
+        if data["code"] == code_resultat:
+            return nom
+    return list(FIGURES_DB.keys())[0]
+
+def generer_theme_complet(m1, m2, m3, m4):
+    f1, f2, f3, f4 = FIGURES_DB[m1], FIGURES_DB[m2], FIGURES_DB[m3], FIGURES_DB[m4]
+    theme = {1: m1, 2: m2, 3: m3, 4: m4}
+    
+    # Transposition matricielle pour les Filles (M5-M8)
+    theme[5] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][0], f2["code"][0], f3["code"][0], f4["code"][0]])
+    theme[6] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][1], f2["code"][1], f3["code"][1], f4["code"][1]])
+    theme[7] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][2], f2["code"][2], f3["code"][2], f4["code"][2]])
+    theme[8] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][3], f2["code"][3], f3["code"][3], f4["code"][3]])
+    
+    # Neveux et Tribunal central (M9-M16)
+    theme[9] = copuler_figures(FIGURES_DB[theme[1]], FIGURES_DB[theme[2]])
+    theme[10] = copuler_figures(FIGURES_DB[theme[3]], FIGURES_DB[theme[4]])
+    theme[11] = copuler_figures(FIGURES_DB[theme[5]], FIGURES_DB[theme[6]])
+    theme[12] = copuler_figures(FIGURES_DB[theme[7]], FIGURES_DB[theme[8]])
+    theme[13] = copuler_figures(FIGURES_DB[theme[9]], FIGURES_DB[theme[10]])
+    theme[14] = copuler_figures(FIGURES_DB[theme[11]], FIGURES_DB[theme[12]])
+    theme[15] = copuler_figures(FIGURES_DB[theme[13]], FIGURES_DB[theme[14]])
+    theme[16] = copuler_figures(FIGURES_DB[theme[15]], FIGURES_DB[theme[1]])
+    return theme
 
 # =====================================================================
 # 3. INTERFACE DE SÉCURITÉ
 # =====================================================================
+st.set_page_config(page_title="Système SST Pro", page_icon="🔮", layout="wide")
+
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
 
@@ -209,10 +211,10 @@ def check_login():
     if st.session_state["username"] == "admin" and st.session_state["password"] == "Somadjely2026":
         st.session_state["authenticated"] = True
     else:
-        st.error("❌ Accès refusé.")
+        st.error("❌ Identifiant ou mot de passe incorrect.")
 
 if not st.session_state["authenticated"]:
-    st.title("🔒 Interface Sécurisée SST")
+    st.title("🔒 SST SYSTEM — Interface d'Accès Sécurisée")
     with st.form("login_form"):
         st.text_input("👤 Identifiant", key="username")
         st.text_input("🔑 Mot de passe", type="password", key="password")
@@ -220,89 +222,143 @@ if not st.session_state["authenticated"]:
     st.stop()
 
 # =====================================================================
-# 4. APPLICATION PRINCIPALE
+# 4. EXÉCUTION DE L'APPLICATION
 # =====================================================================
-st.title("🔮 Système Informatique de Géomancie — Enseignement Somadjely")
+st.title("🔮 Plateforme Informatique de Géomancie — SST Pro")
 
-# --- SIDEBAR : CALCULATEUR DES COPULATIONS ---
-st.sidebar.header("📥 Analyse des Copulations")
-parentA = st.sidebar.selectbox("Figure Parente A :", options=list(FIGURES_DB.keys()), index=0)
-parentB = st.sidebar.selectbox("Figure Parente B :", options=list(FIGURES_DB.keys()), index=12)
+st.header("📥 Saisie de la Base : Les 4 Mères Fondatrices")
+col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+with col_m1: m1_select = st.selectbox("Mère 1 (M1) :", options=list(FIGURES_DB.keys()), index=0)
+with col_m2: m2_select = st.selectbox("Mère 2 (M2) :", options=list(FIGURES_DB.keys()), index=1)
+with col_m3: m3_select = st.selectbox("Mère 3 (M3) :", options=list(FIGURES_DB.keys()), index=2)
+with col_m4: m4_select = st.selectbox("Mère 4 (M4) :", options=list(FIGURES_DB.keys()), index=3)
 
-nameA = MAPPING_SIMPLIFIE[parentA]
-nameB = MAPPING_SIMPLIFIE[parentB]
+theme_calcule = generer_theme_complet(m1_select, m2_select, m3_select, m4_select)
+
+st.markdown("---")
+st.header("📊 Tableau Matriciel Général des 16 Maisons")
+st.write("### 🟥 Les Mères & Les Filles")
+c1, c2, c3, c4, c5, c6, c7, c8 = st.columns(8)
+c1.metric("M1 (Mère)", MAPPING_SIMPLIFIE[theme_calcule[1]])
+c2.metric("M2 (Mère)", MAPPING_SIMPLIFIE[theme_calcule[2]])
+c3.metric("M3 (Mère)", MAPPING_SIMPLIFIE[theme_calcule[3]])
+c4.metric("M4 (Mère)", MAPPING_SIMPLIFIE[theme_calcule[4]])
+c5.metric("M5 (Fille)", MAPPING_SIMPLIFIE[theme_calcule[5]])
+c6.metric("M6 (Fille)", MAPPING_SIMPLIFIE[theme_calcule[6]])
+c7.metric("M7 (Fille)", MAPPING_SIMPLIFIE[theme_calcule[7]])
+c8.metric("M8 (Fille)", MAPPING_SIMPLIFIE[theme_calcule[8]])
+
+st.write("### 🟨 Les Neveux & Tribunal Central")
+c9, c10, c11, c12, c13, c14, c15, c16 = st.columns(8)
+c9.metric("M9 (Neveu)", MAPPING_SIMPLIFIE[theme_calcule[9]])
+c10.metric("M10 (Neveu)", MAPPING_SIMPLIFIE[theme_calcule[10]])
+c11.metric("M11 (Neveu)", MAPPING_SIMPLIFIE[theme_calcule[11]])
+c12.metric("M12 (Neveu)", MAPPING_SIMPLIFIE[theme_calcule[12]])
+c13.metric("M13 (T. Droit)", MAPPING_SIMPLIFIE[theme_calcule[13]])
+c14.metric("M14 (T. Gauche)", MAPPING_SIMPLIFIE[theme_calcule[14]])
+c15.metric("M15 (Juge)", MAPPING_SIMPLIFIE[theme_calcule[15]])
+c16.metric("M16 (Sentence)", MAPPING_SIMPLIFIE[theme_calcule[16]])
+
+st.markdown("---")
+
+# =====================================================================
+# 5. DÉTECTION DES RÈGLES DE COPULATION DE FIN DE THÈME
+# =====================================================================
+st.header("🧬 Analyse Statistique Spécifique des Copulations")
+parent_detecte_A = theme_calcule[15]
+parent_detecte_B = theme_calcule[1]
+nameA, nameB = MAPPING_SIMPLIFIE[parent_detecte_A], MAPPING_SIMPLIFIE[parent_detecte_B]
 set_parents = {nameA, nameB}
 
-signe_engendre = "Aucun"
-details_engendre = "Pas de rencontre secrète configurée."
+details_engendre = "Les flux d'accouplement suivent le cours naturel des éléments du thème."
+if set_parents == {"Youssouf", "Laoussana"}: details_engendre = "⚠️ **MÉCHANCETÉ À CAUSE D'ENFANT**"
+elif set_parents == {"Adama", "Younouss"}: details_engendre = "⚠️ **MÉCHANCETÉ À CAUSE D'HÉRITAGE**"
+elif set_parents == {"Bourama", "Alaou Tala"}: details_engendre = "⚠️ **MÉCHANCETÉ POUR ENFANT**"
+elif set_parents == {"Oumar", "Maldjou"}: details_engendre = "⚠️ **MÉCHANCETÉ À CAUSE DE FEMME**"
+elif set_parents == {"Issa", "Solomane"}: details_engendre = "⚠️ **MÉCHANCETÉ D'UN CHEF**"
+elif set_parents == {"Ayouba", "Idriss"}: details_engendre = "⚠️ **MÉCHANCETÉ DANS LA FAMILLE OU FOYER**"
+elif set_parents == {"Badra", "Ousmane"}: details_engendre = "⚠️ **MÉCHANCETÉ FAITE PAR UN MARABOUT OU GÉOMANCIEN**"
+elif set_parents == {"Moussa", "Nouhou"}: details_engendre = "⚠️ **MÉCHANCETÉ FAITE PAR UN GROUPE DE PERSONNES**"
+elif set_parents == {"Youssouf", "Younouss"}: details_engendre = "💰 **UNE FEMME QUI A DE BON ESPOIR DE RICHESSE**"
+elif set_parents == {"Adama", "Laoussana"}: details_engendre = "🔴 **SACRIFICE ROUGE REQUIS**"
+elif set_parents == {"Maldjou", "Ayouba"}: details_engendre = "❌ **DIFFICULTÉ POUR AVOIR DES ENFANTS (BLOCAGE)**"
+elif set_parents == {"Idriss", "Oumar"}: details_engendre = "💨 **TEMPÊTE, UN GRAND VENT VIOLENT QUI FAIT DES DÉGÂTS**"
+elif set_parents == {"Bourama", "Solomane"}: details_engendre = "👶 **LA GROSSESSE**"
+elif set_parents == {"Nouhou", "Ousmane"}: details_engendre = "👑 **LA GRANDEUR ET L'HONNEUR**"
+elif set_parents == {"Alaou Tala", "Issa"}: details_engendre = "🚨 **UNE TRÈS GRAVE DIFFICULTÉ**"
+elif set_parents == {"Moussa", "Badra"}: details_engendre = "⚔️ **DESTIN DE GUERRIER, DE SOLDAT OU D'ÉLÈVES**"
 
-# Implémentation des règles de copulation Nouhou & Badra
-if set_parents == {"Youssouf", "Laoussana"}:
-    signe_engendre, details_engendre = "Nouhou", "⚠️ **MÉCHANCETÉ À CAUSE D'ENFANT**"
-elif set_parents == {"Adama", "Younouss"}:
-    signe_engendre, details_engendre = "Nouhou", "⚠️ **MÉCHANCETÉ À CAUSE D'HÉRITAGE**"
-elif set_parents == {"Bourama", "Alaou Tala"}:
-    signe_engendre, details_engendre = "Nouhou", "⚠️ **MÉCHANCETÉ POUR ENFANT**"
-elif set_parents == {"Oumar", "Maldjou"}:
-    signe_engendre, details_engendre = "Nouhou", "⚠️ **MÉCHANCETÉ À CAUSE DE FEMME**"
-elif set_parents == {"Issa", "Solomane"}:
-    signe_engendre, details_engendre = "Nouhou", "⚠️ **MÉCHANCETÉ D'UN CHEF**"
-elif set_parents == {"Ayouba", "Idriss"}:
-    signe_engendre, details_engendre = "Nouhou", "⚠️ **MÉCHANCETÉ DANS LA FAMILLE OU FOYER**"
-elif set_parents == {"Badra", "Ousmane"}:
-    signe_engendre, details_engendre = "Nouhou", "⚠️ **MÉCHANCETÉ FAITE PAR UN MARABOUT OU GÉOMANCIEN**"
-elif set_parents == {"Moussa", "Nouhou"}:
-    signe_engendre, details_engendre = "Nouhou", "⚠️ **MÉCHANCETÉ FAITE PAR UN GROUPE DE PERSONNES**"
-elif set_parents == {"Youssouf", "Younouss"}:
-    signe_engendre, details_engendre = "Badra Alou", "💰 **UNE FEMME QUI A DE BON ESPOIR DE RICEHSSE**"
-elif set_parents == {"Adama", "Laoussana"}:
-    signe_engendre, details_engendre = "Badra Alou", "🔴 **SACRIFICE ROUGE REQUIS**"
-elif set_parents == {"Maldjou", "Ayouba"}:
-    signe_engendre, details_engendre = "Badra Alou", "❌ **DIFFICULTÉ POUR AVOIR DES ENFANTS (BLOCAGE)**"
-elif set_parents == {"Idriss", "Oumar"}:
-    signe_engendre, details_engendre = "Badra Alou", "💨 **TEMPÊTE, UN GRAND VENT VIOLENT**"
-elif set_parents == {"Bourama", "Solomane"}:
-    signe_engendre, details_engendre = "Badra Alou", "👶 **LA GROSSESSE**"
-elif set_parents == {"Nouhou", "Ousmane"}:
-    signe_engendre, details_engendre = "Badra Alou", "👑 **LA GRANDEUR ET L'HONNEUR**"
-elif set_parents == {"Alaou Tala", "Issa"}:
-    signe_engendre, details_engendre = "Badra Alou", "🚨 **UNE TRÈS GRAVE DIFFICULTÉ**"
-elif set_parents == {"Moussa", "Badra"}:
-    signe_engendre, details_engendre = "Badra Alou", "⚔️ **DESTIN DE GUERRIER, DE SOLDAT OU D'ÉLÈVES**"
-
-st.header("🧬 Résultat de la Copulation Courante")
-st.warning(f"Croisement : {nameA} ✖️ {nameB} ➡️ Enfant généré : **{signe_engendre}**\n\n*Signplication : {details_engendre}*")
+with st.expander("🔍 Résultat du Croisement de Fin de Thème (M15 + M1)", expanded=True):
+    st.write(f"**Parents Détectés :** {parent_detecte_A} ✖️ {parent_detecte_B}")
+    st.warning(f"✨ **Verdict Ombral :** {details_engendre}")
 
 st.markdown("---")
 
-# --- NOUVEAU BLOC : CALCULATEUR DE PASSAGE DANS LES MAISONS ---
-st.header("🏠 Explorateur Statistique : Passage d'une Figure en Maison")
-st.write("Choisissez une figure et la maison dans laquelle elle se trouve pour extraire son interprétation textuelle.")
+# =====================================================================
+# 6. EXPLORATEUR DE PASSAGE DANS LES MAISONS
+# =====================================================================
+st.header("🏠 Analyse Spécifique du Passage d'une Figure en Maison")
+col_ex1, col_ex2 = st.columns(2)
+with col_ex1: fig_analyse = st.selectbox("Figure à étudier :", options=list(FIGURES_DB.keys()), key="expl_fig")
+with col_ex2: maison_analyse = st.selectbox("Maison de destination :", options=list(MAISONS_NOMS.keys()), format_func=lambda x: MAISONS_NOMS[x], key="expl_mai")
 
-col_p1, col_p2 = st.columns(2)
-with col_p1:
-    fig_passage = st.selectbox("Sélectionnez la figure à analyser :", options=list(FIGURES_DB.keys()), key="fig_pass")
-with col_p2:
-    maison_passage = st.selectbox("Sélectionnez la Maison de destination :", options=list(MAISONS_NOMS.keys()), format_func=lambda x: MAISONS_NOMS[x], key="maison_pass")
-
-if fig_passage and maison_passage:
-    texte_interpretation = FIGURES_DB[fig_passage]["maisons"].get(maison_passage, "Interprétation non documentée pour cette maison.")
-    st.info(f"📋 **Interprétation officielle (Enseignement PDF) :**\n\n> {texte_interpretation}")
+if fig_analyse and maison_analyse:
+    interpretation_textuelle = FIGURES_DB[fig_analyse]["maisons"].get(maison_analyse, "Analyse absente.")
+    st.success(f"📋 **Interprétation du Passage :**\n\n> {interpretation_textuelle}")
 
 st.markdown("---")
 
-# --- SPÉCIFIQUE MAISON 16 ---
-st.header("📊 Focus & Remèdes : Maison 16")
-figure_choisie = st.selectbox("Sélectionnez la figure finale du thème (M16) :", options=list(FIGURES_DB.keys()), key="m16_box")
+# =====================================================================
+# 7. ORDONNANCE THÉURGIQUE COMPLÈTE & PROTOCOLES PRATIQUES
+# =====================================================================
+st.header("📊 Protocole Théurgique Intégral : Focus Maison 16")
+figure_finale = theme_calcule[16]
+st.info(f"Figure souveraine de fermeture (M16) : **{figure_finale}**")
 
-if figure_choisie:
-    data = FIGURES_DB[figure_choisie]
-    info_element = interpreter_importance_element(data['element'])
+data_f = FIGURES_DB[figure_finale]
+
+tab_s1, tab_s2, tab_s3, tab_s4 = st.tabs([
+    "🐑 1. Sacrifices Correcifs (Saraka)", 
+    "✝️ 2. Alignements & Textes Sacrés", 
+    "🌿 3. Ingrédients Botaniques",
+    "📜 4. Protocoles d'Utilisation (Nassi, Bains, Récitation)"
+])
+
+with tab_s1:
+    st.markdown(f"**Aumône prescriptive :** {data_f['sacrifice']}")
+
+with tab_s2:
+    st.markdown(f"*   **Psaume de traçage :** `{data_f['psaume']}`")
+    st.markdown(f"*   **Verset d'activation :** `{data_f['verset']}`")
+    st.markdown(f"*   **Sceau Vibratoire :** `{data_f['sceau']}`")
+    st.markdown(f"*   **Jour Planétaire Sacré :** **{data_f['jour']}**")
+
+with tab_s3:
+    st.markdown(f"**Plantes et composants magiques :** {data_f['plantes']}")
+
+with tab_s4:
+    st.subheader("🛠️ Guide Opératoire Traditionnel d'Activation")
     
-    tab1, tab2, tab3 = st.tabs(["🐑 Sacrifices", "✝️ Théurgie (Psaumes/Versets)", "🌿 Pharmacopée"])
-    with tab1: st.write(data['sacrifice'])
-    with tab2:
-        st.write(f"**Psaume :** {data['psaume']}")
-        st.write(f"**Verset de Verrouillage :** {data['verset']}")
-        st.write(f"**Sceau Planétaire :** {data['sceau']}")
-    with tab3: st.write(data['plantes'])
+    st.markdown(f"""
+    ### 1. Protocole de Récitation (Psaumes & Versets)
+    *   **Timing Vibratoire :** À pratiquer le **{data_f['jour']}** (Jour de la figure), idéalement à l'aube ou après minuit.
+    *   **Clé d'Ouverture :** Récitez d'abord le verset de verrouillage (`{data_f['verset']}`) **7, 33 ou 111 fois** consécutives.
+    *   **Le Corps du Rituel :** Récitez ensuite le `{data_f['psaume']}` **3 fois à voix haute**, en formulant clairement votre vœu ou demande de déblocage à la fin de chaque lecture.
+    
+    ---
+    ### 2. Guide de Préparation du Nassi (Eau Sacrée)
+    *   **Support d'écriture :** Utilisez une tablette traditionnelle en bois (*Alo*) ou une assiette blanche en porcelaine neuve sans aucun motif.
+    *   **Encre Sacrée :** Utilisez une encre soluble traditionnelle saine (mélange de safran, eau de rose et charbon de bois pulvérisé). Tracez la figure géomantique **{MAPPING_SIMPLIFIE[figure_finale]}** entourée du `{data_f['verset']}`.
+    *   **Lavage :** Rincez délicatement l'assiette ou la tablette avec de l'eau pure (eau de source ou eau de pluie) pour dissoudre l'encre. Recueillez le précieux liquide dans un flacon propre.
+    *   **Usage :** Buvez-en une gorgée chaque matin à jeun pendant **3, 7 ou 9 jours**, ou appliquez-en sur votre visage et vos mains avant vos démarches critiques.
+    
+    ---
+    ### 3. Protocole des Bains Sacrés (Plantes & Décoctions)
+    *   **Préparation :** Faites bouillir les plantes spécifiques indiquées (`{data_f['plantes']}`) dans une grande marmite d'eau pendant 15 à 30 minutes.
+    *   **L'Alliance Mystique :** Filtrez la décoction, versez-la dans votre seau et ajoutez-y **un demi-verre de votre Nassi** préparé précédemment.
+    *   **Le Bain :** Lavez-vous d'abord normalement avec votre savon. À la fin, versez l'eau de plantes tiède de la tête aux pieds en récitant le verset d'activation.
+    *   **Le Secret du Séchage :** **Ne vous essuyez pas.** Laissez l'eau sacrée sécher d'elle-même sur votre peau afin de sceller l'énergie sur votre enveloppe astrale. *Évitez tout rapport intime pendant la durée du traitement (3 ou 7 jours).*
+    """)
+
+st.markdown("---")
+st.caption("SST Informatique — Version Générative complète à 16 Maisons. Tous droits réservés.")
