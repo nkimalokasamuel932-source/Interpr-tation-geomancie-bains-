@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-SST - SYSTÈME INFORMATIQUE DE GÉOMANCIE TRADITIONNELLE (VERSION FINALE AVEC AUTHENTIFICATION)
-Conforme à 100% au document de formation officiel de Zoumana Koné-Somadjely.
-"""
 
 import json
 import sys
