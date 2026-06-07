@@ -1,219 +1,184 @@
+# -*- coding: utf-8 -*-
 import streamlit as st
 
 # =====================================================================
-# 1. DICTIONNAIRE DE RÉFÉRENCE DES 16 FIGURES (Géomancie Ramrou)
+# 1. DICTIONNAIRE AUTHENTIQUE DES 16 FIGURES (Zoumana Koné-Somadjely)
 # =====================================================================
-# Données extraites rigoureusement des manuels de référence (Ramrou & Kamagaté)
+# Base de données immuable contenant les secrets théurgiques et versets bibliques.
 FIGURES_DB = {
-    "Youssouf": {
-        "numero": 1,
-        "element": "Feu",
-        "nature": "Feu de braise",
-        "polarite": "Diable (Mauvais)",
-        "sacrifice": "Pagne ou tissu noir, 1 litre de lait, 3 ou 7 colas blancs. À donner à un homme le jeudi matin.",
-        "plantes": "Balanzan (Acacia albida), Diatigui Faga (Ficus sp.)"
+    "Youssouf (Sedjou / Puer)": {
+        "numero": 1, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
+        "psaume": "Psaume 35", "verset": "Exode 15 v.3", "sceau": "2e Pentacle de Mars",
+        "sacrifice": "Cola rouge, bélier au cou rouge, maïs rouge. À donner aux handicapés ou personnes s'étant blessées le Mardi.",
+        "plantes": "Zaban, Balanzan, Poudre de fusil (Arbres : Djala, N'zèrènidjè, Djatiguifaga)"
     },
-    "Adama": {
-        "numero": 2,
-        "element": "Feu",
-        "nature": "Mer / Courant électrique / Lumière",
-        "polarite": "Diable (Bon)",
-        "sacrifice": "Tissu noir, 1 litre de lait, 3 ou 7 colas blancs. À donner à un homme le jeudi matin ou mercredi.",
-        "plantes": "N'gouna (Scléroarya birréa), Djalan (Khaya senegalensis), Zeguelin"
+    "Adama (Letitia / La joie)": {
+        "numero": 2, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
+        "psaume": "Psaume 4", "verset": "Néhémie 8 v.10", "sceau": "2e Pentacle de Jupiter",
+        "sacrifice": "Fruits secs, longs animaux. À donner à plusieurs personnes (Groupe) le Jeudi.",
+        "plantes": "Frogofraga, N'gouna, Sérétoro (Arbres : Sana, Gounan)"
     },
-    "Mahdy": {
-        "numero": 3,
-        "element": "Air",
-        "nature": "Vent fort, tornade",
-        "polarite": "Diable (Bon)",
-        "sacrifice": "7 kg de sel, une paire de chaussures noires à donner à une femme entre 17h et 21h (Lundi ou Jeudi).",
-        "plantes": "Sébé (Rônier / Borassus aethiopum), Tabacouba (Detarium senegalense)"
+    "Mahamadou / Malidjou (Caput Draconis)": {
+        "numero": 3, "element": "Air", "nature": "Futur", "polarite": "Femelle",
+        "psaume": "Psaume 128", "verset": "Exode 20 v.12", "sceau": "1er Pentacle de la Terre",
+        "sacrifice": "Fruits secs, longs animaux. À donner à plusieurs personnes (Groupe) le Jeudi.",
+        "plantes": "Arbres qui poussent sur colline ou toile, Djoun (Arbres : Djoulassounkalani, Sébé)"
     },
-    "Idriss": {
-        "numero": 4,
-        "element": "Eau",
-        "nature": "Fleuve",
-        "polarite": "Diable (Bon)",
-        "sacrifice": "7 kg de sel, une paire de chaussures noires à donner à une femme entre 22h et 00h (Lundi ou Jeudi).",
-        "plantes": "N'Gokoun (Nénuphar / Nymphaea lotus)"
+    "Idrissa (Albayaro / Albus)": {
+        "numero": 4, "element": "Eau", "nature": "Futur", "polarite": "Mâle",
+        "psaume": "Psaume 119 (Beth)", "verset": "Isaïe 1 v.18", "sceau": "2e Pentacle de Mercure",
+        "sacrifice": "Bijoux, objets précieux, offrandes libres. À donner aux enfants le Vendredi.",
+        "plantes": "N'gokou, tous les arbres qui vivent sur les fleuves (Arbres : Dougalén)"
     },
-    "Ibrahima": {
-        "numero": 5,
-        "element": "Eau",
-        "nature": "Vent maléfique",
-        "polarite": "Humain (Bon)",
-        "sacrifice": "6 litres de lait avec un coq rouge ou un mouton. À donner à un homme le lundi entre 13h et 15h.",
-        "plantes": "Zaba (Landolphia owariensis), Karo"
+    "Ibrahima (Taliki / Via)": {
+        "numero": 5, "element": "Eau", "nature": "Présent", "polarite": "Mâle",
+        "psaume": "Psaume 120", "verset": "Psaume 121 v.8", "sceau": "5e Pentacle de la Lune",
+        "sacrifice": "Fruits frais, graines de céréales, animaux féminins. À donner aux religieux ou personnes s'occupant de la religion le Lundi.",
+        "plantes": "Zondjè, arbres poussant au bord des sources d'eau (Arbres : Tièkala, Zongnè)"
     },
-    "Inssa": {
-        "numero": 6,
-        "element": "Eau",
-        "nature": "La pluie",
-        "polarite": "Humain (Mauvais)",
-        "sacrifice": "6 litres de lait avec un coq blanc ou une chèvre. À donner à un homme le mardi entre 17h et 18h.",
-        "plantes": "Kèlètiguè yiri, Triqi (Combretum glutinosum)"
+    "Issa (Nabbi Issa / Amissio)": {
+        "numero": 6, "element": "Eau", "nature": "Passé", "polarite": "Mâle",
+        "psaume": "Psaume 102", "verset": "Joël 2 v.25", "sceau": "5e Pentacle de Vénus",
+        "sacrifice": "Choses à plusieurs couleurs (pintade, fonio, poule tachetée). À donner à un chanteur, griot ou muezzin le Mercredi.",
+        "plantes": "N'gagnaka, Niama, Chi (Arbres : Sourou N'tomo)"
     },
-    "Omar": {
-        "numero": 7,
-        "element": "Air",
-        "nature": "Vent",
-        "polarite": "Diable (Mauvais)",
-        "sacrifice": "Chèvre ou mouton blanc, ou coq rouge. À donner à une femme le mardi ou samedi entre 22h et 00h.",
-        "plantes": "Kaba houlé (Ficus platyphylla)"
+    "Oumarou (Lomara / Rubeus)": {
+        "numero": 7, "element": "Air", "nature": "Passé", "polarite": "Femelle",
+        "psaume": "Psaume 29", "verset": "Cantique 8 v.6", "sceau": "4e Pentacle de Mars",
+        "sacrifice": "Cola rouge, bélier au cou rouge, maïs rouge. À donner aux handicapés ou personnes s'étant blessées le Mardi.",
+        "plantes": "Gaba blé, Djati tgui fa djiri (Arbres : Gabablen, Foronto, Wo)"
     },
-    "Ayoub": {
-        "numero": 8,
-        "element": "Terre",
-        "nature": "La tombe",
-        "polarite": "Diable (Mauvais)",
-        "sacrifice": "Mouton blanc ou coq blanc. À donner à un homme le mardi ou samedi entre 10h et 12h.",
-        "plantes": "Plantes de cimetière, racines profondes"
+    "Ayouba (Almangoussi / Tristitia)": {
+        "numero": 8, "element": "Terre", "nature": "Futur", "polarite": "Postérieur Mâle",
+        "psaume": "Psaume 40", "verset": "Isaïe 61 v.3", "sceau": "5e Pentacle de Saturne",
+        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieilles et vieux le Samedi.",
+        "plantes": "Herbes qui poussent sur les tombeaux, Koroni fin (Arbres : Koto, Ngokou)"
     },
-    "Allahou": {
-        "numero": 9,
-        "element": "Feu",
-        "nature": "Le désert",
-        "polarite": "Humain (Mauvais)",
-        "sacrifice": "Un boubou ou pagne déjà porté, de la viande. À donner à des hommes le dimanche entre 13h et 15h.",
-        "plantes": "Plantes épineuses du désert"
+    "Qala-llahou (Aboubakr Sidik / Fortuna Minor)": {
+        "numero": 9, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
+        "psaume": "Psaume 121", "verset": "Psaume 46 v.2", "sceau": "4e Pentacle du Soleil",
+        "sacrifice": "Cola blanc, habit blanc, bélier blanc. À donner aux personnages de grande renommée, chefs le Dimanche.",
+        "plantes": "Aladjon, racines d'arbres coupant la route (Arbres : Alladjô, Congo Sirani)"
     },
-    "Soulaymane": {
-        "numero": 10,
-        "element": "Terre",
-        "nature": "Montagne",
-        "polarite": "Humain (Bon)",
-        "sacrifice": "3 plats de riz avec de la viande. À donner à une femme entre 18h et 20h, peu importe le jour.",
-        "plantes": "Arbres massifs à écorce dure"
+    "Solomana (Manssa Souleymane / Carcer)": {
+        "numero": 10, "element": "Terre", "nature": "Présent", "polarite": "Femelle",
+        "psaume": "Psaume 142", "verset": "Isaïe 22 v.22", "sceau": "7e Pentacle de Saturne",
+        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieilles et vieux le Samedi.",
+        "plantes": "Mandé sounsoun, Sounsoun (Arbres : Zamba, Sira/Baobab)"
     },
-    "Aliou": {
-        "numero": 11,
-        "element": "Air",
-        "nature": "Fumée",
-        "polarite": "Humain (Mauvais)",
-        "sacrifice": "3 kilos de riz, 3 kilos de mil, 7 colas blancs. À donner à un homme entre 18h et 22h.",
-        "plantes": "Plantes à sève laiteuse"
+    "Badra (Badra Aliou / Conjunctio)": {
+        "numero": 11, "element": "Air", "nature": "Présent", "polarite": "Femelle",
+        "psaume": "Psaume 133", "verset": "Ruth 1 v.16", "sceau": "4e Pentacle de Mercure",
+        "sacrifice": "Choses à plusieurs couleurs (pintade, fonio, poule). À donner à un chanteur, griot ou muezzin le Mercredi.",
+        "plantes": "Guélé (Arbres : Triki, Gouélé)"
     },
-    "Nouhou": {
-        "numero": 12,
-        "element": "Terre",
-        "nature": "Vent",
-        "polarite": "Humain (Bon)",
-        "sacrifice": "Un coq rouge, 3 kilos de maïs, 7 colas rouges. À donner à une femme le vendredi entre 20h et 22h.",
-        "plantes": "Plantes de nettoyage ou de lavage spirituel"
+    "Nouhou (Nouhoum / Cauda Draconis)": {
+        "numero": 12, "element": "Terre", "nature": "Futur", "polarite": "Femelle",
+        "psaume": "Psaume 59", "verset": "Psaume 68 v.2", "sceau": "6e Pentacle de Saturne",
+        "sacrifice": "Cola blanc, habit blanc, bélier blanc. À donner aux renommés, grands personnages le Dimanche.",
+        "plantes": "Goundjè (Arbres : Koudjè, Zèguènè)"
     },
-    "Assane": {
-        "numero": 13,
-        "element": "Eau",
-        "nature": "Le sable",
-        "polarite": "Diable (Mauvais)",
-        "sacrifice": "Un plat de riz avec de la viande de coq. À donner à des femmes le samedi entre 10h et 12h.",
-        "plantes": "Plantes rampantes des zones sablonneuses"
+    "Laoussana (Alhoussein / Puella)": {
+        "numero": 13, "element": "Eau", "nature": "Passé", "polarite": "Femelle",
+        "psaume": "Psaume 119 (Aleph)", "verset": "Cantique 4 v.7", "sceau": "2e Pentacle de Vénus",
+        "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieilles et vieux le Samedi.",
+        "plantes": "Djoulasonkalani (Plantes gluantes, herbes des vieux puits, ravins, rigoles)"
     },
-    "Younouss": {
-        "numero": 14,
-        "element": "Terre",
-        "nature": "Vent froid et lourd",
-        "polarite": "Diable (Bon)",
-        "sacrifice": "Un plat de riz avec un cola blanc. À donner à une femme le vendredi entre 13h et 15h.",
-        "plantes": "Plantes de récolte ou arbres fruitiers"
+    "Ousmane (Mory Zoumana / Acquisitio)": {
+        "numero": 14, "element": "Terre", "nature": "Futur", "polarite": "Mâle",
+        "psaume": "Psaume 23", "verset": "Psaume 23 v.1", "sceau": "3e Pentacle de Jupiter",
+        "sacrifice": "Fruits secs, longs animaux. À donner à plusieurs personnes (Groupe) le Jeudi.",
+        "plantes": "N'doubalé, Frogofraga (Arbres : Troubala, Dougalen, Chou Toro)"
     },
-    "Ousmane": {
-        "numero": 15,
-        "element": "Air",
-        "nature": "Eau de puits",
-        "polarite": "Humain (Bon)",
-        "sacrifice": "3 plats de riz avec 10 colas blancs. À donner à des hommes le dimanche entre 17h et 18h.",
-        "plantes": "Plantes aquatiques douces, lianes d'eau"
+    "Younouss (Tontigui)": {
+        "numero": 15, "element": "Air", "nature": "Futur", "polarite": "Femelle",
+        "psaume": "Psaume 112", "verset": "Deutéronome 28 v.12", "sceau": "6e Pentacle de Jupiter",
+        "sacrifice": "Bijoux, parures ou objets brillants. À donner aux enfants le Vendredi.",
+        "plantes": "N'tomotigui, Zondjè (Arbres : Fogofogo)"
     },
-    "Moussa": {
-        "numero": 16,
-        "element": "Feu",
-        "nature": "La cendre",
-        "polarite": "Humain (Mauvais)",
-        "sacrifice": "Tissu blanc, un coq blanc, de la viande de chèvre. À donner à des hommes le dimanche à 06h du matin.",
-        "plantes": "Arbres produisant beaucoup de cendre, plantes de protection"
+    "Moussa (Djama / Populus)": {
+        "numero": 16, "element": "Feu", "nature": "Présent", "polarite": "Femelle",
+        "psaume": "Psaume 47", "verset": "Genèse 22 v.17", "sceau": "1er Pentacle de la Lune",
+        "sacrifice": "Fruits frais, graines de céréales, animaux féminins. À donner aux religieux ou gardiens du culte le Lundi.",
+        "plantes": "N'tomi, N'galama (Arbres : Tomy, Sounzoufing)"
     }
 }
 
-MAISONS_NOMS = {
-    1: "Maison de l'âme (M1)",
-    2: "Maison de la chance / Fortune (M2)",
-    3: "Maison des frères / Mères / Entourage (M3)",
-    4: "Maison du patrimoine / Pères / Foyer (M4)",
-    5: "Maison des enfants / Amours (M5)",
-    6: "Maison des maladies / Obstacles (M6)",
-    7: "Maison du mariage / Associés (M7)",
-    8: "Maison de la mort / Changement (M8)",
-    9: "Maison des voyages / Dieu (M9)",
-    10: "Maison du pouvoir / Succès professionnel (M10)",
-    11: "Maison des espoirs / Amis (M11)",
-    12: "Maison des ennemis / Blocages secrets (M12)",
-    13: "Maison du lit / Intimité / Argent présent (M13)",
-    14: "Maison des gains futurs / Clôture (M14)",
-    15: "Maison du juge / Clarté du thème (M15)",
-    16: "Maison de la sentence finale / Issue (M16)"
-}
-
 # =====================================================================
-# 2. LOGIQUE D'INTERPRÉTATION MATRICIELLE DES 4 ÉLÉMENTS
+# 2. LOGIQUE D'ANALYSE MATRICIELLE DES 4 ÉLÉMENTS
 # =====================================================================
 def interpreter_importance_element(element_str):
-    """Génère l'analyse de l'importance de l'élément de la sentence finale (M16)."""
     if "Feu" in element_str:
         return {
-            "icone": "🔥",
-            "titre": "Élément FEU - Dynamique d'Action Absolue et de Rapidité",
-            "analyse": "La conclusion de votre thème est dominée par le Feu. Cela indique une résolution tranchante, immédiate ou exigeant de vous un courage martial. Les blocages se consument vite sous cette influence, mais attention aux risques d'emportement, de litiges ou de stress intense.",
+            "icone": "🔥", "titre": "Élément FEU — Dynamique d'Action Absolue et de Rapidité",
+            "analyse": "La conclusion du thème est dominée par le Feu. Résolution tranchante et immédiate. Les blocages se consument vite, mais attention aux risques d'emportement ou de stress intense.",
             "conseil": "Agissez promptement. Privilégiez les purifications matinales, l'utilisation de l'encens sacré, et l'action directe sans hésitation."
         }
     elif "Air" in element_str:
         return {
-            "icone": "💨",
-            "titre": "Élément AIR - Dynamique de Mouvement, d'Esprit et de Parole",
-            "analyse": "Votre issue est portée par les courants de l'Air. Votre situation est extrêmement mobile et dépend de contrats, de négociations, d'écrits ou de l'influence de votre entourage. L'instabilité actuelle précède une transition importante.",
-            "conseil": "Misez sur la communication claire, l'onction de parfums subtils et l'élévation de l'esprit pour stabiliser et orienter cette énergie volatile."
+            "icone": "💨", "titre": "Élément AIR — Dynamique de Mouvement, d'Esprit et de Parole",
+            "analyse": "Votre issue est portée par les courants de l'Air. Situation extrêmement mobile dépendant de contrats, de négociations, d'écrits ou de l'influence de l'entourage.",
+            "conseil": "Misez sur la communication claire, l'onction de parfums subtils et l'élévation de l'esprit pour stabiliser cette énergie volatile."
         }
     elif "Eau" in element_str:
         return {
-            "icone": "💧",
-            "titre": "Élément EAU - Dynamique de Fluidité, d'Abondance et de Purification",
-            "analyse": "L'Eau gouverne votre sentence finale. C'est le symbole des bénédictions fertiles, de la richesse fluide, des réconciliations amicales ou amoureuses. Les difficultés tenaces se dissolvent naturellement comme le sel dans l'eau, bien que l'évolution puisse demander de la patience.",
+            "icone": "💧", "titre": "Élément EAU — Dynamique de Fluidité, d'Abondance et de Purification",
+            "analyse": "L'Eau gouverne votre sentence finale. Symbole de bénédictions fertiles, de richesse fluide et de réconciliations. Les difficultés tenaces se dissolvent naturellement comme le sel dans l'eau.",
             "conseil": "Le bain thérapeutique (Nassi) et l'utilisation de décoctions liquides purificatrices constituent le cœur stratégique de vos remèdes."
         }
     elif "Terre" in element_str:
         return {
-            "icone": "🌱",
-            "titre": "Élément TERRE - Dynamique d'Ancrage, de Secret et de Temps",
-            "analyse": "La Terre scelle votre dénouement. Les résultats obtenus sous cette influence seront solides et pérennes, mais ils sont soumis aux lois du temps, à de lourdes résistances ou à des secrets. Les retards administratifs ou matériels font partie du processus.",
-            "conseil": "Ne forcez pas les événements. Honorez scrupuleusement les aumônes matérielles lourdes (Saraka), les graines, et utilisez les racines de plantes pour débloquer le sol."
+            "icone": "🌱", "titre": "Élément TERRE — Dynamique d'Ancrage, de Secret et de Temps",
+            "analyse": "La Terre scelle votre dénouement. Les résultats seront solides et pérennes, mais ils sont soumis aux lois du temps, à de lourdes résistances ou à des secrets bien gardés.",
+            "conseil": "Ne forcez pas les événements. Honorez scrupuleusement les aumônes matérielles lourdes, les graines, et utilisez les racines de plantes."
         }
+    return {"icone": "✨", "titre": "Élément Équilibré", "analyse": "Forces équilibrées.", "conseil": "Suivez le protocole standard."}
+
+# =====================================================================
+# 3. INTERFACE DE SÉCURITÉ ET D'AUTHENTIFICATION
+# =====================================================================
+st.set_page_config(page_title="Oracle SST Pro", page_icon="🔮", layout="wide")
+
+# Initialisation de l'état de session pour l'accès sécurisé
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
+
+def check_login():
+    """Vérifie les informations d'identification saisies."""
+    if st.session_state["username"] == "admin" and st.session_state["password"] == "Somadjely2026":
+        st.session_state["authenticated"] = True
+        st.success("✅ Accès accordé. Bienvenue dans l'interface SST.")
     else:
-        return {
-            "icone": "✨",
-            "titre": "Élément Équilibré / Neutre",
-            "analyse": "L'influence élémentaire demande un rééquilibrage global des différentes forces en présence.",
-            "conseil": "Suivez rigoureusement l'ensemble des prescriptions sans sauter d'étape."
-        }
+        st.error("❌ Identifiant ou mot de passe incorrect. Accès refusé.")
+
+# Affichage de l'écran de connexion si non authentifié
+if not st.session_state["authenticated"]:
+    st.title("🔒 SST SYSTEM — Interface d'Accès Sécurisée")
+    st.write("Veuillez saisir vos identifiants pour déverrouiller l'accès au moteur géomantique théurgique.")
+    
+    with st.form("login_form"):
+        st.text_input("👤 Identifiant", key="username")
+        st.text_input("🔑 Mot de passe", type="password", key="password")
+        st.form_submit_button("Se connecter", on_click=check_login)
+    st.stop()
 
 # =====================================================================
-# 3. INTERFACE UTILISATEUR STREAMLIT
+# 4. APPLICATION PRINCIPALE (Une fois connecté)
 # =====================================================================
-st.set_page_config(page_title="Oracle Ramrou Pro", page_icon="🔮", layout="wide")
-
-st.title("🔮 Oracle de Géomancie Ramrou - Ordonnance Spirituelle Avancée")
-st.write("Saisissez la figure présente dans la **Maison 16 (Sentence finale)** pour générer l'analyse complète, l'évaluation élémentaire et les remèdes sacrés.")
+st.title("🔮 Système Informatique de Géomancie Traditionnelle — SST Pro")
+st.write("Moteur d'analyse thématique basé sur l'enseignement officiel de **Zoumana Koné-Somadjely**.")
 
 # Sélection de la figure finale
 figure_choisie = st.selectbox(
-    "Choisissez la figure de la Maison 16 (Issue du thème) :",
+    "Choisissez la figure présente en Maison 16 (Sentence finale / Issue ultime) :",
     options=list(FIGURES_DB.keys())
 )
 
 if figure_choisie:
     data = FIGURES_DB[figure_choisie]
     
-    # Affichage de la carte d'identité de la figure
-    st.subheader(f"📊 Fiche Technique : Figure {figure_choisie}")
+    # Affichage de la fiche technique
+    st.subheader(f"📊 Fiche Technique : {figure_choisie}")
     
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -221,60 +186,62 @@ if figure_choisie:
     with col2:
         st.metric(label="Élément Majeur", value=data['element'])
     with col3:
-        st.metric(label="Nature Symbolique", value=data['nature'])
+        st.metric(label="Temps Naturel", value=data['nature'])
     with col4:
-        st.metric(label="Polarité Spirituelle", value=data['polarite'])
+        st.metric(label="Polarité de la Figure", value=data['polarite'])
 
     st.markdown("---")
 
-    # =====================================================================
-    # NOUVEAU BLOC : L'IMPORTANCE DE L'ÉLÉMENT (Correction de l'erreur)
-    # =====================================================================
-    st.header("🔬 Analyse Élémentaire de l'Issue (L'Importance Matricielle)")
-    
-    # Correction de l'erreur : On passe directement l'élément propre de la base de données
+    # Analyse Matricielle de l'élément
+    st.header("🔬 Analyse Élémentaire de l'Issue (Importance Matricielle)")
     info_element = interpreter_importance_element(data['element'])
     
     with st.expander(f"{info_element['icone']} {info_element['titre']}", expanded=True):
-        st.markdown(f"**Impact vibratoire sur votre vie :** {info_element['analyse']}")
+        st.markdown(f"**Impact vibratoire sur le thème :** {info_element['analyse']}")
         st.markdown(f"💡 **Recommandation stratégique :** *{info_element['conseil']}*")
 
     st.markdown("---")
 
-    # =====================================================================
-    # 4. ONGLETS DE PRESCRIPTION PROTOCOLAIRE (L'Ordonnance)
-    # =====================================================================
-    st.header("📜 Votre Ordonnance Spirituelle Personnalisée")
-    st.write("Appliquez ces directives dans l'ordre pour canaliser positivement l'énergie de la sentence.")
+    # Onglets d'ordonnances sacrées et rituelles (Prescriptions)
+    st.header("📜 Votre Ordonnance Théurgique et Spirituelle")
+    st.write("Appliquez strictement ces directives rituelles pour équilibrer la vibration de cette figure.")
     
     tab1, tab2, tab3 = st.tabs([
-        "🐑 1. Sacrifices & Aumônes (Saraka)",
-        "🌿 2. Pharmacopée & Plantes Associées",
-        "📝 3. Directives Protocolaires Rituelles"
+        "🐑 1. Sacrifices & Aumônes Spécifiques",
+        "✝️ 2. Alignement Théurgique & Versets Bibliques",
+        "🌿 3. Pharmacopée & Plantes Associées"
     ])
     
     with tab1:
-        st.subheader("Plan d'Aumône Expiatoire ou d'Ouverture")
-        st.info(f"**Action requise :** {data['sacrifice']}")
-        st.caption("Note : Respectez impérativement les créneaux horaires et les profils des destinataires indiqués pour valider le travail vibratoire.")
+        st.subheader("Plan d'Aumône Expiatoire Traditionnel")
+        st.info(f"**Éléments et matières à offrir :** {data['sacrifice']}")
+        st.caption("Note : Respectez scrupuleusement les jours et profils de destinataires indiqués pour valider le travail vibratoire.")
         
     with tab2:
-        st.subheader("Plantes Sacrées Liées à la Figure")
-        st.success(f"**Végétaux à utiliser (Bains, Nassi ou Fumigations) :** {data['plantes']}")
+        st.subheader("Composants Théurgiques Divins")
+        col_t1, col_t2, col_t3 = st.columns(3)
+        with col_t1:
+            st.warning(f"📖 **Psaume à tracer :**\n{data['psaume']}")
+        with col_t2:
+            st.success(f"🔐 **Verset Biblique de Verrouillage :**\n{data['verset']}")
+        with col_t3:
+            st.info(f"🛡️ **Sceau de Salomon Associé :**\n{data['sceau']}")
+            
         st.markdown("""
-        **Comment exploiter ces plantes ?**
-        * **En Bain (Nassi) :** Écrire la figure le nombre de fois requis, rincer le support avec de l'eau, puis y infuser ou piler les feuilles des plantes indiquées avant le lavage[cite: 23, 26].
-        * **En Fumigation :** Faire sécher les écorces ou feuilles pour les consumer sur des braises de purification.
+        ### Protocole d'application théurgique :
+        1. **Écriture :** Écrivez le psaume et le verset de verrouillage sur votre support traditionnel de collecte (ardoise).
+        2. **Consécration :** Utilisez le sceau de Salomon correspondant pour charger spirituellement l'eau de rinçage (Nassi).
         """)
         
     with tab3:
-        st.subheader("Règles d'Or pour le Praticien et le Consultant")
-        st.markdown(f"""
-        1. **Alignement :** La figure finale exprime l'aboutissement de la Maison 15 (Juge). Ne tentez pas de contrecarrer une figure de Terre par la précipitation, ni une figure de Feu par l'inaction.
-        2. **Intention :** Avant toute manipulation des plantes ou distribution de l'aumône, formulez clairement votre vœu à l'Est[cite: 910, 915, 916].
-        3. **Pureté :** Opérez toujours en état de purification corporelle et spirituelle complète[cite: 910, 914].
+        st.subheader("Plantes Sacrées de Recouvrement")
+        st.success(f"**Végétaux à collecter (Bains, Nassi ou Fumigations) :** {data['plantes']}")
+        st.markdown("""
+        **Méthode de préparation :**
+        * **En Bain de purification :** Faites infuser les feuilles ou écorces récoltées directement dans l'eau sacrée théurgique (Nassi). Lavez-vous avec cette préparation selon les instructions temporelles de la figure.
+        * **En Fumigation protectrice :** Pilez ou séchez les plantes pour les diffuser sous forme d'encens sur des charbons ardents.
         """)
 
     # Pied de page applicatif
     st.markdown("---")
-    st.caption("Application Pro d'Interprétation Ramrou — Basée sur la tradition géomantique authentique d'Afrique de l'Ouest[cite: 1, 1089, 1092].")
+    st.caption("SST Informatique — Application Finale Protégée. Tous droits réservés.")
