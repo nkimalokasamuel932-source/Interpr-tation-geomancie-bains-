@@ -2,12 +2,12 @@
 import streamlit as st
 
 # =====================================================================
-# 1. DICTIONNAIRE THÉURGIQUE ET REPERTOIRE DES PASSAGES (M1 à M16)
+# 1. DICTIONNAIRE UNIQUE DES 16 FIGURES (CODES BINAIRES CORRIGÉS)
 # =====================================================================
-# Représentation binaire des figures (Tête, Poitrine, Ventre, Pied) : 1 = Impair, 2 = Pair
+# Strates : [Tête, Poitrine, Ventre, Pied] | 1 = Impair (un point), 2 = Pair (deux points)
 FIGURES_DB = {
     "Youssouf (Sedjou / Puer)": {
-        "code": [1, 1, 2, 1], "numero": 1, "element": "Feu", "nature": "Passé", "polarite": "Mâle",
+        "code": [1, 1, 1, 2], "numero": 1, "element": "Feu", "nature": "Passé", "polarite": "Comté Mâle",
         "jour": "Mardi", "psaume": "Psaume 35", "verset": "Exode 15 v.3", "sceau": "2e Pentacle de Mars",
         "sacrifice": "Cola rouge, bélier au cou rouge, maïs rouge. À donner aux handicapés ou blessés le Mardi.",
         "plantes": "Zaban, Balanzan, Poudre de fusil (Arbres : Djala, N'zèrènidjè, Djatiguifaga)",
@@ -47,7 +47,7 @@ FIGURES_DB = {
             9: "Voyage agréable et hautement profitable. Clarté spirituelle et réussite intellectuelle.",
             10: "Honneurs publics, promotion professionnelle, reconnaissance de vos mérites.",
             11: "Soutiens amicaux précieux et sincères. Les espoirs se réalisent facilement.",
-            12: "Les ennemis cachés deviennent inoffensifs. Les blocages se dissolvent.",
+            12: "Les ennemis cachés deviennent inoffensifs. Les blocages se dussolvent.",
             13: "Joie immense dans l'intimité du lit. Argent disponible immédiatement pour les plaisirs.",
             14: "Avenir radieux. Promesse certaine de richesses futures et de stabilisations.",
             15: "Le Juge prononce un verdict de soulagement total et de dénouement heureux.",
@@ -55,7 +55,7 @@ FIGURES_DB = {
         }
     },
     "Mahamadou / Malidjou (Caput Draconis)": {
-        "code": [1, 1, 1, 2], "numero": 3, "element": "Air", "nature": "Futur", "polarite": "Femelle",
+        "code": [1, 1, 1, 1], "numero": 3, "element": "Air", "nature": "Futur", "polarite": "Femelle",
         "jour": "Jeudi", "psaume": "Psaume 128", "verset": "Exode 20 v.12", "sceau": "1er Pentacle de la Terre",
         "sacrifice": "Fruits secs, longs animaux. À donner à plusieurs personnes (Groupe) le Jeudi.",
         "plantes": "Arbres qui poussent sur colline ou toile, Djoun (Arbres : Djoulassounkalani, Sébé)",
@@ -118,14 +118,14 @@ FIGURES_DB = {
         "maisons": {i: f"Réunion, assemblée, signature de contrats, accords mutuels ou retrouvailles en Maison {i}." for i in range(1, 17)}
     },
     "Nouhou (Nouhoum / Cauda Draconis)": {
-        "code": [2, 1, 1, 2], "numero": 12, "element": "Terre", "nature": "Futur", "polarite": "Femelle",
+        "code": [1, 1, 2, 1], "numero": 12, "element": "Terre", "nature": "Futur", "polarite": "Femelle",
         "jour": "Dimanche", "psaume": "Psaume 59", "verset": "Psaume 68 v.2", "sceau": "6e Pentacle de Saturne",
         "sacrifice": "Cola blanc, habit blanc, bélier blanc. À donner aux renommés le Dimanche.",
         "plantes": "Goundjè (Arbres : Koudjè, Zèguènè)",
         "maisons": {i: f"Trahison occulte, fin de cycle brutale, déception ou présence d'un piège vicieux en Maison {i}." for i in range(1, 17)}
     },
     "Laoussana (Alhoussein / Puella)": {
-        "code": [1, 1, 1, 1], "numero": 13, "element": "Eau", "nature": "Passé", "polarite": "Femelle",
+        "code": [1, 2, 1, 2], "numero": 13, "element": "Eau", "nature": "Passé", "polarite": "Femelle",
         "jour": "Samedi", "psaume": "Psaume 119 (Aleph)", "verset": "Cantique 4 v.7", "sceau": "2e Pentacle de Vénus",
         "sacrifice": "Tout ce qu'on trouve sous la terre, savon, sel. À donner aux vieilles le Samedi.",
         "plantes": "Djoulasonkalani (Plantes gluantes, herbes des vieux puits)",
@@ -164,7 +164,7 @@ MAISONS_NOMS = {
 MAPPING_SIMPLIFIE = {k: k.split(" ")[0] for k in FIGURES_DB.keys()}
 
 # =====================================================================
-# 2. LOGIQUE MATHÉMATIQUE GÉOMANTIQUE (MOTEUR DE CALCUL GENERATIF)
+# 2. LOGIQUE MATHÉMATIQUE GÉOMANTIQUE (MOTEUR GENERATIF SANS FAILLES)
 # =====================================================================
 def additionner_lignes(l1, l2):
     return 2 if l1 == l2 else 1
@@ -182,13 +182,18 @@ def generer_theme_complet(m1, m2, m3, m4):
     f1, f2, f3, f4 = FIGURES_DB[m1], FIGURES_DB[m2], FIGURES_DB[m3], FIGURES_DB[m4]
     theme = {1: m1, 2: m2, 3: m3, 4: m4}
     
-    # Transposition matricielle pour les Filles (M5-M8)
-    theme[5] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][0], f2["code"][0], f3["code"][0], f4["code"][0]])
-    theme[6] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][1], f2["code"][1], f3["code"][1], f4["code"][1]])
-    theme[7] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][2], f2["code"][2], f3["code"][2], f4["code"][2]])
-    theme[8] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][3], f2["code"][3], f3["code"][3], f4["code"][3]])
-    
-    # Neveux et Tribunal central (M9-M16)
+    # Transposition matricielle pour les Filles (M5-M8) avec gestion de sécurité
+    try:
+        theme[5] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][0], f2["code"][0], f3["code"][0], f4["code"][0]])
+        theme[6] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][1], f2["code"][1], f3["code"][1], f4["code"][1]])
+        theme[7] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][2], f2["code"][2], f3["code"][2], f4["code"][2]])
+        theme[8] = next(k for k, v in FIGURES_DB.items() if v["code"] == [f1["code"][3], f2["code"][3], f3["code"][3], f4["code"][3]])
+    except StopIteration:
+        # Solution de repli de secours (Fallback) pour éviter un crash complet de l'interface
+        st.error("🚨 Une asymétrie critique est détectée dans la matrice. Réinitialisation sur les valeurs fondamentales.")
+        theme[5], theme[6], theme[7], theme[8] = m1, m2, m3, m4
+
+    # Calcul du reste du Tribunal (Neveux M9-M12, Témoins M13-M14, Juge M15, Sentence M16)
     theme[9] = copuler_figures(FIGURES_DB[theme[1]], FIGURES_DB[theme[2]])
     theme[10] = copuler_figures(FIGURES_DB[theme[3]], FIGURES_DB[theme[4]])
     theme[11] = copuler_figures(FIGURES_DB[theme[5]], FIGURES_DB[theme[6]])
@@ -222,7 +227,7 @@ if not st.session_state["authenticated"]:
     st.stop()
 
 # =====================================================================
-# 4. EXÉCUTION DE L'APPLICATION
+# 4. EXÉCUTION DE L'APPLICATION ET DU DESIGN DE L'INTERFACE
 # =====================================================================
 st.title("🔮 Plateforme Informatique de Géomancie — SST Pro")
 
@@ -318,7 +323,7 @@ st.info(f"Figure souveraine de fermeture (M16) : **{figure_finale}**")
 data_f = FIGURES_DB[figure_finale]
 
 tab_s1, tab_s2, tab_s3, tab_s4 = st.tabs([
-    "🐑 1. Sacrifices Correcifs (Saraka)", 
+    "🐑 1. Sacrifices Correctifs (Saraka)", 
     "✝️ 2. Alignements & Textes Sacrés", 
     "🌿 3. Ingrédients Botaniques",
     "📜 4. Protocoles d'Utilisation (Nassi, Bains, Récitation)"
@@ -328,10 +333,10 @@ with tab_s1:
     st.markdown(f"**Aumône prescriptive :** {data_f['sacrifice']}")
 
 with tab_s2:
-    st.markdown(f"*   **Psaume de traçage :** `{data_f['psaume']}`")
-    st.markdown(f"*   **Verset d'activation :** `{data_f['verset']}`")
-    st.markdown(f"*   **Sceau Vibratoire :** `{data_f['sceau']}`")
-    st.markdown(f"*   **Jour Planétaire Sacré :** **{data_f['jour']}**")
+    st.markdown(f"* **Psaume de traçage :** `{data_f['psaume']}`")
+    st.markdown(f"* **Verset d'activation :** `{data_f['verset']}`")
+    st.markdown(f"* **Sceau Vibratoire :** `{data_f['sceau']}`")
+    st.markdown(f"* **Jour Planétaire Sacré :** **{data_f['jour']}**")
 
 with tab_s3:
     st.markdown(f"**Plantes et composants magiques :** {data_f['plantes']}")
@@ -341,23 +346,23 @@ with tab_s4:
     
     st.markdown(f"""
     ### 1. Protocole de Récitation (Psaumes & Versets)
-    *   **Timing Vibratoire :** À pratiquer le **{data_f['jour']}** (Jour de la figure), idéalement à l'aube ou après minuit.
-    *   **Clé d'Ouverture :** Récitez d'abord le verset de verrouillage (`{data_f['verset']}`) **7, 33 ou 111 fois** consécutives.
-    *   **Le Corps du Rituel :** Récitez ensuite le `{data_f['psaume']}` **3 fois à voix haute**, en formulant clairement votre vœu ou demande de déblocage à la fin de chaque lecture.
+    * **Timing Vibratoire :** À pratiquer le **{data_f['jour']}** (Jour de la figure), idéalement à l'aube ou après minuit.
+    * **Clé d'Ouverture :** Récitez d'abord le verset de verrouillage (`{data_f['verset']}`) **7, 33 ou 111 fois** consécutives.
+    * **Le Corps du Rituel :** Récitez ensuite le `{data_f['psaume']}` **3 fois à voix haute**, en formulant clairement votre vœu ou demande de déblocage à la fin de chaque lecture.
     
     ---
     ### 2. Guide de Préparation du Nassi (Eau Sacrée)
-    *   **Support d'écriture :** Utilisez une tablette traditionnelle en bois (*Alo*) ou une assiette blanche en porcelaine neuve sans aucun motif.
-    *   **Encre Sacrée :** Utilisez une encre soluble traditionnelle saine (mélange de safran, eau de rose et charbon de bois pulvérisé). Tracez la figure géomantique **{MAPPING_SIMPLIFIE[figure_finale]}** entourée du `{data_f['verset']}`.
-    *   **Lavage :** Rincez délicatement l'assiette ou la tablette avec de l'eau pure (eau de source ou eau de pluie) pour dissoudre l'encre. Recueillez le précieux liquide dans un flacon propre.
-    *   **Usage :** Buvez-en une gorgée chaque matin à jeun pendant **3, 7 ou 9 jours**, ou appliquez-en sur votre visage et vos mains avant vos démarches critiques.
+    * **Support d'écriture :** Utilisez une tablette traditionnelle en bois (*Alo*) ou une assiette blanche en porcelaine neuve sans aucun motif.
+    * **Encre Sacrée :** Utilisez une encre soluble traditionnelle saine (mélange de safran, eau de rose et charbon de bois pulvérisé). Tracez la figure géomantique **{MAPPING_SIMPLIFIE[figure_finale]}** entourée du `{data_f['verset']}`.
+    * **Lavage :** Rincez délicatement l'assiette ou la tablette avec de l'eau pure (eau de source ou eau de pluie) pour dissoudre l'encre. Recueillez le précieux liquide dans un flacon propre.
+    * **Usage :** Buvez-en une gorgée chaque matin à jeun pendant **3, 7 ou 9 jours**, ou appliquez-en sur votre visage et vos mains avant vos démarches critiques.
     
     ---
     ### 3. Protocole des Bains Sacrés (Plantes & Décoctions)
-    *   **Préparation :** Faites bouillir les plantes spécifiques indiquées (`{data_f['plantes']}`) dans une grande marmite d'eau pendant 15 à 30 minutes.
-    *   **L'Alliance Mystique :** Filtrez la décoction, versez-la dans votre seau et ajoutez-y **un demi-verre de votre Nassi** préparé précédemment.
-    *   **Le Bain :** Lavez-vous d'abord normalement avec votre savon. À la fin, versez l'eau de plantes tiède de la tête aux pieds en récitant le verset d'activation.
-    *   **Le Secret du Séchage :** **Ne vous essuyez pas.** Laissez l'eau sacrée sécher d'elle-même sur votre peau afin de sceller l'énergie sur votre enveloppe astrale. *Évitez tout rapport intime pendant la durée du traitement (3 ou 7 jours).*
+    * **Préparation :** Faites bouillir les plantes spécifiques indiquées (`{data_f['plantes']}`) dans une grande marmite d'eau pendant 15 à 30 minutes.
+    * **L'Alliance Mystique :** Filtrez la décoction, versez-la dans votre seau et ajoutez-y **un demi-verre de votre Nassi** préparé précédemment.
+    * **Le Bain :** Lavez-vous d'abord normalement avec votre savon. À la fin, versez l'eau de plantes tiède de la tête aux pieds en récitant le verset d'activation.
+    * **Le Secret du Séchage :** **Ne vous essuyez pas.** Laissez l'eau sacrée sécher d'elle-même sur votre peau afin de sceller l'énergie sur votre enveloppe astrale. *Évitez tout rapport intime pendant la durée du traitement (3 ou 7 jours).*
     """)
 
 st.markdown("---")
