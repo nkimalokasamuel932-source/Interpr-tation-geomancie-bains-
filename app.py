@@ -1,532 +1,280 @@
 import streamlit as st
 
-# 1. Configuration de la page de l'application
-st.set_page_config(page_title="Oracle Géomantique PRO", page_icon="🔮", layout="wide")
-
 # =====================================================================
-# REPERTOIRE THEURGIQUE COMPLET DES 16 FIGURES GÉOMANTIQUES
+# 1. DICTIONNAIRE DE RÉFÉRENCE DES 16 FIGURES (Géomancie Ramrou)
 # =====================================================================
-DICTIONNAIRE_FIGURES = {
-    "1.1.1.1": {
-        "nom": "Hibrahim (Via)",
-        "signification": "Le Mouvement, la Route, l'Instabilité. Flux constants, déplacements nécessaires, déblocage des visas, accouchement facile.",
-        "psaume_nom": "Psaume 120",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.7) du Psaume 120.",
-        "verset_biblique": "Psaume 121:8 — 'L'Éternel gardera ton départ et ton arrivée, dès maintenant et à jamais.'",
-        "texte_salomonique": "5e Pentacle de la Lune — \"Sert contre les barrières, les embûches et pour voyager en totale sécurité sur l'eau et sur terre.\"",
-        "encre": "Encre d'argent ou bleu clair (faite avec de l'eau de coco pure ou de l'eau de puits).",
-        "parfum": "Musc Blanc léger ou essence de Lotus.",
-        "huiles_essentielles": "Menthe Poivrée ou Citronnelle (3 à 5 gouttes émulsionnées dans une cuillère de lait).",
-        "plantes": "Feuilles de Citronnelle fraîches et Feuilles de Palmier.",
-        "encens": "Camphre naturel.",
-        "moment": "Lundi matin très tôt au lever du soleil.",
-        "saraka": "Partage de fruits ou de friandises à des enfants (Énergie du futur)."
+# Données extraites rigoureusement des manuels de référence (Ramrou & Kamagaté)
+FIGURES_DB = {
+    "Youssouf": {
+        "numero": 1,
+        "element": "Feu",
+        "nature": "Feu de braise",
+        "polarite": "Diable (Mauvais)",
+        "sacrifice": "Pagne ou tissu noir, 1 litre de lait, 3 ou 7 colas blancs. À donner à un homme le jeudi matin.",
+        "plantes": "Balanzan (Acacia albida), Diatigui Faga (Ficus sp.)"
     },
-    "1.1.1.2": {
-        "nom": "Laoussana (Puella)",
-        "signification": "L'Hésitation, la Beauté, les Douces pensées. Mariage, séduction, retour d'affection et apaisement des tensions.",
-        "psaume_nom": "Psaume 119 (Section Aleph)",
-        "cle_psaume": "Écrire le premier verset (V.1) et le huitième verset (V.8) du Psaume 119.",
-        "verset_biblique": "Cantique des Cantiques 4:7 — \"Tu es toute belle, mon amie, et il n'y a point de défaut en toi.\"",
-        "texte_salomonique": "2e Pentacle de Vénus — 'Pour obtenir la grâce, l'amour, les faveurs et pour voir ses désirs s'accomplir.'",
-        "encre": "Encre rose ou encre traditionnelle parfumée à l'eau de rose (infusion d'hibiscus blanc).",
-        "parfum": "Musc Blanc ou essence pure de Jasmin.",
-        "huiles_essentielles": "Palmarosa ou Géranium Rosat (5 gouttes dans une cuillère de lait frais).",
-        "plantes": "Fleurs de Jasmin ou de Lavande, infusées avec 3 cuillères à soupe de Lait frais.",
-        "encens": "Santal Blanc.",
-        "moment": "Vendredi matin à l'aube.",
-        "saraka": "Donner du lait frais ou des objets blancs à des personnes de votre âge."
+    "Adama": {
+        "numero": 2,
+        "element": "Feu",
+        "nature": "Mer / Courant électrique / Lumière",
+        "polarite": "Diable (Bon)",
+        "sacrifice": "Tissu noir, 1 litre de lait, 3 ou 7 colas blancs. À donner à un homme le jeudi matin ou mercredi.",
+        "plantes": "N'gouna (Scléroarya birréa), Djalan (Khaya senegalensis), Zeguelin"
     },
-    "1.2.1.1": {
-        "nom": "Garia (Fortuna Major)",
-        "signification": "La Grande Chance, la Protection, le Succès durable. Réussite totale, élévation royale et charisme majeur.",
-        "psaume_nom": "Psaume 91",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.16) du Psaume 91.",
-        "verset_biblique": "Genèse 12:2 — 'Je ferai de toi une grande nation, et je te bénirai ; je rendrai ton nom grand, et tu seras une source de bénédiction.'",
-        "texte_salomonique": "1er Pentacle du Soleil — 'Voici la Face et la Figure de Celui qui a tout créé, devant qui toutes les créatures obéissent.'",
-        "encre": "Encre Jaune Safranée (Infusion de filaments de vrai safran ou de curcuma pur dans de l'eau de rose). NE JAMAIS UTILISER DE SOUFRE.",
-        "parfum": "Ambre pur ou Musc ambré.",
-        "huiles_essentielles": "Encens Oliban (Frankincense) ou Orange Douce (5 à 7 gouttes mélangées dans du miel).",
-        "plantes": "Feuilles de Laurier noble et Feuilles de Basilic frais.",
-        "encens": "Oliban pur en larmes.",
-        "moment": "Dimanche matin (Laisser charger l'eau 1 heure au soleil avant le bain).",
-        "saraka": "Préparer un grand repas ou donner un vêtement de valeur à un indigent."
+    "Mahdy": {
+        "numero": 3,
+        "element": "Air",
+        "nature": "Vent fort, tornade",
+        "polarite": "Diable (Bon)",
+        "sacrifice": "7 kg de sel, une paire de chaussures noires à donner à une femme entre 17h et 21h (Lundi ou Jeudi).",
+        "plantes": "Sébé (Rônier / Borassus aethiopum), Tabacouba (Detarium senegalense)"
     },
-    "1.2.2.1": {
-        "nom": "Solomana (Carcer)",
-        "signification": "La Chefferie, le Blocage, la Concentration. Autorité administrative, protection des secrets, domination d'un litige juridique.",
-        "psaume_nom": "Psaume 142",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.8) du Psaume 142.",
-        "verset_biblique": "Isaïe 22:22 — 'Je mettrai sur son épaule la clé de la maison de David : quand il ouvrira, nul ne fermera ; quand il fermera, nul n'ouvrira.'",
-        "texte_salomonique": "7e Pentacle de Saturne — 'Pour commander aux puissances de l'ombre et faire trembler les oppresseurs.'",
-        "encre": "Encre noire traditionnelle très concentrée au noir de fumée.",
-        "parfum": "Ambre Noir ou Huile pure de Cèdre.",
-        "huiles_essentielles": "Bois de Santal ou Cèdre de l'Atlas (5 gouttes dispersées dans du gros sel).",
-        "plantes": "Feuilles de Cyprès ou de Lierre grimpant.",
-        "encens": "Myrrhe brute.",
-        "moment": "Samedi soir tard dans le calme.",
-        "saraka": "Offrir du cola fendu ou du pain traditionnel à un gardien ou chef de famille."
+    "Idriss": {
+        "numero": 4,
+        "element": "Eau",
+        "nature": "Fleuve",
+        "polarite": "Diable (Bon)",
+        "sacrifice": "7 kg de sel, une paire de chaussures noires à donner à une femme entre 22h et 00h (Lundi ou Jeudi).",
+        "plantes": "N'Gokoun (Nénuphar / Nymphaea lotus)"
     },
-    "1.2.1.2": {
-        "nom": "Inza (Amissio)",
-        "signification": "La Perte, la Fatigue, le Renoncement. Stopper d'urgence les fuites d'argent et contrer les vols mystiques.",
-        "psaume_nom": "Psaume 102",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.29) du Psaume 102.",
-        "verset_biblique": "Joël 2:25 — 'Je vous remplacerai les années qu'ont dévorées la sauterelle.' (Restauration spirituelle des biens).",
-        "texte_salomonique": "5e Pentacle de Vénus — \"Quand on le montre à n'importe quelle personne, cela invite à l'amour et au respect instantané.\"",
-        "encre": "Encre marron terre ou encre traditionnelle adoucie à l'eau de source.",
-        "parfum": "Ambre précieux ou essence de Myrte.",
-        "huiles_essentielles": "Lavande Vraie ou Sauge Sclarée (5 gouttes dans du gros sel).",
-        "plantes": "Feuilles de Sauge et Feuilles de Thym frais.",
-        "encens": "Muscade râpée ou résine de Mastic.",
-        "moment": "Vendredi soir après le coucher du soleil.",
-        "saraka": "Faire l'aumône de pièces de monnaie ou de vêtements usagés pour conjurer la perte."
+    "Ibrahima": {
+        "numero": 5,
+        "element": "Eau",
+        "nature": "Vent maléfique",
+        "polarite": "Humain (Bon)",
+        "sacrifice": "6 litres de lait avec un coq rouge ou un mouton. À donner à un homme le lundi entre 13h et 15h.",
+        "plantes": "Zaba (Landolphia owariensis), Karo"
     },
-    "1.2.2.2": {
-        "nom": "Adama (Laetitia)",
-        "signification": "La Joie, l'Élévation, la Chance. Fête, prospérité, expansion financière, réussite aux examens et grand bonheur.",
-        "psaume_nom": "Psaume 4",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.9) du Psaume 4.",
-        "verset_biblique": "Néhémie 8:10 — 'Ne vous affligez pas, car la joie de l'Éternel sera votre force.'",
-        "texte_salomonique": "2e Pentacle de Jupiter — 'Pour acquérir la gloire, les honneurs, les richesses, avec une paix d'esprit absolue.'",
-        "encre": "Encre bleue céleste ou encre traditionnelle mélangée à du musc blanc.",
-        "parfum": "Musc Blanc pur (pour la douceur et l'attraction).",
-        "huiles_essentielles": "Bergamote ou Orange Douce (7 gouttes mélangées dans une cuillère de miel).",
-        "plantes": "Feuilles de Menthe poivrée fraîches (7 ou 14 feuilles) et Fleurs de Camomille.",
-        "encens": "Résine de Benjoin.",
-        "moment": "Jeudi matin à l'aube.",
-        "saraka": "Donner 100 colas blanches ou partager de la viande de mouton blanc."
+    "Inssa": {
+        "numero": 6,
+        "element": "Eau",
+        "nature": "La pluie",
+        "polarite": "Humain (Mauvais)",
+        "sacrifice": "6 litres de lait avec un coq blanc ou une chèvre. À donner à un homme le mardi entre 17h et 18h.",
+        "plantes": "Kèlètiguè yiri, Triqi (Combretum glutinosum)"
     },
-    "1.1.2.1": {
-        "nom": "Youssouf (Puer)",
-        "signification": "L'Action, la Force masculine, le Combat. Protection blindée, destruction des complots et des langues de jalousie.",
-        "psaume_nom": "Psaume 35",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.28) du Psaume 35.",
-        "verset_biblique": "Exode 15:3 — 'L'Éternel est un vaillant guerrier ; l'Éternel est son nom.'",
-        "texte_salomonique": "2e Pentacle de Mars — 'Contre les maladies et les plaies, et pour soumettre les esprits rebelles.'",
-        "encre": "Encre Rouge (Encre classique chargée d'une pointe de poudre de piment ou de gingembre).",
-        "parfum": "Musc Noir ou essence de Patchouli.",
-        "huiles_essentielles": "Poivre Noir ou Gingembre (3 à 5 gouttes maximum dans du lait. Attention : très chaud).",
-        "plantes": "Feuilles de Tabac ou feuilles de pissenlit, et feuilles d'Ortie.",
-        "encens": "Sang de Dragon.",
-        "moment": "Mardi soir tard (Ne plus sortir après le bain).",
-        "saraka": "Donner de la nourriture épicée ou des objets tranchants/métalliques."
+    "Omar": {
+        "numero": 7,
+        "element": "Air",
+        "nature": "Vent",
+        "polarite": "Diable (Mauvais)",
+        "sacrifice": "Chèvre ou mouton blanc, ou coq rouge. À donner à une femme le mardi ou samedi entre 22h et 00h.",
+        "plantes": "Kaba houlé (Ficus platyphylla)"
     },
-    "1.1.2.2": {
-        "nom": "Allahou talla (Fortuna Minor)",
-        "signification": "Le Succès rapide, l'Opportunité urgente. Protection sur les routes, secours divin immédiat face à une détresse.",
-        "psaume_nom": "Psaume 121",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.8) du Psaume 121.",
-        "verset_biblique": "Psaume 46:2 — 'Dieu est pour nous un refuge et un appui, un secours toujours présent dans la détresse.'",
-        "texte_salomonique": "4e Pentacle du Soleil — 'Pour voir les esprits invisibles et acquérir une renommée ou un secours céleste immédiat.'",
-        "encre": "Encre Orange ou Jaune vif (Curcuma concentré dans de l'eau bénite).",
-        "parfum": "Musc Ambre ou huile essentielle de Bergamote.",
-        "huiles_essentielles": "Orange Douce ou Bergamote (5 gouttes dans du crème).",
-        "plantes": "Écorces d'Orange séchées et feuilles de Romarin.",
-        "encens": "Oliban pur en larmes.",
-        "moment": "À l'aube un jeudi ou un dimanche pour déblocage sous 48 heures.",
-        "saraka": "Partager des beignets ou de la nourriture légère à l'aube."
+    "Ayoub": {
+        "numero": 8,
+        "element": "Terre",
+        "nature": "La tombe",
+        "polarite": "Diable (Mauvais)",
+        "sacrifice": "Mouton blanc ou coq blanc. À donner à un homme le mardi ou samedi entre 10h et 12h.",
+        "plantes": "Plantes de cimetière, racines profondes"
     },
-    "2.1.1.1": {
-        "nom": "Maldiou (Caput Draconis)",
-        "signification": "La Réalisation, la Stabilité, l'Enracinement. Projets immobiliers, investissements durables, connexion à la lignée maternelle.",
-        "psaume_nom": "Psaume 128",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.6) du Psaume 128.",
-        "verset_biblique": "Exode 20:12 — 'Honore ton père et ta mère, afin que tes jours se prolongent dans le pays que l'Éternel ton Dieu te donne.'",
-        "texte_salomonique": "1er Pentacle de la Terre (ou de Saturne) — 'Pour donner force aux fondations et appeler les esprits de stabilité matérielle.'",
-        "encre": "Encre brune ou traditionnelle mélangée à une pincée de terre fine et fertile de forêt.",
-        "parfum": "Ambre lourd ou essence de Vétiver (odeur de terre humide).",
-        "huiles_essentielles": "Vétiver ou Bois de Santal (5 gouttes diluées dans du gros sel).",
-        "plantes": "Feuilles de Chêne ou de Ficus (symbole de longévité).",
-        "encens": "Myrrhe.",
-        "moment": "Mercredi ou samedi matin.",
-        "saraka": "Faire une offrande ou un cadeau direct à votre mère (ou à une figure maternelle)."
+    "Allahou": {
+        "numero": 9,
+        "element": "Feu",
+        "nature": "Le désert",
+        "polarite": "Humain (Mauvais)",
+        "sacrifice": "Un boubou ou pagne déjà porté, de la viande. À donner à des hommes le dimanche entre 13h et 15h.",
+        "plantes": "Plantes épineuses du désert"
     },
-    "2.1.1.2": {
-        "nom": "Badra (Conjunctio)",
-        "signification": "L'Union, le Contrat, l'Association. Rencontres majeures, signature de pactes commerciaux, mariages, réconciliations.",
-        "psaume_nom": "Psaume 133",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.3) — 'Qu'il est doux pour des frères de demeurer ensemble !'",
-        "verset_biblique": "Ruth 1:16 — 'Où tu iras j'irai, où tu demeureras je demeurerai ; ton peuple sera mon peuple, et ton Dieu sera mon Dieu.'",
-        "texte_salomonique": "4e Pentacle de Mercure — \"Pour acquérir l'éloquence, l'esprit d'assimilation et ouvrir l'esprit de l'autre.\"",
-        "encre": "Encre Jaune Pâle ou bicolore (mélange safran et noir pour l'union des opposés).",
-        "parfum": "Musc précieux mélangé à de l'essence de Lavande.",
-        "huiles_essentielles": "Patchouli (idéal pour les contrats) ou Lavande (5 gouttes dans du lait).",
-        "plantes": "Brins de Lavande et feuilles de Romarin.",
-        "encens": "Fleurs de Lavande ou Macis séché.",
-        "moment": "Mercredi matin au lever du soleil.",
-        "saraka": "Offrir des céréales (fonio, riz) à des personnes de votre tranche d'âge un mercredi."
+    "Soulaymane": {
+        "numero": 10,
+        "element": "Terre",
+        "nature": "Montagne",
+        "polarite": "Humain (Bon)",
+        "sacrifice": "3 plats de riz avec de la viande. À donner à une femme entre 18h et 20h, peu importe le jour.",
+        "plantes": "Arbres massifs à écorce dure"
     },
-    "2.1.2.1": {
-        "nom": "Ousmane (Acquisitio)",
-        "signification": "Le Gain, l'Abondance financière. RéUSSITE commerciale, profits en hausse, héritages et commerce de grande envergure.",
-        "psaume_nom": "Psaume 112",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.10) du Psaume 112.",
-        "verset_biblique": "Deutéronome 28:12 — 'L'Éternel t'ouvrira son bon trésor, le ciel, pour envoyer à ton pays la pluie en son temps et pour bénir le travail de tes mains.'",
-        "texte_salomonique": "6e Pentacle de Jupiter — 'Protège contre tous les dangers terrestres et assure une immense fortune à celui qui s'en lave.'",
-        "encre": "Encre Verte ou Violette royale (mélange traditionnel chargé d'infusion de menthe).",
-        "parfum": "Ambre Gris précieux ou essence de Santal.",
-        "huiles_essentielles": "Cannelle Écorce (2 gouttes max ! TRÈS PIQUANTE) ou Oliban (5 gouttes) mélangées dans du miel.",
-        "plantes": "Feuilles de Trèfle (ou de luzerne) et une bonne pincée de Poudre de Cannelle vraie.",
-        "encens": "Benjoin et éclats de Cannelle.",
-        "moment": "Jeudi matin à l'aube (Jour de Jupiter).",
-        "saraka": "Faire un don financier important dans un lieu de culte ou à une œuvre de charité."
+    "Aliou": {
+        "numero": 11,
+        "element": "Air",
+        "nature": "Fumée",
+        "polarite": "Humain (Mauvais)",
+        "sacrifice": "3 kilos de riz, 3 kilos de mil, 7 colas blancs. À donner à un homme entre 18h et 22h.",
+        "plantes": "Plantes à sève laiteuse"
     },
-    "2.1.2.2": {
-        "nom": "Lamora (Rubeus)",
-        "signification": "La Passion, la Colère, le Magnétisme. Canaliser l'agressivité d'un homme ou raviver le feu charnel d'un couple.",
-        "psaume_nom": "Psaume 29",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.11) — 'La voix de l'Éternel brise les cèdres...'",
-        "verset_biblique": "Cantique des Cantiques 8:6 — 'Mets-moi comme un sceau sur ton cœur... Car l'amour est fort comme la mort.'",
-        "texte_salomonique": "4e Pentacle de Mars — 'Pour la victoire finale dans les duels et pour apaiser les ardeurs agressives.'",
-        "encre": "Encre Rouge Vif (chargée de quelques gouttes de jus de grenade ou de betterave).",
-        "parfum": "Musc Rouge (Musc Ghazal) ou essence de Rose rouge.",
-        "huiles_essentielles": "Laurier Noble (huile des vainqueurs) ou Géranium (5 gouttes dans du lait).",
-        "plantes": "Pétales de Rose rouge et feuilles de Verveine fraîche.",
-        "encens": "Clous de Girofle écrasés.",
-        "moment": "Mardi soir (À prendre dans le calme pour transmuter les énergies).",
-        "saraka": "Offrir du cola rouge ou des fruits rouges à une assemblée."
+    "Nouhou": {
+        "numero": 12,
+        "element": "Terre",
+        "nature": "Vent",
+        "polarite": "Humain (Bon)",
+        "sacrifice": "Un coq rouge, 3 kilos de maïs, 7 colas rouges. À donner à une femme le vendredi entre 20h et 22h.",
+        "plantes": "Plantes de nettoyage ou de lavage spirituel"
     },
-    "2.2.1.1": {
-        "nom": "Nouhou (Cauda Draconis)",
-        "signification": "La Sortie, l'Exorcisme, la Rupture. Briser définitivement les mauvais sorts, les liens toxiques et les blocages de nuit.",
-        "psaume_nom": "Psaume 59",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.18) du Psaume 59.",
-        "verset_biblique": "Psaume 68:2 — 'Dieu se lève, ses ennemis se dispersent, et ses adversaires fuient devant sa face !'",
-        "texte_salomonique": "6e Pentacle de Saturne — 'Pour faire fuir les démons, détruire les complots de nuit et annuler les mauvais sorts.'",
-        "encre": "Encre Noire brute au noir de fumée, pure, sans aucun ajout sucré ou aromatique.",
-        "parfum": "Pas de parfum doux ! Laisser l'encre brute ou ajouter 2 gouttes d'huile de Cade.",
-        "huiles_essentielles": "Arbre à thé (Tea Tree) ou Eucalyptus Globulus (7 gouttes mélangées dans du gros sel).",
-        "plantes": "Feuilles d'Eucalyptus et feuilles d'Armoise (balaye les larves astrales).",
-        "encens": "Feuilles de Laurier séchées. (Note : Soufre ou Asafoetida brûlés à côté en encens uniquement, JAMAIS dans l'encre).",
-        "moment": "Samedi soir tard à l'extérieur ou dans un espace neutre.",
-        "saraka": "Faire un sacrifice d'un vieil habit ou nettoyer bénévolement un espace public."
+    "Assane": {
+        "numero": 13,
+        "element": "Eau",
+        "nature": "Le sable",
+        "polarite": "Diable (Mauvais)",
+        "sacrifice": "Un plat de riz avec de la viande de coq. À donner à des femmes le samedi entre 10h et 12h.",
+        "plantes": "Plantes rampantes des zones sablonneuses"
     },
-    "2.2.1.2": {
-        "nom": "Idriss (Albus)",
-        "signification": "La Sagesse, la Clarté blanche, la Paix. Révélation de la vérité, éclat de l'aura, rêves prophétiques nets.",
-        "psaume_nom": "Psaume 119 (Section Beth)",
-        "cle_psaume": "Écrire le neuvième verset (V.9) et le seizième verset (V.16) du Psaume 119.",
-        "verset_biblique": "Isaïe 1:18 — 'Si vos péchés sont comme le cramoisi, ils deviendront blancs comme la neige.'",
-        "texte_salomonique": "2e Pentacle de Mercure — 'Pour obtenir l'illumination spirituelle, la clarté dans les rêves et comprendre les secrets.'",
-        "encre": "Encre Blanche (ou eau pure chargée de camphre naturel et de craie blanche spirituelle).",
-        "parfum": "Musc Blanc pur à 100 % (Honnêteté et transparence).",
-        "huiles_essentielles": "Bois de Santal ou Lavande (5 gouttes émulsionnées dans du lait frais).",
-        "plantes": "Feuilles de Lys ou pétales de Rose blanche, avec un morceau de Camphre dissous dans l'eau.",
-        "encens": "Santal Blanc.",
-        "moment": "Mercredi matin à l'aube.",
-        "saraka": "Donner du savon, du sel ou de l'eau claire à un démuni."
+    "Younouss": {
+        "numero": 14,
+        "element": "Terre",
+        "nature": "Vent froid et lourd",
+        "polarite": "Diable (Bon)",
+        "sacrifice": "Un plat de riz avec un cola blanc. À donner à une femme le vendredi entre 13h et 15h.",
+        "plantes": "Plantes de récolte ou arbres fruitiers"
     },
-    "2.2.2.1": {
-        "nom": "mangousi (Tristitia)",
-        "signification": "La Reconstruction, la Consolation. Surmonter la mélancolie, un deuil ou relever une entreprise en faillite.",
-        "psaume_nom": "Psaume 40",
-        "cle_psaume": "Écrire le deuxième verset (V.2) et le dernier verset (V.18) — 'Il m'a retiré de la fosse de destruction...'",
-        "verset_biblique": "Isaïe 61:3 — 'Pour donner aux affligés un diadème au lieu de la cendre, une huile de joie au lieu du deuil.'",
-        "texte_salomonique": "5e Pentacle de Saturne — 'Pour consoler les cœurs tristes, défendre votre demeure et repousser la ruine.'",
-        "encre": "Encre Bleu Nuit ou Noire profonde.",
-        "parfum": "Ambre précieux ou essence de Patchouli.",
-        "huiles_essentielles": "Vétiver (pour l'ancrage et la reconstruction) ou Cèdre (5 gouttes dans du sel).",
-        "plantes": "Racines de Gingembre frais écrasées (redonne de la force à la terre) et aiguilles de Pin.",
-        "encens": "Myrrhe ou Storax.",
-        "moment": "Samedi soir dans le calme.",
-        "saraka": "Offrir des produits de la terre (tubercules, sel) à des vieillards le samedi."
+    "Ousmane": {
+        "numero": 15,
+        "element": "Air",
+        "nature": "Eau de puits",
+        "polarite": "Humain (Bon)",
+        "sacrifice": "3 plats de riz avec 10 colas blancs. À donner à des hommes le dimanche entre 17h et 18h.",
+        "plantes": "Plantes aquatiques douces, lianes d'eau"
     },
-    "2.2.2.2": {
-        "nom": "Moussa (Populus)",
-        "signification": "La Foule, le Collectif, l'Audience. Attirer la clientèle en masse, influence publique, célébrité politique ou commerciale.",
-        "psaume_nom": "Psaume 47",
-        "cle_psaume": "Écrire le premier verset (V.1) et le dernier verset (V.10) du Psaume 47.",
-        "verset_biblique": "Genèse 22:17 — 'Je multiplierai ta postérité, comme les étoiles du ciel et comme le sable qui est sur le bord de la mer.'",
-        "texte_salomonique": "1er Pentacle de la Lune — 'Pour ouvrir toutes les portes closes, briser les verrous et invoquer les esprits de l'eau.'",
-        "encre": "Encre Gris Perle ou encre chargée d'eau de pluie collectée une nuit de pleine lune.",
-        "parfum": "Musc Blanc ou essence de Lys.",
-        "huiles_essentielles": "Lavande Vraie (pour la paix publique et l'attraction - 7 gouttes dans du lait).",
-        "plantes": "Feuilles de Persil frais (multiplication) et feuilles de Sauge.",
-        "encens": "Benjoin blanc ou Storax.",
-        "moment": "Lundi (De préférence en période de Lune Croissante).",
-        "saraka": "Distribuer du pain ou des aliments de base à une foule ou à un groupe d'enfants."
+    "Moussa": {
+        "numero": 16,
+        "element": "Feu",
+        "nature": "La cendre",
+        "polarite": "Humain (Mauvais)",
+        "sacrifice": "Tissu blanc, un coq blanc, de la viande de chèvre. À donner à des hommes le dimanche à 06h du matin.",
+        "plantes": "Arbres produisant beaucoup de cendre, plantes de protection"
     }
 }
 
-NOMS_MAISONS = [
-    "M1 : Consultant / Âme", "M2 : Gains / Argent", "M3 : Entourage / Échanges", "M4 : Foyer / Patrimoine",
-    "M5 : Amours / Enfants", "M6 : Maladie / Obstacles", "M7 : Conjoint / Associés", "M8 : Mort / Changements",
-    "M9 : Voyages / Spiritualité", "M10 : Carrière / Honneurs", "M11 : Appuis / Espoirs", "M12 : Épreuves / Secrets",
-    "M13 : Témoin Droit (Passé)", "M14 : Témoin Gauche (Futur)", "M15 : Le Juge (Verdict)", "M16 : La Sentence (Issue)"
-]
+MAISONS_NOMS = {
+    1: "Maison de l'âme (M1)",
+    2: "Maison de la chance / Fortune (M2)",
+    3: "Maison des frères / Mères / Entourage (M3)",
+    4: "Maison du patrimoine / Pères / Foyer (M4)",
+    5: "Maison des enfants / Amours (M5)",
+    6: "Maison des maladies / Obstacles (M6)",
+    7: "Maison du mariage / Associés (M7)",
+    8: "Maison de la mort / Changement (M8)",
+    9: "Maison des voyages / Dieu (M9)",
+    10: "Maison du pouvoir / Succès professionnel (M10)",
+    11: "Maison des espoirs / Amis (M11)",
+    12: "Maison des ennemis / Blocages secrets (M12)",
+    13: "Maison du lit / Intimité / Argent présent (M13)",
+    14: "Maison des gains futurs / Clôture (M14)",
+    15: "Maison du juge / Clarté du thème (M15)",
+    16: "Maison de la sentence finale / Issue (M16)"
+}
 
 # =====================================================================
-# FONCTIONS LOGIQUES ET MATHÉMATIQUES
+# 2. LOGIQUE D'INTERPRÉTATION MATRICIELLE DES 4 ÉLÉMENTS
 # =====================================================================
-def identifier_figure(liste_points):
-    cle = ".".join(map(str, liste_points))
-    return DICTIONNAIRE_FIGURES.get(cle, {"nom": "Inconnue", "signification": "-"})
+def interpreter_importance_element(element_str):
+    """Génère l'analyse de l'importance de l'élément de la sentence finale (M16)."""
+    if "Feu" in element_str:
+        return {
+            "icone": "🔥",
+            "titre": "Élément FEU - Dynamique d'Action Absolue et de Rapidité",
+            "analyse": "La conclusion de votre thème est dominée par le Feu. Cela indique une résolution tranchante, immédiate ou exigeant de vous un courage martial. Les blocages se consument vite sous cette influence, mais attention aux risques d'emportement, de litiges ou de stress intense.",
+            "conseil": "Agissez promptement. Privilégiez les purifications matinales, l'utilisation de l'encens sacré, et l'action directe sans hésitation."
+        }
+    elif "Air" in element_str:
+        return {
+            "icone": "💨",
+            "titre": "Élément AIR - Dynamique de Mouvement, d'Esprit et de Parole",
+            "analyse": "Votre issue est portée par les courants de l'Air. Votre situation est extrêmement mobile et dépend de contrats, de négociations, d'écrits ou de l'influence de votre entourage. L'instabilité actuelle précède une transition importante.",
+            "conseil": "Misez sur la communication claire, l'onction de parfums subtils et l'élévation de l'esprit pour stabiliser et orienter cette énergie volatile."
+        }
+    elif "Eau" in element_str:
+        return {
+            "icone": "💧",
+            "titre": "Élément EAU - Dynamique de Fluidité, d'Abondance et de Purification",
+            "analyse": "L'Eau gouverne votre sentence finale. C'est le symbole des bénédictions fertiles, de la richesse fluide, des réconciliations amicales ou amoureuses. Les difficultés tenaces se dissolvent naturellement comme le sel dans l'eau, bien que l'évolution puisse demander de la patience.",
+            "conseil": "Le bain thérapeutique (Nassi) et l'utilisation de décoctions liquides purificatrices constituent le cœur stratégique de vos remèdes."
+        }
+    elif "Terre" in element_str:
+        return {
+            "icone": "🌱",
+            "titre": "Élément TERRE - Dynamique d'Ancrage, de Secret et de Temps",
+            "analyse": "La Terre scelle votre dénouement. Les résultats obtenus sous cette influence seront solides et pérennes, mais ils sont soumis aux lois du temps, à de lourdes résistances ou à des secrets. Les retards administratifs ou matériels font partie du processus.",
+            "conseil": "Ne forcez pas les événements. Honorez scrupuleusement les aumônes matérielles lourdes (Saraka), les graines, et utilisez les racines de plantes pour débloquer le sol."
+        }
+    else:
+        return {
+            "icone": "✨",
+            "titre": "Élément Équilibré / Neutre",
+            "analyse": "L'influence élémentaire demande un rééquilibrage global des différentes forces en présence.",
+            "conseil": "Suivez rigoureusement l'ensemble des prescriptions sans sauter d'étape."
+        }
 
-def additionner_figures(fig_a, fig_b):
-    return [2 if (fig_a[i] + fig_b[i]) in [2, 4] else 1 for i in range(4)]
+# =====================================================================
+# 3. INTERFACE UTILISATEUR STREAMLIT
+# =====================================================================
+st.set_page_config(page_title="Oracle Ramrou Pro", page_icon="🔮", layout="wide")
 
-def calculer_cle_ecriture(psaume_str):
-    chiffres = [int(c) for c in psaume_str if c.isdigit()]
-    total = sum(chiffres) if chiffres else 7
-    while total > 9: 
-        total = sum(int(c) for c in str(total))
-    if total in [1, 4, 8]: return 7
-    if total in [3, 6, 9]: return 9
-    return 3
+st.title("🔮 Oracle de Géomancie Ramrou - Ordonnance Spirituelle Avancée")
+st.write("Saisissez la figure présente dans la **Maison 16 (Sentence finale)** pour générer l'analyse complète, l'évaluation élémentaire et les remèdes sacrés.")
 
-def generer_carre_magique(valeur_cible):
-    base = (valeur_cible - 12) // 3
-    reste = (valeur_cible - 12) % 3
+# Sélection de la figure finale
+figure_choisie = st.selectbox(
+    "Choisissez la figure de la Maison 16 (Issue du thème) :",
+    options=list(FIGURES_DB.keys())
+)
+
+if figure_choisie:
+    data = FIGURES_DB[figure_choisie]
     
-    c1, c2, c3, c4, c5, c6, c7, c8, c9 = [base + i for i in range(9)]
-    if reste == 1: c7 += 1; c8 += 1; c9 += 1
-    elif reste == 2: c4 += 1; c5 += 1; c6 += 1; c7 += 2; c8 += 2; c9 += 2
+    # Affichage de la carte d'identité de la figure
+    st.subheader(f"📊 Fiche Technique : Figure {figure_choisie}")
     
-    ligne1 = f"|  {c4:<3} |  {c9:<3} |  {c2:<3} |"
-    ligne2 = f"|  {c3:<3} |  {c5:<3} |  {c7:<3} |"
-    ligne3 = f"|  {c8:<3} |  {c1:<3} |  {c6:<3} |"
-    return f"+------+------+------+\n{ligne1}\n+------+------+------+\n{ligne2}\n+------+------+------+\n{ligne3}\n+------+------+------+"
-
-def format_visuel_text(liste_points):
-    lignes = []
-    for pt in liste_points:
-        if pt == 2: lignes.append("●   ●")
-        else: lignes.append("  ●  ")
-    return "\n".join(lignes)
-
-def extraire_numero_psaume(psaume_str):
-    chiffres = "".join([c for c in psaume_str if c.isdigit()])
-    return int(chiffres) if chiffres else 40
-
-# =====================================================================
-# INTERFACE D'ACCÈS
-# =====================================================================
-if "authentifie" not in st.session_state:
-    st.session_state["authentifie"] = False
-
-if not st.session_state["authentifie"]:
-    st.subheader("🔐 Espace Sécurisé d'Oracle Géomantique")
-    st.write("Veuillez entrer vos identifiants d'accès pour activer le Radar de consultation.")
-    
-    with st.form("formulaire_connexion_multi"):
-        user_saisi = st.text_input("Nom d'utilisateur :")
-        pass_saisi = st.text_input("Mot de passe :", type="password")
-        bouton_validation = st.form_submit_button("🔑 Se connecter")
-        
-        if bouton_validation:
-            try:
-                admin_user = st.secrets["credentials"]["username"]
-                admin_pass = st.secrets["credentials"]["password"]
-                client_user = st.secrets["client_credentials"]["username"]
-                client_pass = st.secrets["client_credentials"]["password"]
-                
-                if (user_saisi == admin_user and pass_saisi == admin_pass) or (user_saisi == client_user and pass_saisi == client_pass):
-                    st.session_state["authentifie"] = True
-                    st.success("Accès validé ! Lancement du moteur...")
-                    st.rerun()
-                else:
-                    st.error("❌ Identifiants incorrects. Accès refusé.")
-            except KeyError:
-                st.error("⚠️ Erreur de configuration : Un des profils d'accès dans la section Secrets est manquant.")
-
-else:
-    st.title("🔮 Système Expert d'Oracle Géomantique PRO")
-    st.write("Moteur de calcul théurgique configuré en mode étendu (16 Maisons).")
-
-    question = st.text_input("✍️ Saisir le sujet ou le nom du consultant :", "Thème général")
-
-    st.write("---")
-    st.markdown("### 🛠️ Configuration des 4 Maisons Mères")
-
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.write("**Maison I (M1)**")
-        m1_1 = st.selectbox("Ligne 1", [1, 2], key="m1_1")
-        m1_2 = st.selectbox("Ligne 2", [1, 2], key="m1_2")
-        m1_3 = st.selectbox("Ligne 3", [1, 2], key="m1_3")
-        m1_4 = st.selectbox("Ligne 4", [1, 2], key="m1_4")
-        m1 = [m1_1, m1_2, m1_3, m1_4]
-
+        st.metric(label="Numéro Unique", value=f"N° {data['numero']}")
     with col2:
-        st.write("**Maison II (M2)**")
-        m2_1 = st.selectbox("Ligne 1", [1, 2], key="m2_1")
-        m2_2 = st.selectbox("Ligne 2", [1, 2], key="m2_2")
-        m2_3 = st.selectbox("Ligne 3", [1, 2], key="m2_3")
-        m2_4 = st.selectbox("Ligne 4", [1, 2], key="m2_4")
-        m2 = [m2_1, m2_2, m2_3, m2_4]
-
+        st.metric(label="Élément Majeur", value=data['element'])
     with col3:
-        st.write("**Maison III (M3)**")
-        m3_1 = st.selectbox("Ligne 1", [1, 2], key="m3_1")
-        m3_2 = st.selectbox("Ligne 2", [1, 2], key="m3_2")
-        m3_3 = st.selectbox("Ligne 3", [1, 2], key="m3_3")
-        m3_4 = st.selectbox("Ligne 4", [1, 2], key="m3_4")
-        m3 = [m3_1, m3_2, m3_3, m3_4]
-
+        st.metric(label="Nature Symbolique", value=data['nature'])
     with col4:
-        st.write("**Maison IV (M4)**")
-        m4_1 = st.selectbox("Ligne 1", [1, 2], key="m4_1")
-        m4_2 = st.selectbox("Ligne 2", [1, 2], key="m4_2")
-        m4_3 = st.selectbox("Ligne 3", [1, 2], key="m4_3")
-        m4_4 = st.selectbox("Ligne 4", [1, 2], key="m4_4")
-        m4 = [m4_1, m4_2, m4_3, m4_4]
+        st.metric(label="Polarité Spirituelle", value=data['polarite'])
 
-    st.write("---")
+    st.markdown("---")
 
-    if st.button("🔮 INTERPRÉTER LE THÈME ET CALCULER LES 16 MAISONS"):
-        # Calculs logiques
-        m5 = [m1[0], m2[0], m3[0], m4[0]]
-        m6 = [m1[1], m2[1], m3[1], m4[1]]
-        m7 = [m1[2], m2[2], m3[2], m4[2]]
-        m8 = [m1[3], m2[3], m3[3], m4[3]]
+    # =====================================================================
+    # NOUVEAU BLOC : L'IMPORTANCE DE L'ÉLÉMENT (Correction de l'erreur)
+    # =====================================================================
+    st.header("🔬 Analyse Élémentaire de l'Issue (L'Importance Matricielle)")
+    
+    # Correction de l'erreur : On passe directement l'élément propre de la base de données
+    info_element = interpreter_importance_element(data['element'])
+    
+    with st.expander(f"{info_element['icone']} {info_element['titre']}", expanded=True):
+        st.markdown(f"**Impact vibratoire sur votre vie :** {info_element['analyse']}")
+        st.markdown(f"💡 **Recommandation stratégique :** *{info_element['conseil']}*")
+
+    st.markdown("---")
+
+    # =====================================================================
+    # 4. ONGLETS DE PRESCRIPTION PROTOCOLAIRE (L'Ordonnance)
+    # =====================================================================
+    st.header("📜 Votre Ordonnance Spirituelle Personnalisée")
+    st.write("Appliquez ces directives dans l'ordre pour canaliser positivement l'énergie de la sentence.")
+    
+    tab1, tab2, tab3 = st.tabs([
+        "🐑 1. Sacrifices & Aumônes (Saraka)",
+        "🌿 2. Pharmacopée & Plantes Associées",
+        "📝 3. Directives Protocolaires Rituelles"
+    ])
+    
+    with tab1:
+        st.subheader("Plan d'Aumône Expiatoire ou d'Ouverture")
+        st.info(f"**Action requise :** {data['sacrifice']}")
+        st.caption("Note : Respectez impérativement les créneaux horaires et les profils des destinataires indiqués pour valider le travail vibratoire.")
         
-        m9 = additionner_figures(m1, m2)
-        m10 = additionner_figures(m3, m4)
-        m11 = additionner_figures(m5, m6)
-        m12 = additionner_figures(m7, m8)
+    with tab2:
+        st.subheader("Plantes Sacrées Liées à la Figure")
+        st.success(f"**Végétaux à utiliser (Bains, Nassi ou Fumigations) :** {data['plantes']}")
+        st.markdown("""
+        **Comment exploiter ces plantes ?**
+        * **En Bain (Nassi) :** Écrire la figure le nombre de fois requis, rincer le support avec de l'eau, puis y infuser ou piler les feuilles des plantes indiquées avant le lavage[cite: 23, 26].
+        * **En Fumigation :** Faire sécher les écorces ou feuilles pour les consumer sur des braises de purification.
+        """)
         
-        m13 = additionner_figures(m9, m10)
-        m14 = additionner_figures(m11, m12)
-        m15 = additionner_figures(m13, m14)
-        m16 = additionner_figures(m1, m15)
+    with tab3:
+        st.subheader("Règles d'Or pour le Praticien et le Consultant")
+        st.markdown(f"""
+        1. **Alignement :** La figure finale exprime l'aboutissement de la Maison 15 (Juge). Ne tentez pas de contrecarrer une figure de Terre par la précipitation, ni une figure de Feu par l'inaction.
+        2. **Intention :** Avant toute manipulation des plantes ou distribution de l'aumône, formulez clairement votre vœu à l'Est[cite: 910, 915, 916].
+        3. **Pureté :** Opérez toujours en état de purification corporelle et spirituelle complète[cite: 910, 914].
+        """)
 
-        theme_complet = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16]
-        
-        m1_fig = identifier_figure(m1)
-        juge = identifier_figure(m15)
-        sentence = identifier_figure(m16)
-        
-        num_ecritures_juge = calculer_cle_ecriture(juge['psaume_nom'])
-        num_ecritures_sentence = calculer_cle_ecriture(sentence['psaume_nom'])
-        
-        id_p_juge = extraire_numero_psaume(juge['psaume_nom'])
-        id_p_sent = extraire_numero_psaume(sentence['psaume_nom'])
-
-        # =====================================================================
-        # SECTION 1 : DE QUOI PARLE LE THÈME
-        # =====================================================================
-        st.header("📖 Orientation Globale : De quoi parle le thème ?")
-        st.write(f"**Analyse de l'intention :** Le consultant se présente sous l'influence spirituelle de la figure **{m1_fig['nom']}** en Maison I. Cela montre que son état d'esprit actuel ou sa situation de départ est marquée par : *{m1_fig['signification']}*")
-        st.write(f"**Le Message du Verdict :** Le Juge suprême (**{juge['nom']}**) indique que la réponse définitive à votre préoccupation majeure (*{question}*) s'articule autour de l'énergie suivante : *{juge['signification']}*")
-
-        st.write("---")
-
-        # =====================================================================
-        # NOUVELLE SECTION 1B : LA CONCLUSION DU THÈME (MAISON 16)
-        # =====================================================================
-        st.header("👑 Sceau de l'Issue : La Conclusion du Thème")
-        st.markdown(
-            f"En géomancie sacrée, la **Maison XVI (La Sentence)** combine l'élan initial du Consultant (M1) et la sentence du Juge (M15). "
-            f"Elle représente l'étape ultime, le décret invisible qui valide la stabilité future de la situation."
-        )
-        
-        st.error(
-            f"**L'Issue Finale est régie par : {sentence['nom']}**\n\n"
-            f"📌 **Verdict de l'avenir :** {sentence['signification']}\n\n"
-            f"💡 *Conseil de l'Oracle :* Pour fixer cette conclusion positivement et dissoudre les derniers pièges, "
-            f"l'application stricte des bains rituels liés au Psaume de la Sentence est obligatoire."
-        )
-
-        st.write("---")
-
-        # =====================================================================
-        # SECTION 2 : DETECTEUR AUTOMATIQUE DE DOUBLONS (PASSATIONS)
-        # =====================================================================
-        st.header("🔄 Analyse des Passations (Messages Cachés des Doublons)")
-        passations_trouvees = {}
-        for idx_a in range(16):
-            nom_a = identifier_figure(theme_complet[idx_a])['nom']
-            for idx_b in range(idx_a + 1, 16):
-                nom_b = identifier_figure(theme_complet[idx_b])['nom']
-                if nom_a == nom_b:
-                    if nom_a not in passations_trouvees:
-                        passations_trouvees[nom_a] = []
-                    passations_trouvees[nom_a].append((idx_a, idx_b))
-
-        if not passations_trouvees:
-            st.info("✨ Aucune passation détectée. Les énergies agissent de manière indépendante.")
-        else:
-            for fig_nom, occurrences in passations_trouvees.items():
-                for (maison_orig, maison_dest) in occurrences:
-                    st.markdown(f"#### 🔁 Passation de **{fig_nom}**")
-                    st.markdown(f"👉 Voyage entre **{NOMS_MAISONS[maison_orig]}** et **{NOMS_MAISONS[maison_dest]}**")
-                    st.caption(f"💡 *Interprétation :* L'énergie liée à votre {NOMS_MAISONS[maison_orig].split(' : ')[1]} influence directement l'évolution de votre {NOMS_MAISONS[maison_dest].split(' : ')[1]}. Vous devez équilibrer la première maison pour libérer la seconde.")
-                st.write("")
-
-        st.write("---")
-
-        # =====================================================================
-        # CARTOGRAPHIE VISUELLE DES 16 MAISONS
-        # =====================================================================
-        st.header("📊 Cartographie Complète des 16 Maisons")
-        
-        st.subheader("🧱 Les 4 Maisons Mères")
-        g1_1, g1_2, g1_3, g1_4 = st.columns(4)
-        for idx, col in enumerate([g1_1, g1_2, g1_3, g1_4]):
-            fig = identifier_figure(theme_complet[idx])
-            with col:
-                st.markdown(f"**{NOMS_MAISONS[idx]}**")
-                st.code(format_visuel_text(theme_complet[idx]))
-                st.markdown(f"🔹 **{fig['nom']}**")
-
-        st.subheader("🌿 Les 4 Maisons Filles")
-        g2_1, g2_2, g2_3, g2_4 = st.columns(4)
-        for idx, col in enumerate([g2_1, g2_2, g2_3, g2_4]):
-            real_idx = idx + 4
-            fig = identifier_figure(theme_complet[real_idx])
-            with col:
-                st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
-                st.code(format_visuel_text(theme_complet[real_idx]))
-                st.markdown(f"🔹 **{fig['nom']}**")
-
-        st.subheader("🍃 Les 4 Maisons Nièces")
-        g3_1, g3_2, g3_3, g3_4 = st.columns(4)
-        for idx, col in enumerate([g3_1, g3_2, g3_3, g3_4]):
-            real_idx = idx + 8
-            fig = identifier_figure(theme_complet[real_idx])
-            with col:
-                st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
-                st.code(format_visuel_text(theme_complet[real_idx]))
-                st.markdown(f"🔹 **{fig['nom']}**")
-
-        st.subheader("⚖️ L'Aéropage & Le Tribunal Décisionnel")
-        g4_1, g4_2, g4_3, g4_4 = st.columns(4)
-        for idx, col in enumerate([g4_1, g4_2, g4_3, g4_4]):
-            real_idx = idx + 12
-            fig = identifier_figure(theme_complet[real_idx])
-            with col:
-                st.markdown(f"**{NOMS_MAISONS[real_idx]}**")
-                st.code(format_visuel_text(theme_complet[real_idx]))
-                st.markdown(f"🔥 **{fig['nom']}**")
-
-        st.write("---")
-
-        # =====================================================================
-        # REMÈDES ET COUPLAGE THÉURGIQUE
-        # =====================================================================
-        st.header("🛡️ Ordonnance Spirituelle & Guide des Bains")
-        tab1, tab2, tab3, tab4 = st.tabs(["📝 Écritures de Base", "🧪 Préparation du Bain", "📐 Carrés (Hatims)", "📦 Sacrifices (Saraka)"])
-        
-        with tab1:
-            st.subheader("📋 Textes à tracer")
-            st.markdown(f"### 🏛️ POUR LE JUGE ({juge['nom']}) — À répéter **{num_ecritures_juge} fois** :")
-            st.info(f"**1. Clé du Psaume :** {juge['cle_psaume']}\n\n**2. Ancrage Biblique :** {juge['verset_biblique']}\n\n**3. Sceau Salomonique :** {juge['texte_salomonique']}")
-            st.markdown(f"### 👑 POUR LA SENTENCE ({sentence['nom']}) — À répéter **{num_ecritures_sentence} fois** :")
-            st.info(f"**1. Clé du Psaume :** {sentence['cle_psaume']}\n\n**2. Ancrage Biblique :** {sentence['verset_biblique']}\n\n**3. Sceau Salomonique :** {sentence['texte_salomonique']}")
-
-        with tab2:
-            st.subheader("🧪 Alchimie des Plantes")
-            st.markdown(f"### 🚿 Protocole pour le Juge ({juge['nom']}) :")
-            st.write(f"🎨 **Encre :** {juge['encre']} | 🧴 **Parfum :** {juge['parfum']} | 🌿 **Plantes :** {juge['plantes']}")
-            st.markdown("---")
-            st.markdown(f"### 🚿 Protocole pour la Sentence ({sentence['nom']}) :")
-            st.write(f"🎨 **Encre :** {sentence['encre']} | 🧴 **Parfum :** {sentence['parfum']} | 🌿 **Plantes :** {sentence['plantes']}")
-
-        with tab3:
-            st.text(generer_carre_magique(id_p_juge))
-            st.text(generer_carre_magique(id_p_sent))
-
-        with tab4:
-            st.success(f"📦 **Aumône Juge ({juge['nom']}) :** {juge['saraka']}")
-            st.warning(f"📦 **Aumône Sentence ({sentence['nom']}) :** {sentence['saraka']}")
+    # Pied de page applicatif
+    st.markdown("---")
+    st.caption("Application Pro d'Interprétation Ramrou — Basée sur la tradition géomantique authentique d'Afrique de l'Ouest[cite: 1, 1089, 1092].")
