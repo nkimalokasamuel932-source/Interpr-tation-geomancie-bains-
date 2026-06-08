@@ -117,3 +117,57 @@ if st.button("Calculer le Protocole de Soin"):
     *Heure actuelle :* **{planete_actuelle}**
     *Si vous êtes en heure {data['planete']}, vous pouvez commencer immédiatement.*
     """)
+    import streamlit as st
+
+# 1. BASE DE DONNÉES COMPLÈTE (Heures et Jours)
+FIGURES_DATA = {
+    "1121": {"nom": "Youssouf", "psaume": "Psaume 35", "jour": "Mardi", "planete": "Mars", "huile": "Laurier noble"},
+    "1222": {"nom": "Adama", "psaume": "Psaume 4", "jour": "Jeudi", "planete": "Jupiter", "huile": "Citron"},
+    "2111": {"nom": "Madiou", "psaume": "Psaume 128", "jour": "Jeudi", "planete": "Jupiter", "huile": "Romarin"},
+    "2212": {"nom": "Idrissa", "psaume": "Psaume 119", "jour": "Vendredi", "planete": "Mercure", "huile": "Menthe"},
+    "1111": {"nom": "Ibrahima", "psaume": "Psaume 120", "jour": "Lundi", "planete": "Lune", "huile": "Cèdre"},
+    "1212": {"nom": "Issa", "psaume": "Psaume 102", "jour": "Mercredi", "planete": "Vénus", "huile": "Encens"},
+    "2122": {"nom": "Oumarou", "psaume": "Psaume 29", "jour": "Mardi", "planete": "Mars", "huile": "Gingembre"},
+    "2221": {"nom": "Ayouba", "psaume": "Psaume 40", "jour": "Samedi", "planete": "Saturne", "huile": "Verveine"},
+    "1122": {"nom": "Abubakar", "psaume": "Psaume 121", "jour": "Dimanche", "planete": "Soleil", "huile": "Rose"},
+    "1221": {"nom": "Massasouleymane", "psaume": "Psaume 142", "jour": "Samedi", "planete": "Saturne", "huile": "Girofle"},
+    "2112": {"nom": "Badra", "psaume": "Psaume 133", "jour": "Mercredi", "planete": "Mercure", "huile": "Curcuma"},
+    "2211": {"nom": "Nouhou", "psaume": "Psaume 59", "jour": "Dimanche", "planete": "Soleil", "huile": "Basilic"},
+    "2222": {"nom": "Moussa", "psaume": "Psaume 47", "jour": "Lundi", "planete": "Lune", "huile": "Thym"},
+    "2121": {"nom": "Ousmane", "psaume": "Psaume 23", "jour": "Jeudi", "planete": "Jupiter", "huile": "Cannelle"},
+    "1112": {"nom": "Allahou", "psaume": "Psaume 59", "jour": "Dimanche", "planete": "Soleil", "huile": "Sauge"},
+    "1211": {"nom": "Fortuna Minor", "psaume": "Psaume 1", "jour": "Vendredi", "planete": "Mercure", "huile": "Anis"}
+}
+
+# 2. LOGIQUE DE CALCUL (inchangée)
+def addition(f1, f2):
+    return "".join(["2" if (int(f1[i]) + int(f2[i])) % 2 == 0 else "1" for i in range(4)])
+
+def calcul_theme(mères):
+    m = [None] + mères
+    m.extend([m[1][0]+m[2][0]+m[3][0]+m[4][0], m[1][1]+m[2][1]+m[3][1]+m[4][1], m[1][2]+m[2][2]+m[3][2]+m[4][2], m[1][3]+m[2][3]+m[3][3]+m[4][3]])
+    m.extend([addition(m[1], m[2]), addition(m[3], m[4]), addition(m[5], m[6]), addition(m[7], m[8])])
+    m.extend([addition(m[9], m[10]), addition(m[11], m[12]), addition(m[13], m[14]), addition(m[1], m[15])])
+    return m
+
+# 3. INTERFACE AVEC TEMPORALITÉ
+st.title("📿 Protocole Temporel Somadjely")
+mères = [st.sidebar.text_input(f"Mère {i}", "1121") for i in range(1, 5)]
+maison_choisie = st.sidebar.number_input("Maison à traiter (1-16)", 1, 16, 2)
+
+if st.button("Générer le Protocole"):
+    theme = calcul_theme(mères)
+    code = theme[maison_choisie]
+    data = FIGURES_DATA.get(code)
+
+    st.success(f"Figure : {data['nom']} (Code: {code})")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write(f"📅 **Jour Sacré** : {data['jour']}")
+        st.write(f"🪐 **Planète régente** : {data['planete']}")
+    with col2:
+        st.write(f"💧 **Huile clé** : {data['huile']}")
+        st.write(f"📖 **Psaume** : {data['psaume']}")
+
+    st.info(f"💡 **Conseil d'application** : Effectuez le bain de Nassi le **{data['jour']}** pendant l'heure régie par **{data['planete']}** pour une efficacité vibratoire maximale.")
