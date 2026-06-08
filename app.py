@@ -82,3 +82,15 @@ if st.button("Lancer le protocole de soin"):
         st.success("Le moment est parfait pour ce rituel : nous sommes sous l'influence de la planète régente.")
     else:
         st.warning(f"Attendez l'heure de {data['planete']} pour optimiser la force vibratoire du Nassi.")
+        # Ajoutez ceci dans votre bloc "if st.button("Lancer le protocole de soin"):"
+INTERPRETATION_MAISON = {
+    1: "Soi-même et vitalité", 2: "Biens et finances", 3: "Entourage et communication",
+    4: "Foyer et racines", 5: "Créativité et enfants", 6: "Santé et travail",
+    7: "Relations et partenaires", 8: "Transformation et héritage", 9: "Spiritualité et loi",
+    10: "Carrière et succès", 11: "Projets et amis", 12: "Épreuves et protections",
+    13: "Résultat final", 14: "Influence extérieure", 15: "Le Juge (Issue)", 16: "Conclusion"
+}
+
+st.write(f"---")
+st.write(f"🔍 **Lecture théurgique** : Vous traitez le domaine de la **Maison {maison_cle} ({INTERPRETATION_MAISON[maison_cle]})**.")
+st.write(f"L'énergie de la figure **{data['nom']}** vient agir ici pour : *{data['signification']}*.")
