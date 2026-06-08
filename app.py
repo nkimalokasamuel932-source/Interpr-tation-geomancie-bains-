@@ -259,7 +259,34 @@ def calcul_theme(mères):
     m.extend([addition(m[1], m[2]), addition(m[3], m[4]), addition(m[5], m[6]), addition(m[7], m[8])])
     m.extend([addition(m[9], m[10]), addition(m[11], m[12]), addition(m[13], m[14]), addition(m[1], m[15])])
     return m
+    
+import streamlit as st
 
+st.set_page_config(page_title="Géomancie Somadjely", layout="wide")
+
+st.title("📿 Système Théurgique Somadjely")
+
+# Utilisation des fonctions natives de Streamlit au lieu du HTML complexe
+st.subheader("Diagnostic Géomantique")
+
+# Exemple simple de structure
+col1, col2 = st.columns(2)
+with col1:
+    st.write("### Analyse des figures")
+    # Remplacez ceci par vos calculs réels
+    st.info("Sélectionnez vos 4 mères pour lancer le calcul.")
+
+with col2:
+    st.write("### Protocole de Soin")
+    st.warning("Le protocole s'affichera ici après calcul.")
+
+# Si vous voulez vraiment intégrer du HTML, faites-le par petits morceaux :
+st.markdown("""
+<div style="background-color: #f0f2f6; padding: 20px; border-radius: 10px;">
+    <h3>Méthode Somadjely</h3>
+    <p>Application du Nassi chrétien sans sacrifice de sang.</p>
+</div>
+""", unsafe_allow_html=True)
 # 3. INTERFACE AVEC TEMPORALITÉ
 st.title("📿 Protocole Temporel Somadjely")
 mères = [st.sidebar.text_input(f"Mère {i}", "1121") for i in range(1, 5)]
