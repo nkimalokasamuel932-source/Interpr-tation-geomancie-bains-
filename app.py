@@ -34,7 +34,68 @@ def get_heure_planetaire():
     # Calcul simplifié basé sur l'ordre chaldéen
     index = (JOURS_DEBUT[jour] + now.hour) % 7
     return PLANETES_CYCLE[index]
+import streamlit as st
 
+# 1. BASE DE DONNÉES THÉURGIQUE ÉTENDUE
+FIGURES_DATA = {
+    "1121": {"nom": "Youssouf", "psaume": "Psaume 35", "verset": "Exode 15:3", "huile": "Laurier noble", "plante": "Feuilles de Laurier"},
+    "1222": {"nom": "Adama", "psaume": "Psaume 4", "verset": "Néhémie 8:10", "huile": "Citron", "plante": "Zeste de Citron"},
+    "2111": {"nom": "Madiou", "psaume": "Psaume 128", "verset": "Exode 20:12", "huile": "Romarin", "plante": "Romarin séché"},
+    "2212": {"nom": "Idrissa", "psaume": "Psaume 119", "verset": "Ésaïe 1:18", "huile": "Menthe", "plante": "Menthe blanche"},
+    "1111": {"nom": "Ibrahima", "psaume": "Psaume 120", "verset": "Psaume 121:8", "huile": "Cèdre", "plante": "Hysope"},
+    "1212": {"nom": "Issa", "psaume": "Psaume 102", "verset": "Joël 2:25", "huile": "Encens", "plante": "Sel bénit"},
+    "2122": {"nom": "Oumarou", "psaume": "Psaume 29", "verset": "Cantique 8:6", "huile": "Gingembre", "plante": "Racine de gingembre"},
+    "2221": {"nom": "Ayouba", "psaume": "Psaume 40", "verset": "Ésaïe 61:3", "huile": "Verveine", "plante": "Verveine"},
+    "1122": {"nom": "Abubakar", "psaume": "Psaume 121", "verset": "Psaume 46:2", "huile": "Rose", "plante": "Pétales de rose"},
+    "1221": {"nom": "Massasouleymane", "psaume": "Psaume 142", "verset": "Ésaïe 22:22", "huile": "Girofle", "plante": "Clous de girofle"},
+    "2112": {"nom": "Badra", "psaume": "Psaume 133", "verset": "Ruth 1:16", "huile": "Curcuma", "plante": "Poudre de curcuma"},
+    "2211": {"nom": "Nouhou", "psaume": "Psaume 59", "verset": "Psaume 68:2", "huile": "Basilic", "plante": "Feuilles de basilic"},
+    "2222": {"nom": "Moussa", "psaume": "Psaume 47", "verset": "Genèse 22:17", "huile": "Thym", "plante": "Thym commun"},
+    "2121": {"nom": "Ousmane", "psaume": "Psaume 23", "verset": "Psaume 23:1", "huile": "Cannelle", "plante": "Bâtons de cannelle"},
+    "1112": {"nom": "Allahou", "psaume": "Psaume 59", "verset": "Proverbes 26:27", "huile": "Sauge", "plante": "Sauge officinale"},
+    "1211": {"nom": "Fortuna Minor", "psaume": "Psaume 1", "verset": "Proverbes 10:22", "huile": "Anis", "plante": "Anis étoilé"}
+}
+
+# 2. LOGIQUE DE CALCUL
+def addition(f1, f2):
+    return "".join(["2" if (int(f1[i]) + int(f2[i])) % 2 == 0 else "1" for i in range(4)])
+
+def calcul_theme(mères):
+    m = [None] + mères
+    # Génération complète (16 maisons)
+    m.extend([m[1][0]+m[2][0]+m[3][0]+m[4][0], m[1][1]+m[2][1]+m[3][1]+m[4][1], m[1][2]+m[2][2]+m[3][2]+m[4][2], m[1][3]+m[2][3]+m[3][3]+m[4][3]])
+    m.extend([addition(m[1], m[2]), addition(m[3], m[4]), addition(m[5], m[6]), addition(m[7], m[8])])
+    m.extend([addition(m[9], m[10]), addition(m[11], m[12]), addition(m[13], m[14]), addition(m[1], m[15])])
+    return m
+
+# 3. INTERFACE
+st.title("📿 Théurgie Somadjely : Protocole NASSI")
+mères = [st.sidebar.text_input(f"Mère {i}", "1121") for i in range(1, 5)]
+maison_choisie = st.sidebar.number_input("Quelle maison traiter (1-16) ?", 1, 16, 2)
+
+if st.button("Générer le Protocole de Soin"):
+    theme = calcul_theme(mères)
+    code = theme[maison_choisie]
+    data = FIGURES_DATA.get(code, {"nom": "Inconnue", "psaume": "N/A", "verset": "N/A", "huile": "N/A", "plante": "N/A"})
+
+    st.success(f"Protocole pour la Maison {maison_choisie} : {data['nom']}")
+    
+    tab1, tab2 = st.tabs(["Ingrédients Sacrés", "Protocole d'Application"])
+    
+    with tab1:
+        st.write(f"🌿 **Plante de base** : {data['plante']}")
+        st.write(f"💧 **Huile Essentielle** : {data['huile']}")
+        st.write(f"📖 **Psaume de Puissance** : {data['psaume']}")
+        st.write(f"📜 **Verset** : *{data['verset']}*")
+        
+    with tab2:
+        st.markdown(f"""
+        1. **Préparation** : Placez-vous face au NORD.
+        2. **Infusion** : Faites bouillir la plante pendant 10 minutes. 
+        3. **Signature** : Dessinez la figure **{code}** sur une feuille, écrivez le verset autour.
+        4. **Nassi** : Dissolvez l'encre dans l'eau infusée après avoir ajouté 3 gouttes de l'huile de **{data['huile']}**.
+        5. **Rituel** : Lavez-vous avec cette eau tiède, récitez le {data['psaume']} sept fois.
+        """)
 # 3. LOGIQUE GÉOMANTIQUE
 def addition(f1, f2):
     return "".join(["2" if (int(f1[i]) + int(f2[i])) % 2 == 0 else "1" for i in range(4)])
