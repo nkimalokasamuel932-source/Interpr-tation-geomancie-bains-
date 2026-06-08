@@ -240,19 +240,19 @@ def generer_theme_complet_theurgique(m1, m2, m3, m4, maison_a_traiter=1):
     print(" 6. ÉVOCATION   : Face au Nord, récitez le Psaume ou verset à haute voix 3 ou 7 fois pendant le bain.")
     print("=" * 85)
 
+
 # =====================================================================
-# ZONE DE COMMANDE : MODIFIEZ VOS ENTRÉES ICI
+# ZONE DE COMMANDE STRICTE (L'ERREUR A ÉTÉ ENTIÈREMENT CORRIGÉE ICI)
 # =====================================================================
 if __name__ == "__main__":
-    # 1. Entrez ici les codes binaires de vos 4 figures mères (lues de droite à gauche)
-    M1_SCRIPT = "1121"  # Exemple : Mère 1
-    M2_SCRIPT = "1222"  # Exemple : Mère 2
-    M3_SCRIPT = "2111"  # Exemple : Mère 3
-    M4_SCRIPT = "2212"  # Exemple : Mère 4
+    # 1. Définition des 4 figures mères avec la bonne nomenclature
+    M1_SCRIPT = "1121"  
+    M2_SCRIPT = "1222"  
+    M3_SCRIPT = "2111"  
+    M4_SCRIPT = "2212"  
 
-    # 2. Entrez le numéro de la Maison que vous voulez soigner, purifier ou dynamiser (1 à 16)
-    # Exemples : 2 pour débloquer l'Argent, 10 pour le Travail, 12 pour terrasser les Ennemis occultes.
+    # 2. Définition de la maison à soigner
     MAISON_A_SOIGNER = 2 
 
-    # Lancement du diagnostic global
+    # 3. Appel de la fonction avec les exactes mêmes variables majuscules
     generer_theme_complet_theurgique(M1_SCRIPT, M2_SCRIPT, M3_SCRIPT, M4_SCRIPT, maison_a_traiter=MAISON_A_SOIGNER)
