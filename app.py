@@ -28,7 +28,11 @@ DICTIONNAIRE_THEURGIQUE = {
     "1211": {"nom": "Fortuna Minor", "plante": "Anis étoilé", "element": "Air", "direction": "OUEST", "vertu": "Succès rapide mais éphémère, étincelle.", "verset": "Proverbes 10:22"}
 }
 
-def generer_theme_complet_theurgique(m1, m2, m3, m4, maison_a_traiter):
+def generer_theme_auto():
+    # Définition des 4 mères par défaut
+    m1, m2, m3, m4 = "1121", "1222", "2111", "2212"
+    maison_cible = 2
+    
     m5 = m1[0] + m2[0] + m3[0] + m4[0]
     m6 = m1[1] + m2[1] + m3[1] + m4[1]
     m7 = m1[2] + m2[2] + m3[2] + m4[2]
@@ -45,26 +49,14 @@ def generer_theme_complet_theurgique(m1, m2, m3, m4, maison_a_traiter):
     maisons = [None, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16]
     labels = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI"]
     
-    print("\n--- RÉSULTATS DU THÈME ---")
+    print("\n--- RÉSULTATS DU THÈME AUTOMATIQUE ---")
     for i in range(1, 17):
         info = DICTIONNAIRE_THEURGIQUE.get(maisons[i], {"nom": "Inconnue"})
         print(f"Maison {labels[i]} : {maisons[i]} ({info['nom']})")
     
-    target = DICTIONNAIRE_THEURGIQUE.get(maisons[maison_a_traiter], {"nom": "N/A", "plante": "N/A", "verset": "N/A", "direction": "N/A"})
-    print(f"\n--- PROTOCOLE MAISON {maison_a_traiter} ---")
+    target = DICTIONNAIRE_THEURGIQUE.get(maisons[maison_cible], {"nom": "N/A", "plante": "N/A", "verset": "N/A", "direction": "N/A"})
+    print(f"\n--- PROTOCOLE MAISON {maison_cible} ---")
     print(f"Plante : {target['plante']}\nVerset : {target['verset']}\nDirection : {target['direction']}")
 
 if __name__ == "__main__":
-    try:
-        print("--- SYSTÈME GÉOMANTIQUE SÉCURISÉ ---")
-        user = input("Identifiant : ")
-        pwd = input("Mot de passe : ")
-        
-        if user == "admin" and pwd == "1234":
-            print("\nAccès validé. Lancement du diagnostic...\n")
-            # Entrez vos mères ici
-            generer_theme_complet_theurgique("1121", "1222", "2111", "2212", 2)
-        else:
-            print("\nAccès refusé.")
-    except Exception as e:
-        print(f"\nErreur technique : {e}")
+    generer_theme_auto()
