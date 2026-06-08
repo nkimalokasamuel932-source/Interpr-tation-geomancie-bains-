@@ -70,3 +70,50 @@ if st.button("Générer le Protocole"):
         st.success(f"Le moment est idéal ! Nous sommes en heure de {heure_actuelle}.")
     else:
         st.warning(f"Heure actuelle : {heure_actuelle}. Attendez l'heure de {data['planete']}.")
+        import streamlit as st
+import datetime
+import math
+
+# 
+
+# 1. DONNÉES PLANÉTAIRES
+PLANETES = ["Saturne", "Jupiter", "Mars", "Soleil", "Vénus", "Mercure", "Lune"]
+PLANETES_PAR_JOUR = {
+    "Monday": ["Lune", "Saturne", "Jupiter", "Mars", "Soleil", "Vénus", "Mercure"],
+    "Tuesday": ["Mars", "Soleil", "Vénus", "Mercure", "Lune", "Saturne", "Jupiter"],
+    "Wednesday": ["Mercure", "Lune", "Saturne", "Jupiter", "Mars", "Soleil", "Vénus"],
+    "Thursday": ["Jupiter", "Mars", "Soleil", "Vénus", "Mercure", "Lune", "Saturne"],
+    "Friday": ["Vénus", "Mercure", "Lune", "Saturne", "Jupiter", "Mars", "Soleil"],
+    "Saturday": ["Saturne", "Jupiter", "Mars", "Soleil", "Vénus", "Mercure", "Lune"],
+    "Sunday": ["Soleil", "Vénus", "Mercure", "Lune", "Saturne", "Jupiter", "Mars"]
+}
+
+def get_heure_planetaire():
+    now = datetime.datetime.now()
+    # Approximation : lever du soleil à 06h, coucher à 18h (ajustable)
+    jour_semaine = now.strftime("%A")
+    heure_actuelle = now.hour
+    
+    # Simple calcul de cycle (0h-24h)
+    index = heure_actuelle % 7
+    return PLANETES_PAR_JOUR[jour_semaine][index]
+
+# 2. INTÉGRATION DANS LE PROTOCOLE
+st.title("📿 Calculateur de Théurgie Somadjely")
+
+# Affichage de l'heure actuelle
+planete_actuelle = get_heure_planetaire()
+st.sidebar.markdown(f"---")
+st.sidebar.write(f"🪐 **Heure Planétaire actuelle** : `{planete_actuelle}`")
+
+if st.button("Calculer le Protocole de Soin"):
+    # ... (logique de calcul du thème identique) ...
+    
+    st.info(f"""
+    **Conseil de Maître :**
+    Votre figure est régie par **{data['planete']}**. 
+    Pour une efficacité maximale, préparez votre Nassi à une heure régie par cette planète.
+    
+    *Heure actuelle :* **{planete_actuelle}**
+    *Si vous êtes en heure {data['planete']}, vous pouvez commencer immédiatement.*
+    """)
