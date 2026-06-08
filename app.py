@@ -256,3 +256,15 @@ if __name__ == "__main__":
 
     # 3. Appel de la fonction avec les exactes mêmes variables majuscules
     generer_theme_complet_theurgique(M1_SCRIPT, M2_SCRIPT, M3_SCRIPT, M4_SCRIPT, maison_a_traiter=MAISON_A_SOIGNER)
+    if __name__ == "__main__":
+    try:
+        user = input("Identifiant : ")
+        pwd = input("Mot de passe : ")
+        if user == "admin" and pwd == "1234":
+            print("Accès validé.")
+            # Entrez vos mères ici
+            generer_theme_complet_theurgique("1121", "1222", "2111", "2212", 2)
+        else:
+            print("Accès refusé.")
+    except Exception as e:
+        print(f"Erreur technique : {e}")
