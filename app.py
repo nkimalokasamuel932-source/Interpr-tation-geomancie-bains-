@@ -4,9 +4,8 @@
 MON_ID_PERSONNEL  = "theurge2026"
 MON_MDP_PERSONNEL = "Salomon777"
 
-
 # ==============================================================================
-# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE CORRIGÉE
+# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE NETTOYÉE DE TOUT RETOUR À LA LIGNE
 # ==============================================================================
 DATA_THEURGIQUE = {
     "Adama": {
@@ -43,7 +42,7 @@ DATA_THEURGIQUE = {
         "domaines": "Relations, diplomatie, réputation",
         "psaume": "Psaume 45",
         "verset_reference": "Verset 2",
-        "verset_texte": "Des paroles pleines de charme bouillonnent dans mon cœur. Je dis : Mon œuvre est pour le roi ! Que ma langue soit comme la plume d'un habile écrivain !",
+        "verset_texte": "Des paroles pleines de charme bouillonnent dans mon cœur. Je dis : Mon œuvre est pour le roi !",
         "huile": "Géranium ou Rose de Damas",
         "moment_bain": "Matin ou avant une sortie",
         "usage": "Harmonie familiale, retour d'affection, séduction, charisme commercial et paix."
@@ -160,10 +159,10 @@ DATA_THEURGIQUE = {
         "domaines": "Contrainte, procédure juridique, stagnation",
         "psaume": "Psaume 142",
         "verset_reference": "Verset 8",
-        "verset_texte": "Tire mon âme de sa prison, afin que je célèbre ton nom ! Les justes viendront m'entourer, quand tu m'auras fait du bien.",
+        "verset_texte": "Tire mon âme de sa prison, afin que je célèbre ton nom !",
         "huile": "Cyprès de Provence",
         "moment_bain": "Soir (Libération)",
-        "usage": "Sortir des dettes étouffantes, clore définitivement un problème, briser les blocages juridiques."
+        "usage": "Sortir des dettes étouffantes, clore définitivement un problème, briser les blocages."
     },
     "Goundo (ou Tchebissaba)": {
         "nom_africain_synonyme": "Ngansa",
@@ -189,7 +188,7 @@ DATA_THEURGIQUE = {
         "verset_texte": "Tu as changé mon deuil en allégresse, tu as délié mon sac, et tu m'as ceint de joie.",
         "huile": "Citronnelle ou Eucalyptus",
         "moment_bain": "Soir (Déracinement / Consolidation)",
-        "usage": "Bain de consolidation des acquis, ancrage spirituel, protection de la maison et déracinement des tristesses."
+        "usage": "Bain de consolidation des acquis, ancrage spirituel, protection de la maison."
     },
     "Adama-Lomara": {
         "nom_africain_synonyme": "Lahoussana",
@@ -202,7 +201,7 @@ DATA_THEURGIQUE = {
         "verset_texte": "Je les brise, et ils ne peuvent se relever ; ils tombent sous mes pieds.",
         "huile": "Clou de Girofle",
         "moment_bain": "Soir (Coupure nette, ne pas s'essuyer)",
-        "usage": "Bain de coupure radicale. Nettoyage karmique, chasser un ennemi tenace et finir un cycle négatif."
+        "usage": "Bain de coupure radicale. Nettoyage karmique, chasser un ennemi tenace."
     },
     "Lomara Blen": {
         "nom_africain_synonyme": "Lomara",
@@ -215,4 +214,90 @@ DATA_THEURGIQUE = {
         "verset_texte": "Éternel ! Attaque ceux qui m'attaquent, combats ceux qui me combattent !",
         "huile": "Cannelle (Écorce)",
         "moment_bain": "Soir (Coucher, ne pas s'essuyer)",
-        "usage": "Retour
+        "usage": "Retour à l'envoyeur puissant, briser les mauvais sorts immédiatement (Bain de choc)."
+    }
+}
+
+SIGNIFICATION_MAISONS = {
+    1: "Maison de l'Auteur (Le Consultant, son état présent, ses pensées)",
+    2: "Maison des Biens (Finances, commerce, possessions matérielles)",
+    3: "Maison de l'Entourage (Proches, frères, petites démarches, nouvelles)",
+    4: "Maison du Patrimoine (Foyer, le père, la maison, dénouement des affaires)",
+    5: "Maison des Enfants (Amours, plaisirs, chance pure, créativité)",
+    6: "Maison des Malaises (Santé, obstacles subis, travail quotidien)",
+    7: "Maison de l'Union (Conjoint, partenariats, contrats, adversaire connu)",
+    8: "Maison de la Mort (Transformations, crises, héritages, capitaux externes)",
+    9: "Maison des Voyages (Spiritualité, l'étranger, études, grands projets)",
+    10: "Maison du Pouvoir (Carrière, honneurs, position sociale, autorité)",
+    11: "Maison des Appuis (Soutiens, amis fidèles, espoirs secrets)",
+    12: "Maison des Obstacles (Ennemis cachés, épreuves secrètes, blocages occultes)",
+    13: "Maison du Résultat (Conclusion directe, ce qui se matérialise)",
+    14: "Maison des Conséquences (Le futur proche, ce qui se développe après)",
+    15: "Maison de la Clarté (Le Témoin du thème, l'ambiance générale)",
+    16: "Maison de la Sentence (Le Décret final de la consultation)"
+}
+
+THEME_DYNAMIQUE = {
+    1: "Adama",          
+    2: "Idrissa",        
+    3: "Mahamadou",      
+    4: "Tontigui",       
+    5: "Bila",           
+    6: "Mavour",         
+    7: "Lomara Blen",    
+    8: "Yousouf",        
+    9: "Massa Solomane", 
+    10: "Idrissa",       
+    11: "Kalalahou",     
+    12: "Mangossi",      
+    13: "Mori-Zoumana",  
+    14: "Adama-Lomara",  
+    15: "Goundo",        
+    16: "Nouhou-Koro"    
+}
+
+def interpreter_mouvement_geomantique(theme):
+    print("=" * 95)
+    print(" 🔮 RAPPORT DE CONSULTATION GÉOMANTIQUE SÉCURISÉ")
+    print("=" * 95)
+    
+    for maison, nom_fig in theme.items():
+        clef_exacte = None
+        for clef in DATA_THEURGIQUE.keys():
+            if nom_fig.lower() in clef.lower():
+                clef_exacte = clef
+                break
+                
+        if not clef_exacte:
+            continue
+            
+        f_data = DATA_THEURGIQUE[clef_exacte]
+        desc_maison = SIGNIFICATION_MAISONS[maison]
+        
+        print(f"\n🏠 MAISON {maison} : {desc_maison}")
+        print(f"   ▶ Figure Active : {clef_exacte} (Tableau : {f_data['nom_africain_synonyme']})")
+        print(f"   ▶ Tempérament   : [{f_data['nature'].upper()}]")
+        print(f"   ▶ Signification  : {f_data['signification']} ➔ {f_data['domaines']}")
+        
+        if "Mauvais" in f_data["nature"]:
+            print(f"   ❌ DIAGNOSTIC  : Courant négatif bloquant ce secteur.")
+            print(f"   🛁 SOLUTION REQUIS : Préparer un bain d'huile essentielle de {f_data['huile']}.")
+            print(f"   📜 SCRIPTURE   : {f_data['psaume']} ({f_data['verset_reference']}) : \"{f_data['verset_texte']}\"")
+        else:
+            print(f"   ✨ DIAGNOSTIC  : Lumière présente. Aucun obstacle majeur.")
+            print(f"   🛁 PERFECTION  : Consolider l'apport avec le bain du matin : {f_data['usage']}")
+            print(f"   📜 MOTS SAINTS : \"{f_data['verset_texte']}\"")
+        print("-" * 95)
+
+def verifier_acces_global(identifiant, mot_de_passe):
+    secret_id = "theurge2026"
+    secret_mdp = "Salomon777"
+    if identifiant == secret_id and mot_de_passe == secret_mdp:
+        return True
+    return False
+
+if __name__ == "__main__":
+    if verifier_acces_global(MON_ID_PERSONNEL, MON_MDP_PERSONNEL):
+        interpreter_mouvement_geomantique(THEME_DYNAMIQUE)
+    else:
+        print("❌ ERREUR DE SÉCURITÉ : Identifiant ou Mot de passe invalide tout en haut du script.")
