@@ -1,28 +1,12 @@
 # ==============================================================================
-# SYSTÈME D'ACCÈS SÉCURISÉ (VERSION SANS BLOCAGE)
+# CONFIGURATION DE VOS ACCÈS (MODIFIABLE ICI COMPLEMENT DE MANIÈRE VISIBLE)
 # ==============================================================================
-IDENTIFIANT_SECRET = "theurge2026"
-MOT_DE_PASSE_SECRET = "Salomon777"
-
-def authentification_directe(identifiant, mot_de_passe):
-    """Vérifie les accès sans bloquer le terminal."""
-    print("\n" + "░" * 60)
-    print(" 🔐 CONNEXION À LA BASE DE DONNÉES GÉOMANTIQUE PRO")
-    print("░" * 60)
-    print(f"👤 Identifiant fourni : {identifiant}")
-    
-    if identifiant == IDENTIFIANT_SECRET and mot_de_passe == MOT_DE_PASSE_SECRET:
-        print(" [✓] Authentification réussie. Ouverture des canaux théurgiques...")
-        print("░" * 60 + "\n")
-        return True
-    else:
-        print(" [❌] Échec de la connexion. Les secrets restent verrouillés.")
-        print("░" * 60 + "\n")
-        return False
+MON_ID_PERSONNEL  = "theurge2026"
+MON_MDP_PERSONNEL = "Salomon777"
 
 
 # ==============================================================================
-# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE SYNCHRONISÉE
+# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE CORRIGÉE
 # ==============================================================================
 DATA_THEURGIQUE = {
     "Adama": {
@@ -98,7 +82,7 @@ DATA_THEURGIQUE = {
         "domaines": "Opinions publiques, soutien social, élections",
         "psaume": "Psaume 4",
         "verset_reference": "Verset 7",
-        "verset_texte": "Plusieurs disent : Who will show us any good? Lord, lift up the light of your countenance upon us.",
+        "verset_texte": "Fais lever sur nous la lumière de ta face, ô Éternel !",
         "huile": "Orange Douce ou Bergamote",
         "moment_bain": "Matin",
         "usage": "Succès rapide et brillant, protection discrète au quotidien, dynamisme."
@@ -255,7 +239,7 @@ SIGNIFICATION_MAISONS = {
 }
 
 # ==============================================================================
-# LE THÈME TRACÉ (LES FIGURES DE VOTRE TIRAGE)
+# LE THÈME TRACÉ (LES FIGURES EN MOUVEMENT)
 # ==============================================================================
 THEME_DYNAMIQUE = {
     1: "Adama",          
@@ -277,11 +261,11 @@ THEME_DYNAMIQUE = {
 }
 
 # ==============================================================================
-# MOTEUR D'INTERPRÉTATION GÉOMANTIQUE ET THÉURGIQUE
+# LE MOTEUR DU SYSTÈME SANS VERROUILLAGE REPLIT/JUPYTER
 # ==============================================================================
 def interpreter_mouvement_geomantique(theme):
     print("=" * 95)
-    print(" 🔮 ANALYSE ET RECOMMANDATIONS BASÉES SUR LE TABLEAU DE VOS FIGURES GÉOMANTIQUES")
+    print(" 🔮 RAPPORT DE CONSULTATION COMPLET SÉCURISÉ")
     print("=" * 95)
     
     for maison, nom_fig in theme.items():
@@ -298,27 +282,10 @@ def interpreter_mouvement_geomantique(theme):
         desc_maison = SIGNIFICATION_MAISONS[maison]
         
         print(f"\n🏠 MAISON {maison} : {desc_maison}")
-        print(f"   ▶ Figure Active : {clef_exacte} (Équivalent Tableau : {f_data['nom_africain_synonyme']})")
-        print(f"   ▶ Statut / Nature: [{f_data['nature'].upper()}]")
+        print(f"   ▶ Figure Active : {clef_exacte} (Tableau : {f_data['nom_africain_synonyme']})")
+        print(f"   ▶ Tempérament   : [{f_data['nature'].upper()}]")
         print(f"   ▶ Signification  : {f_data['signification']} ➔ {f_data['domaines']}")
         
         if "Mauvais" in f_data["nature"]:
-            print(f"   ❌ DIAGNOSTIC  : Alerte de blocage ou perturbation sur ce secteur.")
-            print(f"   🛁 RITUEL DE SOIN: Faire le Bain Théurgique à base de : {f_data['huile']}.")
-            print(f"   📜 CONSEIL VOCAL: Activer la clé : {f_data['psaume']} ({f_data['verset_reference']}) ➔ \"{f_data['verset_texte']}\"")
-        else:
-            print(f"   ✨ DIAGNOSTIC  : Courant porteur favorable. Énergie d'ouverture.")
-            print(f"   🛁 SCELLAGE    : Soutenir la vibration avec l'huile : {f_data['huile']} ({f_data['moment_bain']}).")
-            print(f"   📜 MOT DE FORCE: Répéter l'affirmation scripturaire : \"{f_data['verset_texte']}\"")
-        print("-" * 95)
-
-# ==============================================================================
-# ENCLENCHEMENT DIRECT SANS ACCROC
-# ==============================================================================
-if __name__ == "__main__":
-    # Remplis tes informations ici à la place des chaînes de texte si tu veux tester l'erreur
-    MON_ID = "theurge2026"
-    MON_MDP = "Salomon777"
-    
-    if authentification_directe(MON_ID, MON_MDP):
-        interpreter_mouvement_geomantique(THEME_DYNAMIQUE)
+            print(f"   ❌ DIAGNOSTIC  : Courant négatif bloquant ce secteur.")
+            print(f"   🛁 SOLUTION REQUIS : Préparer un bain d'huile
