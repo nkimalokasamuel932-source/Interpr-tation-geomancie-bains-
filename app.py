@@ -1,7 +1,33 @@
 # ==============================================================================
-# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE ALIGNÉE (SYNCHRONISATION DES SIGNIFICATIONS)
+# SYSTÈME D'ACCÈS SÉCURISÉ (MODIFIABLE)
 # ==============================================================================
+IDENTIFIANT_SECRET = "theurge2026"
+MOT_DE_PASSE_SECRET = "Salomon777"
 
+def authentification():
+    """Efface l'écran visuellement (page blanche) et demande les accès."""
+    import os
+    # Nettoyage de la console pour faire place nette (page blanche)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    print("=" * 60)
+    print(" 🔐 BASE DE DONNÉES GÉOMANTIQUE PRO - ACCÈS SÉCURISÉ")
+    print("=" * 60)
+    
+    id_entre = input("👤 Entrez votre Identifiant : ").strip()
+    mdp_entre = input("🔑 Entrez votre Mot de Passe : ").strip()
+    
+    if id_entre == IDENTIFIANT_SECRET and mdp_entre == MOT_DE_PASSE_SECRET:
+        print("\n [✓] Accès accordé. Initialisation des secrets théurgiques...")
+        return True
+    else:
+        print("\n [❌] Accès refusé. Identifiants incorrects.")
+        return False
+
+
+# ==============================================================================
+# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE ALIGNÉE
+# ==============================================================================
 DATA_THEURGIQUE = {
     "Adama": {
         "nom_africain_synonyme": "Mahadi",
@@ -47,7 +73,7 @@ DATA_THEURGIQUE = {
         "nom_latin": "PUER (Le Garçon)",
         "nature": "Plutôt Bénéfique (ambivalent)",
         "signification": "Jeunesse, énergie, courage, action",
-        "domaines": "Action, aventure, compétition, défense",
+        "domaines": "Action, aventure, compétition, defense",
         "psaume": "Psaume 144",
         "verset_reference": "Verset 1",
         "verset_texte": "Béni soit l'Éternel, mon rocher, qui exerce mes mains au combat, mes doigts à la bataille !",
@@ -234,35 +260,33 @@ SIGNIFICATION_MAISONS = {
 
 
 # ==============================================================================
-# ESPACE DE SAISIE DU THÈME EN MOUVEMENT (LIÉ À VOTRE TIRAGE)
+# LE THÈME TRACÉ (LES FIGURES EN MOUVEMENT EN MAISON 1 À 16)
 # ==============================================================================
-
 THEME_DYNAMIQUE = {
-    1: "Adama",          # Mahadi bouge en M1
-    2: "Idrissa",        # Soumana bouge en M2
-    3: "Mahamadou",      # Moussa bouge en M3
-    4: "Tontigui",       # Tontigui bouge en M4
-    5: "Bila",           # Allahou_Tallah bouge en M5
-    6: "Mavour",         # Bayada bouge en M6
-    7: "Lomara Blen",    # Lomara bouge en M7
-    8: "Yousouf",        # Nouhou bouge en M8
-    9: "Massa Solomane", # Faventina bouge en M9
-    10: "Idrissa",       # Soumana bouge en M10
-    11: "Kalalahou",     # Ali_Badara bouge en M11
-    12: "Mangossi",      # Massa_Solo bouge en M12
-    13: "Mori-Zoumana",  # Talki bouge en M13
-    14: "Adama-Lomara",  # Lahoussana bouge en M14
-    15: "Goundo",        # Ngansa bouge en M15
-    16: "Nouhou-Koro"    # Mangoussi bouge en M16
+    1: "Adama",          
+    2: "Idrissa",        
+    3: "Mahamadou",      
+    4: "Tontigui",       
+    5: "Bila",           
+    6: "Mavour",         
+    7: "Lomara Blen",    
+    8: "Yousouf",        
+    9: "Massa Solomane", 
+    10: "Idrissa",       
+    11: "Kalalahou",     
+    12: "Mangossi",      
+    13: "Mori-Zoumana",  
+    14: "Adama-Lomara",  
+    15: "Goundo",        
+    16: "Nouhou-Koro"    
 }
 
 
 # ==============================================================================
-# MOTEUR D'INTERPRÉTATION STRICTE BASÉ SUR VOS SIGNIFICATIONS
+# ENGIN D'INTERPRÉTATION
 # ==============================================================================
-
 def interpreter_mouvement_geomantique(theme):
-    print("=" * 90)
+    print("\n" + "=" * 90)
     print(" 🔮 RAPPORT DIVINATOIRE STRUCTURÉ SUR VOS SIGNIFICATIONS GÉOMANTIQUES")
     print("=" * 90)
     
@@ -282,9 +306,8 @@ def interpreter_mouvement_geomantique(theme):
         print(f"\n🏠 MAISON {maison} : {desc_maison}")
         print(f"   ▶ Figure   : {clef_exacte} (Nom géomantique : {f_data['nom_africain_synonyme']})")
         print(f"   ▶ Nature   : [{f_data['nature'].upper()}]")
-        print(f"   ▶ Message  : {f_data['signification']} -> S'applique directement au domaine : {f_data['domaines']}")
+        print(f"   ▶ Message  : {f_data['signification']} -> Domaine : {f_data['domaines']}")
         
-        # Application théurgique corrective
         if "Mauvais" in f_data["nature"]:
             print(f"   ❌ IMPACT  : Blocage identifié. Cette figure altère la maison.")
             print(f"   🛁 SOLUTION: Faire le bain avec l'huile de {f_data['huile']} ({f_data['moment_bain']}).")
@@ -295,5 +318,12 @@ def interpreter_mouvement_geomantique(theme):
             print(f"   📜 VERSET  : \"{f_data['verset_texte']}\"")
         print("-" * 90)
 
+
+# ==============================================================================
+# POINT D'ENTRÉE DU SCRIPT
+# ==============================================================================
 if __name__ == "__main__":
-    interpreter_mouvement_geomantique(THEME_DYNAMIQUE)
+    # Déclenchement de la vérification de sécurité sur la page blanche
+    if authentification():
+        # Si OK, le script affiche les résultats de l'interprétation
+        interpreter_mouvement_geomantique(THEME_DYNAMIQUE)
