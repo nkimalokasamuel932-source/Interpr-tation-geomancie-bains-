@@ -1,6 +1,177 @@
 # -*- coding: utf-8 -*-
 import streamlit as st
+# Base de données Théurgique et Africaine Pro
+# Enrichie avec les textes intégraux des versets de Salomon pour les bains
 
+DATA_THEURGIQUE = {
+    "Bila (ou Sira)": {
+        "nom_latin": "VIA (La Voie)",
+        "psaume": "Psaume 23",
+        "verset_reference": "Verset 3",
+        "verset_texte": "Il restaure mon âme, il me conduit dans les sentiers de la justice, à cause de son nom.",
+        "huile": "Menthe Poivrée",
+        "moment_bain": "Matin (Lever du soleil)",
+        "usage": "Ouvrir les routes, débloquer les voies sans issue, accélérer la chance."
+    },
+    "Tontigui (ou Gariya)": {
+        "nom_latin": "POPULUS / POPA CAS (Le Peuple)",
+        "psaume": "Psaume 91",
+        "verset_reference": "Verset 11",
+        "verset_texte": "Car il ordonnera à ses anges de te garder dans toutes tes voies.",
+        "huile": "Arbre à Thé (Tea Tree)",
+        "moment_bain": "Matin ou Soir (Protection continue)",
+        "usage": "Protection blindée contre les complots de la foule, les jalousies et le public."
+    },
+    "Allou Badra (ou Aliou Badra)": {
+        "nom_latin": "PUER (Le Garçon)",
+        "psaume": "Psaume 144",
+        "verset_reference": "Verset 1",
+        "verset_texte": "Béni soit l'Éternel, mon rocher, qui exerce mes mains au combat, mes doigts à la bataille !",
+        "huile": "Gingembre",
+        "moment_bain": "Matin (Action / Dynamisme)",
+        "usage": "Force, courage, victoire éclatante lors d'un conflit, d'une rivalité ou d'un procès."
+    },
+    "Massa Solomane": {
+        "nom_latin": "PUELLA (La Fille)",
+        "psaume": "Psaume 45",
+        "verset_reference": "Verset 2",
+        "verset_texte": "Des paroles pleines de charme bouillonnent dans mon cœur. Je dis : Mon œuvre est pour le roi ! Que ma langue soit comme la plume d'un habile écrivain !",
+        "huile": "Géranium ou Rose de Damas",
+        "moment_bain": "Matin ou avant une sortie",
+        "usage": "Harmonie familiale, retour d'affection, séduction, charisme commercial et paix."
+    },
+    "Mavour (ou Inzan)": {
+        "nom_latin": "ALBUS (Le Blanc)",
+        "psaume": "Psaume 119",
+        "verset_reference": "Verset 105",
+        "verset_texte": "Ta parole est une lampe à mes pieds, et une lumière sur mon sentier.",
+        "huile": "Encens d'Oliban",
+        "moment_bain": "Soir (Méditation et clarté)",
+        "usage": "Clarté mentale, intuition pour les affaires, haute protection et sagesse spirituelle."
+    },
+    "Lomara Blen": {
+        "nom_latin": "RUBEUS (Le Rouge)",
+        "psaume": "Psaume 35",
+        "verset_reference": "Verset 1",
+        "verset_texte": "Éternel ! Attaque ceux qui m'attaquent, combats ceux qui me combattent !",
+        "huile": "Cannelle (Écorce)",
+        "moment_bain": "Soir (Coucher, ne pas s'essuyer)",
+        "usage": "Retour à l'envoyeur puissant, briser les mauvais sorts immédiatement (Bain de choc)."
+    },
+    "Goundo (ou Tchebissaba)": {
+        "nom_latin": "AMISSIO (La Perte)",
+        "psaume": "Psaume 51",
+        "verset_reference": "Verset 12",
+        "verset_texte": "Ô Dieu ! crée en moi un cœur pur, renouvelle en moi un esprit bien disposé.",
+        "huile": "Lavande Vraie",
+        "moment_bain": "Soir (Purification)",
+        "usage": "Purification des blocages internes, détachement des erreurs du passé, effacement des dettes."
+    },
+    "Kalalahou": {
+        "nom_latin": "CONIUNCTIO (L'Union)",
+        "psaume": "Psaume 133",
+        "verset_reference": "Verset 1",
+        "verset_texte": "Voici, qu'il est agréable, qu'il est doux pour des frères de demeurer ensemble !",
+        "huile": "Ylang-Ylang",
+        "moment_bain": "Matin (Alliances et contrats)",
+        "usage": "Sceller des contrats de partenariat, accords commerciaux solides, unions ou mariages."
+    },
+    "Yousouf (ou Asidika)": {
+        "nom_latin": "FORTUNA MAJOR (La Grande Fortune)",
+        "psaume": "Psaume 20",
+        "verset_reference": "Verset 5",
+        "verset_texte": "Qu'il te donne ce que ton cœur désire, et qu'il accomplisse tous tes desseins !",
+        "huile": "Laurier Noble",
+        "moment_bain": "Matin (Bain de Royauté)",
+        "usage": "Bain de Royauté. Grande chance financière, succès total aux examens, jeux et concours."
+    },
+    "Mahamadou (ou Moussa)": {
+        "nom_latin": "FORTUNA MINOR (La Petite Fortune)",
+        "psaume": "Psaume 4",
+        "verset_reference": "Verset 7",
+        "verset_texte": "Plusieurs disent : Qui nous fera voir le bonheur ? Fais lever sur nous la lumière de ta face, ô Éternel !",
+        "huile": "Orange Douce ou Bergamote",
+        "moment_bain": "Matin",
+        "usage": "Succès rapide et brillant, protection discrète au quotidien, dynamisme."
+    },
+    "Idrissa": {
+        "nom_latin": "ACQUISITIO / ARQUISITIO (Le Gain)",
+        "psaume": "Psaume 112",
+        "verset_reference": "Verset 3",
+        "verset_texte": "Il a dans sa maison bien-être et richesse, et sa justice subsiste à jamais.",
+        "huile": "Patchouli",
+        "moment_bain": "Matin (Attraction commerciale)",
+        "usage": "Attraction financière magnétique, prospérité dans le commerce et rentrées d'argent."
+    },
+    "Mangossi": {
+        "nom_latin": "CARCER (La Prison)",
+        "psaume": "Psaume 142",
+        "verset_reference": "Verset 8",
+        "verset_texte": "Tire mon âme de sa prison, afin que je célèbre ton nom ! Les justes viendront m'entourer, quand tu m'auras fait du bien.",
+        "huile": "Cyprès de Provence",
+        "moment_bain": "Soir (Libération)",
+        "usage": "Sortir des dettes étouffantes, clore définitivement un problème, briser les blocages juridiques."
+    },
+    "Nouhou-Koro": {
+        "nom_latin": "TRISTITIA / PRISTITIA (La Tristesse)",
+        "psaume": "Psaume 30",
+        "verset_reference": "Verset 12",
+        "verset_texte": "Tu as changé mon deuil en allégresse, tu as délié mon sac, et tu m'as ceint de joie.",
+        "huile": "Citronnelle ou Eucalyptus",
+        "moment_bain": "Soir (Déracinement / Consolidation)",
+        "usage": "Bain de consolidation des acquis, ancrage spirituel, protection de la maison et déracinement des tristesses."
+    },
+    "Mori-Zoumana": {
+        "nom_latin": "LAETITIA (La Joie)",
+        "psaume": "Psaume 100",
+        "verset_reference": "Verset 2",
+        "verset_texte": "Servez l'Éternel avec joie, venez avec allégresse en sa présence !",
+        "huile": "Pamplemousse",
+        "moment_bain": "Matin (Ouverture sociale)",
+        "usage": "Attirer la bonne humeur, la fête, les faveurs des personnes influentes et la chance spontanée."
+    },
+    "Adama": {
+        "nom_latin": "CAPUT DRACONIS (La Tête de Dragon)",
+        "psaume": "Psaume 8",
+        "verset_reference": "Verset 6",
+        "verset_texte": "Tu lui as donné l'empire sur les œuvres de tes mains, tu as tout mis sous ses pieds.",
+        "huile": "Cèdre de l'Atlas",
+        "moment_bain": "Matin (Élévation / Autorité)",
+        "usage": "Élévation sociale, prise de poste de direction, charisme de leader et initiation spirituelle."
+    },
+    "Adama-Lomara": {
+        "nom_latin": "CAUDA DRACONIS (La Queue de Dragon)",
+        "psaume": "Psaume 18",
+        "verset_reference": "Verset 38",
+        "verset_texte": "Je les brise, et ils ne peuvent se relever ; ils tombent sous mes pieds.",
+        "huile": "Clou de Girofle",
+        "moment_bain": "Soir (Coupure nette, ne pas s'essuyer)",
+        "usage": "Bain de coupure radicale. Nettoyage karmique, chasser un ennemi tenace et finir un cycle négatif."
+    }
+}
+
+# --- TEXTES TEXTES SALOMONIQUES BIBLIQUES DE CONSÉCRATION ---
+# À utiliser pour consacrer et réveiller l'eau du bain avant d'y ajouter les huiles et les versets spécifiques.
+
+TEXTES_SALOMONIQUES = {
+    "Sagesse_Et_Appel_De_Salomon": (
+        "1 Rois 3:9 - 'Accorde donc à ton serviteur un cœur intelligent pour juger ton peuple, "
+        "pour discerner le bien du mal ! Car qui pourrait juger ton peuple, ce peuple si nombreux ?' "
+        "[Utilisé pour activer l'intelligence et la direction divine avant le bain]."
+    ),
+    "Priere_Royale_De_Salomon": (
+        "2 Chroniques 1:12 - 'La sagesse et l'intelligence te sont accordées. "
+        "Je te donnerai en outre des richesses, des biens et de la gloire, "
+        "comme n'en a jamais eu aucun roi avant toi, et comme n'en aura aucun après toi.' "
+        "[Idéal pour oindre et charger les bains de type Yousouf, Idrissa ou Adama]."
+    ),
+    "Consecration_De_L_Eau": (
+        "Psaume 29:3-4 - 'La voix de l'Éternel retentit sur les eaux, "
+        "Le Dieu de gloire fait tonner le tonnerre, L'Éternel est sur les grandes eaux. "
+        "La voix de l'Éternel est puissante, La voix de l'Éternel est majestueuse.' "
+        "[À réciter en remuant l'eau du bain 3 fois avec la main droite pour l'allumer spirituellement]."
+    )
+}
 # =====================================================================
 # 1. DICTIONNAIRE HARMONISÉ DES 16 FIGURES (CODES BINAIRES UNIQUES)
 # =====================================================================
