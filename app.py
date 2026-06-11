@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Configuration de la page
-st.set_page_config(page_title="Système Théurgique Géomancie Rectifiée", page_icon="🔮", layout="wide")
+st.set_page_config(page_title="Système Théurgique - Saisie 16 Maisons", page_icon="🔮", layout="wide")
 
 # ==============================================================================
 # ACCÈS SÉCURISÉS
@@ -43,7 +43,7 @@ DATA = {
         "huile": "Cèdre de l'Atlas", 
         "aromatiques": "Basilic sacré (Tulsi), Romarin officinal, Curcuma en poudre",
         "zikr": "Ya Rafi'u (Ô Celui qui élève) — 351 fois + Nom Salomonique : ADONAI MELEKH",
-        "priere_salomonique": "Ô Seigneur Souverain, Roi de la Terre, ADONAI MELEKH, Toi qui as façonné l'homme de poussière et d'esprit et l'as couronné de gloire. Par cette onction et ce bain de feu, confère-moi l'empire légitime sur la matière. Éloigne de mes mains le spectre du manque. Que l'abondance infinie se prosterne à mes pieds. Amen.",
+        "priere_salomonique": "Ô Seigneur Souverain, Roi de la Terre, ADONAI MELEKH, Toi qui as façonne l'homme de poussière et d'esprit et l'as couronné de gloire. Par cette onction et ce bain de feu, confère-moi l'empire légitime sur la matière. Éloigne de mes mains le spectre du manque. Que l'abondance infinie se prosterne à mes pieds. Amen.",
         "mots_application": "Que l'abondance matérielle et l'élévation financière s'installent durablement. Amen.", "moment": "Matin",
         "savon_additifs": "Une demi-cuillère à café de curcuma pur en poudre pour la couleur or et la fixation financière, avec du romarin séché émietté."
     },
@@ -120,7 +120,7 @@ DATA = {
         "maison_repos": 7, "nom_maison_repos": "M7 (Adversaires / Époux)", "plante": "Gababelé",
         "txt": "Maison des adversaires, des rivaux, des conflits déclarés, du mariage et des partenaires.",
         "psaume": "Psaume 35", "verset": "Verset 1", 
-        "texte_biblique": "Éternel ! Attaque ceux qui m'attaquent, combats ceux qui me combatte !",
+        "texte_biblique": "Éternel ! Attaque ceux qui m'attaquent, combats ceux qui me combattent !",
         "zikr_verset": "Réciter le Verset 1 du Psaume 35 vigoureusement 71 fois face à l'Est en cas de conflit avéré.",
         "repetitions": "71",
         "bain_preparation": "Préparer une eau de combat tiède en infusant du Gababelé broyé avec du gingembre frais émincé.",
@@ -145,7 +145,7 @@ DATA = {
         "huile": "Cyprès de Provence", 
         "aromatiques": "Sauge officinale, Racine de Gingembre, Charbon de bois",
         "zikr": "Ya Moukhrij (Ô Celui qui fait sortir) — 201 fois + Nom Salomonique : AGLA",
-        "priere_salomonique": "Souverain Éternel, Force immuable, AGLA, Toi qui as les clés des abîmes et de la vie. Entends mon cri du fond de la fosse. Brise les portes d'airain et les verrous de fer de ma prison existentielle. Tire mon âme de l'angoisse et fais-moi remonter vers la lumière. Amen.",
+        "priere_salomonique": "Souverain Éternel, Force immuable, AGLA, Toi qui as les clés des abîmes et de la via. Entends mon cri du fond de la fosse. Brise les portes d'airain et les verrous de fer de ma prison existentielle. Tire mon âme de l'angoisse et fais-moi remonter vers la lumière. Amen.",
         "mots_application": "Je me libère des angoisses, des blocages et de toute forme d'enfermement. Amen.", "moment": "Soir",
         "savon_additifs": "Sauge officinale réduite en poudre et une pincée de charbon actif végétal pour l'absorption des impuretés astrales."
     },
@@ -294,33 +294,6 @@ MAISONS_NOMINATIVES = {
     13: "M13 (Témoin Droite)", 14: "M14 (Témoin Gauche)", 15: "M15 (Conclusion)", 16: "M16 (Le Décret)"
 }
 
-# ==============================================================================
-# FONCTIONS DE CALCULS GÉOMANTIQUES
-# ==============================================================================
-def additionner_lignes(fig1, fig2):
-    c1 = DATA[fig1]["code"]
-    c2 = DATA[fig2]["code"]
-    nouveau_code = []
-    for i in range(4):
-        total = c1[i] + c2[i]
-        nouveau_code.append(2 if total % 2 == 0 else 1)
-    for nom, bloc in DATA.items():
-        if bloc["code"] == tuple(nouveau_code):
-            return nom
-    return fig1
-
-def generer_fille(m1, m2, m3, m4, index_ligne):
-    code_fille = (
-        DATA[m1]["code"][index_ligne],
-        DATA[m2]["code"][index_ligne],
-        DATA[m3]["code"][index_ligne],
-        DATA[m4]["code"][index_ligne]
-    )
-    for nom, bloc in DATA.items():
-        if bloc["code"] == code_fille:
-            return nom
-    return m1
-
 def interpreter_passation(nom_figure, maison_actuelle):
     maison_repos = DATA[nom_figure]["maison_repos"]
     nom_maison_repos = DATA[nom_figure]["nom_maison_repos"]
@@ -329,13 +302,13 @@ def interpreter_passation(nom_figure, maison_actuelle):
     if maison_repos == maison_actuelle:
         return f"✨ **La figure est chez elle (Maison de Repos originelle).** Ses vibrations et sa plante native (**{plante_associee}**) agissent à leur plein potentiel natif."
     else:
-        return f"🔄 **Passation Métaphysique :** La figure originelle de *{nom_maison_repos}* a migré vers la **Maison {maison_actuelle} ({MAISONS_NOMINATIVES[maison_actuelle]})**. Elle transfère l'influence de sa plante native **{plante_associee}** pour colorer la Maison {maison_actuelle}."
+        return f"🔄 **Passation Métaphysique :** La figure originelle de *{nom_maison_repos}* est positionnée en **Maison {maison_actuelle} ({MAISONS_NOMINATIVES[maison_actuelle]})**. Elle injecte l'influence vibratoire de sa plante native **{plante_associee}** dans ce secteur."
 
 # ==============================================================================
-# INTERFACE UTILISATEUR STREAMLIT
+# INTERFACE STREAMLIT
 # ==============================================================================
-st.title("🔮 Plateforme Théurgique de Géomancie et d'Interprétation au Repos")
-st.write("Dressez votre thème. Utilisez l'onglet adapté selon votre besoin d'analyse.")
+st.title("🔮 Espace Thérapeutique : Renseignement des 16 Maisons")
+st.write("Saisissez directement les 16 figures de votre thème pour générer instantanément vos ordonnances de bains, zikrs et savons.")
 
 with st.sidebar:
     st.header("🔐 Accès au Temple")
@@ -343,188 +316,21 @@ with st.sidebar:
     u_pw = st.text_input("Mot de passe", type="password")
 
 if u_id == ID_SECRET and u_pw == MDP_SECRET:
-    st.success("🔓 Outils géomantiques actifs.")
-    
-    # CRÉATION DE DEUX ONGLETS EXTÊMEMENT CLAIRS ET SÉPARÉS
-    tab_mode_mres, tab_mode_complet = st.tabs([
-        "🌿 MODE STANDARD : Saisie des 4 Mères", 
-        "✍️ MODE EXPERT : Saisie des 16 Figures (Thème complet)"
-    ])
+    st.success("🔓 Formulaire d'entrée des 16 Maisons actif.")
     
     options_figures = list(DATA.keys())
-    theme_complet = {}
-
-    # --------------------------------------------------------------------------
-    # ONGLET 1 : SAISIE VIA LES 4 MÈRES UNIQUEMENT
-    # --------------------------------------------------------------------------
-    with tab_mode_mres:
-        st.subheader("Entrez uniquement les 4 premières Mères")
-        st.write("Le système va calculer algorithmiquement le reste des 12 maisons.")
-        
-        c1, col2, col3, col4 = st.columns(4)
-        with c1: m1 = st.selectbox("🏠 M1 (Première Mère)", options_figures, index=0, key="std_m1")
-        with col2: m2 = st.selectbox("🏠 M2 (Deuxième Mère)", options_figures, index=1, key="std_m2")
-        with col3: m3 = st.selectbox("🏠 M3 (Troisième Mère)", options_figures, index=2, key="std_m3")
-        with col4: m4 = st.selectbox("🏠 M4 (Quatrième Mère)", options_figures, index=3, key="std_m4")
-
-        # Calcul algorithmique automatique
-        m5 = generer_fille(m1, m2, m3, m4, 0)
-        m6 = generer_fille(m1, m2, m3, m4, 1)
-        m7 = generer_fille(m1, m2, m3, m4, 2)
-        m8 = generer_fille(m1, m2, m3, m4, 3)
-
-        m9 = additionner_lignes(m1, m2)
-        m10 = additionner_lignes(m3, m4)
-        m11 = additionner_lignes(m5, m6)
-        m12 = additionner_lignes(m7, m8)
-
-        m13 = additionner_lignes(m9, m10)
-        m14 = additionner_lignes(m11, m12)
-        m15 = additionner_lignes(m13, m14)
-        m16 = additionner_lignes(m15, m1)
-
-        theme_standard = {
-            1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8,
-            9: m9, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15, 16: m16
-        }
-
-    # --------------------------------------------------------------------------
-    # ONGLET 2 : LE VÉRITABLE ESPACE COMPLET POUR VOS 16 FIGURES
-    # --------------------------------------------------------------------------
-    with tab_mode_complet:
-        st.subheader("Entrez manuellement les 16 figures de votre thème tracé")
-        st.warning("Ce mode désactive le calcul automatique et respecte STRICTEMENT vos attributions personnalisées.")
-        
-        st.markdown("#### ⚜️ Mères Fondamentales (1 à 4)")
-        cx1, cx2, cx3, cx4 = st.columns(4)
-        f1 = cx1.selectbox("🏠 Maison 1 (Demandeur)", options_figures, index=0, key="exp_m1")
-        f2 = cx2.selectbox("🏠 Maison 2 (Argent)", options_figures, index=1, key="exp_m2")
-        f3 = cx3.selectbox("🏠 Maison 3 (Entourage)", options_figures, index=2, key="exp_m3")
-        f4 = cx4.selectbox("🏠 Maison 4 (Foyer)", options_figures, index=3, key="exp_m4")
-
-        st.markdown("#### 🌿 Filles (5 à 8)")
-        cx5, cx6, cx7, cx8 = st.columns(4)
-        f5 = cx5.selectbox("🏠 Maison 5 (Enfants)", options_figures, index=4, key="exp_m5")
-        f6 = cx6.selectbox("🏠 Maison 6 (Maladies)", options_figures, index=5, key="exp_m6")
-        f7 = cx7.selectbox("🏠 Maison 7 (Union/Rivaux)", options_figures, index=6, key="exp_m7")
-        f8 = cx8.selectbox("🏠 Maison 8 (Blocages/Peur)", options_figures, index=7, key="exp_m8")
-
-        st.markdown("#### ⚡ Neveux (9 à 12)")
-        cx9, cx10, cx11, cx12 = st.columns(4)
-        f9 = cx9.selectbox("🏠 Maison 9 (Spiritualité)", options_figures, index=8, key="exp_m9")
-        f10 = cx10.selectbox("🏠 Maison 10 (Travail)", options_figures, index=9, key="exp_m10")
-        f11 = cx11.selectbox("🏠 Maison 11 (Espoirs)", options_figures, index=10, key="exp_m11")
-        f12 = cx12.selectbox("🏠 Maison 12 (Ennemis)", options_figures, index=11, key="exp_m12")
-
-        st.markdown("#### ⚖️ Tribunal et Décret (13 à 16)")
-        cx13, cx14, cx15, cx16 = st.columns(4)
-        f13 = cx13.selectbox("🏠 Maison 13 (Témoin D.)", options_figures, index=12, key="exp_m13")
-        f14 = cx14.selectbox("🏠 Maison 14 (Témoin G.)", options_figures, index=13, key="exp_m14")
-        f15 = cx15.selectbox("🏠 Maison 15 (Le Juge)", options_figures, index=14, key="exp_m15")
-        f16 = cx16.selectbox("🏠 Maison 16 (Le Décret)", options_figures, index=15, key="exp_m16")
-
-        theme_expert = {
-            1: f1, 2: f2, 3: f3, 4: f4, 5: f5, 6: f6, 7: f7, 8: f8,
-            9: f9, 10: f10, 11: f11, 12: f12, 13: f13, 14: f14, 15: f15, 16: f16
-        }
-
-    # SELECTION DU THÈME À TRAITER SELON L'ONGLET REQUIS
-    # Nous détectons si l'utilisateur est sur l'onglet expert ou standard via un bouton d'activation
-    st.markdown("---")
-    st.header("⚙️ ACTIONNEZ LE TRAITEMENT")
-    choix_final = st.checkbox("🔥 Cliquer ici pour VALIDER et analyser les 16 figures renseignées ci-dessus", value=True)
-
-    # Si la case est cochée, on regarde quel thème est actif
-    # Par sécurité, si l'expert a modifié des valeurs dans l'onglet expert, on priorise le thème complet
-    is_expert_modified = any(theme_expert[i] != options_figures[i-1] for i in range(1, 17))
     
-    if is_expert_modified:
-        theme_complet = theme_expert
-        st.success("🎯 ANALYSE EN COURS : Thème Expert (16 Maisons personnalisées)")
-    else:
-        theme_complet = theme_standard
-        st.info("📊 ANALYSE EN COURS : Thème Standard (Calculé automatiquement)")
-
-    # ==============================================================================
-    # VISUALISATION DES 16 MAISONS RETENUES
-    # ==============================================================================
-    with st.container(border=True):
-        st.subheader("🖼️ CARTOGRAPHIE SYNTHÉTIQUE DU THÈME RETENU")
-        
-        c_l1, c_l2, c_l3, c_l4 = st.columns(4)
-        c_l1.metric("M1 (Demandeur)", theme_complet[1])
-        c_l2.metric("M2 (Argent)", theme_complet[2])
-        c_l3.metric("M3 (Relations)", theme_complet[3])
-        c_l4.metric("M4 (Foyer)", theme_complet[4])
-        
-        c_l5, c_l6, c_l7, c_l8 = st.columns(4)
-        c_l5.metric("M5 (Enfants)", theme_complet[5])
-        c_l6.metric("M6 (Maladies)", theme_complet[6])
-        c_l7.metric("M7 (Alliances)", theme_complet[7])
-        c_l8.metric("M8 (Obstacles)", theme_complet[8])
-
-        c_l9, c_l10, c_l11, c_l12 = st.columns(4)
-        c_l9.metric("M9 (Spiritualité)", theme_complet[9])
-        c_l10.metric("M10 (Carrière)", theme_complet[10])
-        c_l11.metric("M11 (Vœux)", theme_complet[11])
-        c_l12.metric("M12 (Difficultés)", theme_complet[12])
-
-        c_l13, c_l14, c_l15, c_l16 = st.columns(4)
-        c_l13.warning(f"M13 (Témoin D.) : {theme_complet[13]}")
-        c_l14.warning(f"M14 (Témoin G.) : {theme_complet[14]}")
-        c_l15.error(f"M15 (Le Juge) : {theme_complet[15]}")
-        c_l16.success(f"M16 (Le Décret) : {theme_complet[16]}")
-
-    # ==============================================================================
-    # DÉPLOIEMENT DU DICTIONNAIRE ET DES INSTRUCTIONS DE SAVONS
-    # ==============================================================================
-    st.markdown("---")
-    st.header("📖 DICTIONNAIRE THÉRAPEUTIQUE, RECETTES DE BAINS ET SAVONS ARTISANAUX")
+    # Formulaire de saisie directe des 16 Maisons sans calcul automatique
+    st.header("📥 CONFIGURATION MANUELLE DES 16 MAISONS")
     
-    for m, fig_choisie in theme_complet.items():
-        bloc = DATA[fig_choisie]
-        statut_action = "🛑 SECTEUR CRITIQUE" if "Mauvais" in bloc["nature"] else "✨ SECTEUR HARMONIEUX"
-        titre_boite = f"{MAISONS_NOMINATIVES[m]} ➔ Figure : {fig_choisie} [{statut_action}]"
-        
-        with st.expander(titre_boite):
-            tab_passation, tab_verset, tab_bain, tab_savon = st.tabs([
-                "🔄 Analyse de Passation", 
-                "📿 Zikr du Verset Biblique", 
-                "🌿 Recette de Bain & Posologie",
-                "🧼 Fabrication du Savon Rituel"
-            ])
-            
-            with tab_passation:
-                st.info(interpreter_passation(fig_choisie, m))
-                st.markdown(f"**Signification originelle au Repos :** *{bloc['txt']}*")
-                
-            with tab_verset:
-                st.markdown(f"### 📿 Protocole de Récitation du Verset Sacré ({bloc['psaume']})")
-                st.info(f"**Verset :** *\"{bloc['texte_biblique']}\"* ({bloc['psaume']}, {bloc['verset']})")
-                st.warning(f"**Méthode de Zikr :** {bloc['zikr_verset']}")
-                st.write(f"**Zikr additionnel :** {bloc['zikr']}")
-                st.caption(f"⏱️ **Moment idéal :** {bloc['moment']}")
-                
-            with tab_bain:
-                st.markdown(f"### 🌱 Préparation du Bain Spirituel ({bloc['plante']})")
-                st.write(f"**Plante maîtresse :** **{bloc['plante']}**, Compléments : *{bloc['aromatiques']}*.")
-                st.success(f"🥣 **Préparation :** {bloc['bain_preparation']}")
-                st.error(f"📋 **Application :** {bloc['bain_posologie']}")
-                
-            with tab_savon:
-                st.markdown("### 🧼 Fabrication et Consécration du Savon Thérapeutique")
-                col_g, col_d = st.columns(2)
-                with col_g:
-                    st.markdown("**1. Ingrédients pour la base :**")
-                    st.write("- **500g de base neutre :** Savon de Marseille blanc ou Savon Noir.")
-                    st.write(f"- **Liquide :** Décoction ultra-concentrée de **{bloc['plante']}**.")
-                with col_d:
-                    st.markdown("**2. Additifs aromatiques :**")
-                    st.write(f"- **Éléments :** {bloc['savon_additifs']}")
-                    st.write(f"- **Huile :** 15 gouttes d'huile essentielle de **{bloc['huile']}**.")
-                
-                st.warning(f"🔮 **Consécration :**\n"
-                           f"Une fois sec, faites le zikr du **{bloc['psaume']}** exactement **{bloc['repetitions']} fois** directement sur le savon pour figer la charge.")
-                st.write(f"📋 **Formule d'activation :** *\"{bloc['mots_application']}\"*.")
-else:
-    st.warning("🔒 Système Verrouillé. Veuillez inscrire vos identifiants à gauche pour accéder au Temple géomantique.")
+    st.markdown("### ⚜️ 1. Les Quatre Mères Fondues (M1 à M4)")
+    c1, c2, c3, c4 = st.columns(4)
+    m1 = c1.selectbox("🏠 Maison 1 (Demandeur)", options_figures, index=0)
+    m2 = c2.selectbox("🏠 Maison 2 (Argent)", options_figures, index=1)
+    m3 = c3.selectbox("🏠 Maison 3 (Entourage)", options_figures, index=2)
+    m4 = c4.selectbox("🏠 Maison 4 (Le Foyer)", options_figures, index=3)
+
+    st.markdown("### 🌿 2. Les Quatre Filles Émergées (M5 à M8)")
+    c5, c6, c7, c8 = st.columns(4)
+    m5 = c5.selectbox("🏠 Maison 5 (Enfants/Nouvelles)", options_figures, index=4)
+    m6 = c6.selectbox("🏠 Maison 6 (Maladies/Obstacles)", options_figures,
