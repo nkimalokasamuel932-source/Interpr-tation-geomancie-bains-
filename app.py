@@ -4,7 +4,7 @@ import streamlit as st
 st.set_page_config(page_title="Système Théurgique Géomancie Rectifiée", page_icon="🔮", layout="wide")
 
 # ==============================================================================
-# ACCÈS SÉCURISÉS (À modifier selon vos besoins de confidentialité)
+# ACCÈS SÉCURISÉS
 # ==============================================================================
 ID_SECRET = "theurge2026"
 MDP_SECRET = "Salomon777"
@@ -20,6 +20,7 @@ DATA = {
         "psaume": "Psaume 20", "verset": "Verset 5", 
         "texte_biblique": "Qu'il te donne ce que ton cœur désire, et qu'il accomplisse tous tes desseins !",
         "zikr_verset": "Réciter le Verset 5 du Psaume 20 exactement 77 fois par jour.",
+        "repetitions": "77",
         "bain_preparation": "Faire bouillir une poignée de feuilles ou d'écorces de Balança dans 5 litres d'eau purifiée pendant 15 minutes. Laisser tiédir et filtrer.",
         "bain_posologie": "Se laver avec cette décoction pendant 7 jours consécutifs, le matin au lever du soleil, sans utiliser de savon chimique après le rinçage.",
         "huile": "Laurier Noble", 
@@ -36,6 +37,7 @@ DATA = {
         "psaume": "Psaume 8", "verset": "Verset 6", 
         "texte_biblique": "Tu lui as donné l'empire sur les œuvres de tes mains, tu as tout mis sous ses pieds.",
         "zikr_verset": "Réciter le Verset 6 du Psaume 8 exactement 88 fois après la prière du matin.",
+        "repetitions": "88",
         "bain_preparation": "Infuser 100g de feuilles de Sana séchées dans de l'eau de source chauffée. Ajouter une cuillère à café de Curcuma pur.",
         "bain_posologie": "Bain à prendre pendant 3 jours consécutifs en versant l'eau de la tête aux pieds, de préférence le matin, pour attirer l'élévation financière.",
         "huile": "Cèdre de l'Atlas", 
@@ -51,8 +53,8 @@ DATA = {
         "txt": "Maison de la famille, des voisins, des collègues, des communications et de l'entourage proche.",
         "psaume": "Psaume 4", "verset": "Verset 7", 
         "texte_biblique": "Fais lever sur nous la lumière de ta face, ô Éternel !",
-        "vibratoire": "Onde de fluidisation éthérique. Elle balaye les énergies stagnantes de la médisance.",
         "zikr_verset": "Réciter le Verset 7 du Psaume 4 exactement 33 fois matin et soir.",
+        "repetitions": "33",
         "bain_preparation": "Laisser macérer des feuilles fraîches de Cebé dans de l'eau froide exposée aux premiers rayons de soleil pendant 4 heures. Filtrer et ajouter quelques zestes d'orange.",
         "bain_posologie": "Utiliser comme eau de rinçage après votre douche habituelle pendant 5 jours pour harmoniser les relations familiales et de voisinage.",
         "huile": "Orange Douce", 
@@ -69,6 +71,7 @@ DATA = {
         "psaume": "Psaume 112", "verset": "Verset 3", 
         "texte_biblique": "Il a dans sa maison bien-être et richesse, et sa justice subsiste à jamais.",
         "zikr_verset": "Réciter le Verset 3 du Psaume 112 exactement 44 fois au cœur de la maison.",
+        "repetitions": "44",
         "bain_preparation": "Décoction lourde de racines ou feuilles de Djou avec 3 clous de girofle. Faire bouillir longuement à feu doux.",
         "bain_posologie": "Prendre ce bain protecteur et purificateur le mercredi soir. Asperger également les quatre coins de la maison avec un peu de cette eau.",
         "huile": "Patchouli", 
@@ -85,6 +88,7 @@ DATA = {
         "psaume": "Psaume 100", "verset": "Verset 2", 
         "texte_biblique": "Servez l'Éternel avec joie, venez avec allégresse en sa présence !",
         "zikr_verset": "Réciter le Verset 2 du Psaume 100 exactement 55 fois avant de lire ou d'envoyer des courriers importants.",
+        "repetitions": "55",
         "bain_preparation": "Infuser des tiges de Citronnelle et des feuilles de Djècala dans de l'eau bouillante. Laisser refroidir jusqu'à température agréable.",
         "bain_posologie": "Bain de clarté à effectuer pendant 3 jours consécutifs, idéalement le matin, pour débloquer les situations administratives ou obtenir de bonnes nouvelles.",
         "huile": "Pamplemousse", 
@@ -101,6 +105,7 @@ DATA = {
         "psaume": "Psaume 51", "verset": "Verset 12", 
         "texte_biblique": "Ô Dieu ! crée en moi un cœur pur, renouvelle en moi un esprit bien disposé.",
         "zikr_verset": "Réciter le Verset 12 du Psaume 51 exactement 66 fois à genoux avant de dormir.",
+        "repetitions": "66",
         "bain_preparation": "Faire bouillir vigoureusement les feuilles de Wingninga avec du sel gemme brut dans 6 litres d'eau.",
         "bain_posologie": "Bain de purification profonde et d'exorcisme corporel à faire pendant 6 soirs d'affilée juste avant le coucher. Recueillir l'eau résiduelle si possible pour l'évacuer hors de la concession.",
         "huile": "Lavande Vraie", 
@@ -117,6 +122,7 @@ DATA = {
         "psaume": "Psaume 35", "verset": "Verset 1", 
         "texte_biblique": "Éternel ! Attaque ceux qui m'attaquent, combats ceux qui me combattent !",
         "zikr_verset": "Réciter le Verset 1 du Psaume 35 vigoureusement 71 fois face à l'Est en cas de conflit avéré.",
+        "repetitions": "71",
         "bain_preparation": "Préparer une eau de combat tiède en infusant du Gababelé broyé avec du gingembre frais émincé.",
         "bain_posologie": "Se laver uniquement le soir tard pendant 3 jours. Ce bain agit comme un bouclier de retour à l'envoyeur contre les complots et les litiges.",
         "huile": "Cannelle Écorce", 
@@ -133,6 +139,7 @@ DATA = {
         "psaume": "Psaume 142", "verset": "Verset 8", 
         "texte_biblique": "Tire mon âme de sa prison, afin que je célèbre ton nom !",
         "zikr_verset": "Réciter le Verset 8 du Psaume 142 exactement 82 fois dans l'obscurité pour briser les blocages psychologiques.",
+        "repetitions": "82",
         "bain_preparation": "Faire bouillir les feuilles de Kronifin avec une poignée de charbon végétal purifié.",
         "bain_posologie": "Bain de coupure karmique à prendre à minuit pile pendant 1 seul soir. Essuyer le corps avec un tissu propre noir à jeter ensuite.",
         "huile": "Cyprès de Provence", 
@@ -149,6 +156,7 @@ DATA = {
         "psaume": "Psaume 133", "verset": "Verset 1", 
         "texte_biblique": "Voici, qu'il est agréable, qu'il est doux pour des frères de demeurer ensemble !",
         "zikr_verset": "Réciter le Verset 1 du Psaume 133 exactement 99 fois avant d'entreprendre des démarches de visa ou de voyage.",
+        "repetitions": "99",
         "bain_preparation": "Infuser des feuilles de Sadjo (ou Aladjo) avec des pétales de roses fraîches et de l'anis étoilé.",
         "bain_posologie": "Prendre ce bain d'ouverture de routes spirituelles et géographiques pendant 7 jours consécutifs le matin.",
         "huile": "Ylang-Ylang", 
@@ -165,6 +173,7 @@ DATA = {
         "psaume": "Psaume 45", "verset": "Verset 2", 
         "texte_biblique": "Des paroles pleines de charme bouillonnent dans mon cœur. Je dis : Mon œuvre est pour le roi !",
         "zikr_verset": "Réciter le Verset 2 du Psaume 45 exactement 100 fois chaque matin avant d'aller travailler pour asseoir son charisme.",
+        "repetitions": "100",
         "bain_preparation": "Faire bouillir de l'écorce ou des feuilles séchées de Sira (Baobab) pour obtenir une solution ambrée hautement magnétique.",
         "bain_posologie": "Se laver le corps pendant 9 jours consécutifs au réveil. Ce traitement impose le respect, l'autorité professionnelle et attire les promotions.",
         "huile": "Géranium Bourbon", 
@@ -177,10 +186,11 @@ DATA = {
     "Badara": {
         "ref": "Badara", "code": (2, 1, 1, 1), "nature": "Bénéfique", "element": "Vent",
         "maison_repos": 11, "nom_maison_repos": "M11 (Espoirs / Protections / Souhaits)", "plante": "Gbè yiri",
-        "txt": "Maison des espohes, de la protection, de la chose espérée, des aides providentielles et des envies.",
+        "txt": "Maison des espoirs, de la protection, de la chose espérée, des aides providentielles et des envies.",
         "psaume": "Psaume 144", "verset": "Verset 1", 
         "texte_biblique": "Béni soit l'Éternel, mon rocher, qui exerce mes mains au combat, mes doigts à la bataille !",
         "zikr_verset": "Réciter le Verset 1 du Psaume 144 exactement 111 fois pour précipiter la réalisation d'un vœu cher.",
+        "repetitions": "111",
         "bain_preparation": "Décoction de feuilles de Gbè yiri avec des graines de cardamome pilées.",
         "bain_posologie": "Bain d'activation de la chance providentielle à effectuer pendant 4 matins de suite, de préférence en début de mois lunaire.",
         "huile": "Gingembre Bleu", 
@@ -197,6 +207,7 @@ DATA = {
         "psaume": "Psaume 30", "verset": "Verset 12", 
         "texte_biblique": "Tu as changé mon deuil en allégresse, tu as délié mon sac, et tu m'as ceint de joie.",
         "zikr_verset": "Réciter le Verset 12 du Psaume 30 exactement 122 fois après le coucher du soleil pour dissoudre l'adversité.",
+        "repetitions": "122",
         "bain_preparation": "Infuser vigoureusement une grande quantité de feuilles de Kounbè avec du thym blanc.",
         "bain_posologie": "Se laver entièrement pendant 7 soirs d'affilée pour briser les blocages répétitifs et éloigner définitivement les complots cachés.",
         "huile": "Citronnelle Java", 
@@ -213,6 +224,7 @@ DATA = {
         "psaume": "Psaume 18", "verset": "Verset 38", 
         "texte_biblique": "Je les brise, et ils ne peuvent se relever ; ils tombent sous mes pieds.",
         "zikr_verset": "Réciter le Verset 38 du Psaume 18 exactement 133 fois dans la chambre à coucher avant le repos nocturne.",
+        "repetitions": "133",
         "bain_preparation": "Préparer une eau de purification calme en infusant de l'écorce ou des feuilles de Zaman avec des feuilles d'Eucalyptus.",
         "bain_posologie": "Bain apaisant à prendre le soir juste avant le coucher pendant 5 jours pour nettoyer l'atmosphère intime et stabiliser le couple.",
         "huile": "Clou de Girofle", 
@@ -229,6 +241,7 @@ DATA = {
         "psaume": "Psaume 91", "verset": "Verset 11", 
         "texte_biblique": "Car il ordonnera à ses anges de te garder dans toutes tes voies.",
         "zikr_verset": "Réciter le Verset 11 du Psaume 91 exactement 144 fois le matin pour sécuriser vos investissements.",
+        "repetitions": "144",
         "bain_preparation": "Faire bouillir des écorces de Dialassogala avec des graines de coriandre.",
         "bain_posologie": "Bain d'attraction financière durable à exécuter pendant 5 matins consécutifs en formulant clairement des vœux de prospérité commerciale.",
         "huile": "Arbre à Thé / Tea Tree", 
@@ -244,7 +257,8 @@ DATA = {
         "txt": "Maison de la conclusion du thème, du résumé général des affaires, du bilan et de l'environnement final.",
         "psaume": "Psaume 119", "verset": "Verset 105", 
         "texte_biblique": "Ta parole est une lampe à mes pieds, et une lumière sur mon sentier.",
-        "zikr_verset": "Réciter le Verset 105 du Psaume 119 exactement 150 fois le soir pour obtenir une illumination intérieure ou dénouer un problème complexe.",
+        "zikr_verset": "Réciter le Verset 105 du Psaume 119 exactement 150 fois le soir pour obtenir une illumination intérieure ou dénouer un problem complexe.",
+        "repetitions": "150",
         "bain_preparation": "Infuser des feuilles de Doualé avec des larmes de résine pure d'Oliban dans de l'eau tiède.",
         "bain_posologie": "Bain de synthèse finale à prendre pendant 3 soirs d'affilée pour clore heureusement une affaire en cours et éclairer vos choix de vie.",
         "huile": "Encens d'Oliban", 
@@ -261,6 +275,7 @@ DATA = {
         "psaume": "Psaume 4", "verset": "Verset 7", 
         "texte_biblique": "Fais lever sur nous la lumière de ta face, ô Éternel !",
         "zikr_verset": "Réciter le Verset 7 du Psaume 4 exactement 166 fois pour sceller instantanément le travail géomantique.",
+        "repetitions": "166",
         "bain_preparation": "Préparer une infusion forte de feuilles de Tomy bourou avec de la menthe poivrée fraîche.",
         "bain_posologie": "Prendre ce dernier bain de scellage le jeudi ou dimanche matin très tôt. Il permet de matérialiser les réponses positives et d'accélérer les signatures de contrats.",
         "huile": "Orange Douce", 
@@ -456,10 +471,10 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
                 st.info("🥣 **Méthode de cuisson (Fondant/Recuit) :**\n"
                         "1. Faites fondre le savon râpé au bain-marie doux avec les 100 ml de liquide de plante concentré.\n"
                         "2. Hors du feu, incorporez énergiquement le liant, les additifs aromatiques en poudre fine et les gouttes d'huile essentielle.\n"
-                        "3. Coulez la pâte homogène dans un moule. Laissez durcir 24 à 48 heures avant de démouler et découper.")
+                        "3. Coulez la pâte homogène dans un moule. Laissez durcier 24 à 48 heures avant de démouler et découper.")
                 
                 st.warning(f"🔮 **Consécration Théurgique du Savon :**\n"
-                           f"Une fois le savon sec, posez-le devant vous. Effectuez le zikr exact de la figure : **{bloc['psaume']} ({bloc['verset']})** le nombre de fois requis (**{bloc['zikr_verset'].split('exactement ')[1].split(' fois')[0]} fois**). "
+                           f"Une fois le savon sec, posez-le devant vous. Effectuez le zikr exact de la figure : **{bloc['psaume']} ({bloc['verset']})** exactement **{bloc['repetitions']} fois**.\n\n"
                            f"Soufflez sur le savon à la fin de la récitation et prononcez la prière salomonique pour ancrer la charge.")
                 
                 st.write(f"📋 **Posologie du Savon :** Utilisez ce savon de la tête aux pieds pendant votre douche. Laissez agir la mousse 1 à 2 minutes sur la peau en formulant vos vœux : *\"{bloc['mots_application']}\"*.")
