@@ -1,301 +1,273 @@
 import streamlit as st
 
-# Configuration de la page Streamlit
-st.set_page_config(page_title="Base Géomantique Pro", page_icon="🔮", layout="centered")
+# Configuration de la page
+st.set_page_config(page_title="Théurgie & Géomancie Sacrée", page_icon="✨", layout="wide")
 
 # ==============================================================================
-# CONFIGURATION DE VOS ACCÈS SECRETS
+# ACCÈS
 # ==============================================================================
-IDENTIFIANT_SECRET = "theurge2026"
-MOT_DE_PASSE_SECRET = "Salomon777"
+ID_SECRET = "theurge2026"
+MDP_SECRET = "Salomon777"
 
 # ==============================================================================
-# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE
+# BASE DE DONNÉES THÉURGIQUE ET MYSTIQUE COMPLÈTE
 # ==============================================================================
-DATA_THEURGIQUE = {
+DATA = {
+    "Bila (Seydiou)": {
+        "ref": "Bila (ou Sira / VIA)", 
+        "nature": "Neutre", 
+        "txt": "Ouverture des routes, déblocage des voies sans issue, dénouement des blocages de projets.",
+        "psaume": "Psaume 23", "verset": "Verset 3", "texte_biblique": "Il restaure mon âme, il me conduit dans les sentiers de la justice, à cause de son nom.",
+        "huile": "Menthe Poivrée (Vitesse et clarté)", "plantes": "Feuilles de menthe fraîche, Laurier, Verveine",
+        "zikr": "Ya Fattah (Ô Celui qui ouvre) — 489 fois",
+        "mots_application": "Par la vertu de ce Nassi et la puissance du Psaume 23, que toutes mes routes fermées soient brisées et que la chance m'accompagne partout où mes pieds fouleront le sol. Amen.",
+        "moment": "Matin au lever du soleil"
+    },
     "Adama": {
-        "nom_africain_synonyme": "Mahadi",
-        "nom_latin": "CAPUT DRACONIS (La Tête de Dragon)",
-        "nature": "Bénéfique",
-        "signification": "Succès, prospérité, accomplissement",
-        "domaines": "Argent, carrière, projets aboutis",
-        "psaume": "Psaume 8",
-        "verset_reference": "Verset 6",
-        "verset_texte": "Tu lui as donné l'empire sur les œuvres de tes mains, tu as tout mis sous ses pieds.",
-        "huile": "Cèdre de l'Atlas",
-        "moment_bain": "Matin (Élévation / Autorité)",
-        "usage": "Élévation sociale, prise de poste de direction, charisme de leader et initiation spirituelle."
+        "ref": "Adama (CAPUT DRACONIS)", 
+        "nature": "Bénéfique", 
+        "txt": "Élévation spirituelle, charisme, autorité, obtention de postes de direction, royauté.",
+        "psaume": "Psaume 8", "verset": "Verset 6", "texte_biblique": "Tu lui as donné l'empire sur les œuvres de tes mains, tu as tout mis sous ses pieds.",
+        "huile": "Cèdre de l'Atlas (Ancrage royal)", "plantes": "Écorce de cèdre, Romarin, Basilic sacré",
+        "zikr": "Ya Rafi'u (Ô Celui qui élève) — 351 fois",
+        "mots_application": "Que l'élévation, la considération et l'autorité de Sa Majesté le Roi Salomon descendent sur ma vie. Que mes ennemis deviennent mon marchepied. Amen.",
+        "moment": "Matin à la première heure"
     },
-    "Mori-Zoumana": {
-        "nom_africain_synonyme": "Talki",
-        "nom_latin": "LAETITIA (La Joie)",
-        "nature": "Bénéfique",
-        "signification": "Chance, bénédiction, bonheur futur",
-        "domaines": "Spiritualité, destin, événements heureux",
-        "psaume": "Psaume 100",
-        "verset_reference": "Verset 2",
-        "verset_texte": "Servez l'Éternel avec joie, venez avec allégresse en sa présence !",
-        "huile": "Pamplemousse",
-        "moment_bain": "Matin (Ouverture sociale)",
-        "usage": "Attirer la bonne humeur, la fête, les faveurs des personnes influentes et la chance spontanée."
-    },
-    "Massa Solomane": {
-        "nom_africain_synonyme": "Faventina",
-        "nom_latin": "PUELLA (La Fille)",
-        "nature": "Bénéfique",
-        "signification": "Espoir, amour, faveur sociale",
-        "domaines": "Relations, diplomatie, réputation",
-        "psaume": "Psaume 45",
-        "verset_reference": "Verset 2",
-        "verset_texte": "Des paroles pleines de charme bouillonnent dans mon cœur. Je dis : Mon œuvre est pour le roi !",
-        "huile": "Géranium ou Rose de Damas",
-        "moment_bain": "Matin ou avant une sortie",
-        "usage": "Harmonie familiale, retour d'affection, séduction, charisme commercial et paix."
-    },
-    "Allou Badra (ou Aliou Badra)": {
-        "nom_africain_synonyme": "Diafan_Almamy",
-        "nom_latin": "PUER (Le Garçon)",
-        "nature": "Plutôt Bénéfique (ambivalent)",
-        "signification": "Jeunesse, énergie, courage, action",
-        "domaines": "Action, aventure, compétition, défense",
-        "psaume": "Psaume 144",
-        "verset_reference": "Verset 1",
-        "verset_texte": "Béni soit l'Éternel, mon rocher, qui exerce mes mains au combat, mes doigts à la bataille !",
-        "huile": "Gingembre",
-        "moment_bain": "Matin (Action / Dynamisme)",
-        "usage": "Force, courage, victoire éclatante lors d'un conflit, d'une rivalité ou d'un procès."
+    "Mahamadou (Maldiou)": {
+        "ref": "Mahamadou (FORTUNA MINOR)", 
+        "nature": "Neutre", 
+        "txt": "Soutien collectif, popularité rapide, protection lors des concours ou examens publics.",
+        "psaume": "Psaume 4", "verset": "Verset 7", "texte_biblique": "Fais lever sur nous la lumière de ta face, ô Éternel !",
+        "huile": "Orange Douce (Magnétisme solaire)", "plantes": "Zestes d'orange, Pétales de Souci (Calendula), Hibiscus",
+        "zikr": "Ya Nour (Ô Lumière) — 256 fois",
+        "mots_application": "Que ma présence brille parmi les hommes comme le soleil au zénith. Que la faveur populaire m'accompagne dans toutes mes démarches publiques. Amen.",
+        "moment": "Matin"
     },
     "Idrissa": {
-        "nom_africain_synonyme": "Soumana",
-        "nom_latin": "ACQUISITIO / ARQUISITIO (Le Gain)",
-        "nature": "Bénéfique (surtout matériel)",
-        "signification": "Gain, acquisition, réussite matérielle",
-        "domaines": "Finance, commerce, possession",
-        "psaume": "Psaume 112",
-        "verset_reference": "Verset 3",
-        "verset_texte": "Il a dans sa maison bien-être et richesse, et sa justice subsiste à jamais.",
-        "huile": "Patchouli",
-        "moment_bain": "Matin (Attraction commerciale)",
-        "usage": "Attraction financière magnétique, prospérité dans le commerce et rentrées d'argent."
+        "ref": "Idrissa (ACQUISITIO)", 
+        "nature": "Bénéfique", 
+        "txt": "Attraction financière magnétique, rentrées d'argent, succès commercial et prospérité matérielle.",
+        "psaume": "Psaume 112", "verset": "Verset 3", "texte_biblique": "Il a dans sa maison bien-être et richesse, et sa justice subsiste à jamais.",
+        "huile": "Patchouli (Magnétisme de la richesse)", "plantes": "Bâtons de cannelle concassés, Trèfle, Menthe séchée",
+        "zikr": "Ya Razzaq (Ô Pourvoyeur) — 308 fois",
+        "mots_application": "Que les richesses de la terre et de l'esprit soient aimantées vers ma demeure. Que l'abondance ne quitte jamais mes mains ni mes comptes. Amen.",
+        "moment": "Matin (Heure du commerce)"
     },
-    "Mahamadou (ou Moussa)": {
-        "nom_africain_synonyme": "Moussa",
-        "nom_latin": "FORTUNA MINOR (La Petite Fortune)",
-        "nature": "Neutre",
-        "signification": "Soutien collectif, attente, popularité",
-        "domaines": "Opinions publiques, soutien social, élections",
-        "psaume": "Psaume 4",
-        "verset_reference": "Verset 7",
-        "verset_texte": "Fais lever sur nous la lumière de ta face, ô Éternel !",
-        "huile": "Orange Douce ou Bergamote",
-        "moment_bain": "Matin",
-        "usage": "Succès rapide et brillant, protection discrète au quotidien, dynamisme."
+    "Yousouf (Issa/Nouhou)": {
+        "ref": "Yousouf (FORTUNA MAJOR)", 
+        "nature": "Bénéfique", 
+        "txt": "Grande chance durable, succès total aux examens, jeux, bénédiction de la destinée.",
+        "psaume": "Psaume 20", "verset": "Verset 5", "texte_biblique": "Qu'il te donne ce que ton cœur désire, et qu'il accomplisse tous tes desseins !",
+        "huile": "Laurier Noble (Victoire et Royauté)", "plantes": "Feuilles de Laurier séchées, Clous de girofle, Sauge",
+        "zikr": "Ya Wahhab (Ô Donateur Suprême) — 14 fois",
+        "mots_application": "Que les décrets de blocage soient annulés et remplacés par la réussite éclatante. Ce que mon cœur désire se matérialise dès aujourd'hui par la grâce céleste. Amen.",
+        "moment": "Matin (Bain de Royauté)"
     },
-    "Kalalahou": {
-        "nom_africain_synonyme": "Ali_Badara",
-        "nom_latin": "CONIUNCTIO (L'Union)",
-        "nature": "Neutre à Bénéfique",
-        "signification": "Réunion, rencontre, coopération",
-        "domaines": "Relations, partenariats, collaborations",
-        "psaume": "Psaume 133",
-        "verset_reference": "Verset 1",
-        "verset_texte": "Voici, qu'il est agréable, qu'il est doux pour des frères de demeurer ensemble !",
-        "huile": "Ylang-Ylang",
-        "moment_bain": "Matin (Alliances et contrats)",
-        "usage": "Sceller des contrats de partenariat, accords commerciaux solides, unions ou mariages."
+    "Mavour (Inzan)": {
+        "ref": "Mavour (ALBUS)", 
+        "nature": "Bénéfique", 
+        "txt": "Sagesse profonde, illumination spirituelle, paix intérieure, pureté de l'esprit.",
+        "psaume": "Psaume 119", "verset": "Verset 105", "texte_biblique": "Ta parole est une lampe à mes pieds, et une lumière sur mon sentier.",
+        "huile": "Encens d'Oliban (Haute vibration)", "plantes": "Résine d'oliban, Camomille matricaire, Jasmin",
+        "zikr": "Ya Alim (Ô Omniscient) — 150 fois",
+        "mots_application": "Que le voile de l'illusion soit levé. Donne-moi la sagesse des anciens pour guider mes pas et préserver ma maison de tout trouble. Amen.",
+        "moment": "Soir au coucher (Méditation)"
     },
-    "Mavour (ou Inzan)": {
-        "nom_africain_synonyme": "Bayada",
-        "nom_latin": "ALBUS (Le Blanc)",
-        "nature": "Neutre à Bénéfique",
-        "signification": "Sagesse, paix, clarté mentale",
-        "domaines": "Négociations, calme, gestion raisonnable",
-        "psaume": "Psaume 119",
-        "verset_reference": "Verset 105",
-        "verset_texte": "Ta parole est une lampe à mes pieds, et une lumière sur mon sentier.",
-        "huile": "Encens d'Oliban",
-        "moment_bain": "Soir (Méditation et clarté)",
-        "usage": "Clarté mentale, intuition pour les affaires, haute protection et sagesse spirituelle."
+    "Lomara (Lamora)": {
+        "ref": "Lomara Blen (RUBEUS)", 
+        "nature": "Mauvais", 
+        "txt": "Retour à l'envoyeur destructeur, briser les mauvais sorts immédiatement, combat occulte.",
+        "psaume": "Psaume 35", "verset": "Verset 1", "texte_biblique": "Éternel ! Attaque ceux qui m'attaquent, combats ceux qui me combattent !",
+        "huile": "Cannelle Écorce (Feu purificateur)", "plantes": "Feuilles de Moutarde, Piment de Cayenne (pincée), Ortie",
+        "zikr": "Ya Jabbar (Ô Contraignant Suprême) — 206 fois",
+        "mots_application": "Que les flèches mystiques tirées contre moi fassent demi-tour à cet instant précis. Que le feu théurgique consume mes oppresseurs. Amen.",
+        "moment": "Soir (Bain de choc — Ne pas s'essuyer)"
     },
-    "Tontigui (ou Gariya)": {
-        "nom_africain_synonyme": "Tontigui",
-        "nom_latin": "POPULUS / POPA CAS (Le Peuple)",
-        "nature": "Neutre à Bénéfique",
-        "signification": "Douceur, harmonie, séduction",
-        "domaines": "Relations amoureuses, diplomatie, art",
-        "psaume": "Psaume 91",
-        "verset_reference": "Verset 11",
-        "verset_texte": "Car il ordonnera à ses anges de te garder dans toutes tes voies.",
-        "huile": "Arbre à Thé (Tea Tree)",
-        "moment_bain": "Matin ou Soir (Protection continue)",
-        "usage": "Protection blindée contre les complots de la foule, les jalousies et le public."
+    "Nouhou-Koro (Mangoussi)": {
+        "ref": "Nouhou-Koro (TRISTITIA)", 
+        "nature": "Mauvais", 
+        "txt": "Déracinement de la mélancolie, transmutation des épreuves familiales en joies, ancrage spirituel.",
+        "psaume": "Psaume 30", "verset": "Verset 12", "texte_biblique": "Tu as changé mon deuil en allégresse, tu as délié mon sac, et tu m'as ceint de joie.",
+        "huile": "Citronnelle (Purification des miasmes)", "plantes": "Tiges de citronnelle fraîche, Lavande, Thym sauvage",
+        "zikr": "Ya Latif (Ô Doux / Bienveillant) — 129 fois",
+        "mots_application": "Que toute lourdeur héritée ou projetée quitte mes corps subtils. Transforme mes larmes en triomphes spirituels et matériels. Amen.",
+        "moment": "Soir (Déracinement)"
     },
-    "Yousouf (ou Asidika)": {
-        "nom_africain_synonyme": "Nouhou",
-        "nom_latin": "FORTUNA MAJOR (La Grande Fortune)",
-        "nature": "Bénéfique",
-        "signification": "Grande chance, succès durable",
-        "domaines": "Opportunités, destin, réussite stable",
-        "psaume": "Psaume 20",
-        "verset_reference": "Verset 5",
-        "verset_texte": "Qu'il te donne ce que ton cœur désire, et qu'il accomplisse tous tes desseins !",
-        "huile": "Laurier Noble",
-        "moment_bain": "Matin (Bain de Royauté)",
-        "usage": "Bain de Royauté. Grande chance financière, succès total aux examens, jeux et concours."
+    "Kalalahou (Kallaloua)": {
+        "ref": "Kalalahou (CONIUNCTIO)", 
+        "nature": "Bénéfique", 
+        "txt": "Sceller des partenariats commerciaux, mariage stable, retour d'affection, réconciliation.",
+        "psaume": "Psaume 133", "verset": "Verset 1", "texte_biblique": "Voici, qu'il est agréable, qu'il est doux pour des frères de demeurer ensemble !",
+        "huile": "Ylang-Ylang (Harmonie relationnelle)", "plantes": "Fleurs de jasmin, Pétales de Rose rouge, Coriandre",
+        "zikr": "Ya Wadoud (Ô Aimant) — 20 fois",
+        "mots_application": "Que l'harmonie et l'amour inconditionnel soient ancrés entre [Nom de la personne] et moi. Que nos cœurs vibrent à l'unisson. Amen.",
+        "moment": "Matin (Alliances)"
     },
-    "Bila (ou Sira)": {
-        "nom_africain_synonyme": "Allahou_Tallah",
-        "nom_latin": "VIA (La Voie)",
-        "nature": "Neutre à Mauvais",
-        "signification": "Petite chance, voyage, opportunité fugace",
-        "domaines": "Voyages, opportunités passagères",
-        "psaume": "Psaume 23",
-        "verset_reference": "Verset 3",
-        "verset_texte": "Il restaure mon âme, il me conduit dans les sentiers de la justice, à cause de son nom.",
-        "huile": "Menthe Poivrée",
-        "moment_bain": "Matin (Lever du soleil)",
-        "usage": "Ouvrir les routes, débloquer les voies sans issue, accélérer la chance."
+    "Massa Solomane (Salomon)": {
+        "ref": "Massa Solomane (PUELLA)", 
+        "nature": "Bénéfique", 
+        "txt": "Faveur auprès des femmes, charme commercial, esthétique, paix, diplomatie.",
+        "psaume": "Psaume 45", "verset": "Verset 2", "texte_biblique": "Des paroles pleines de charme bouillonnent dans mon cœur. Je dis : Mon œuvre est pour le roi !",
+        "huile": "Géranium Bourbon (Beauté et magnétisme)", "plantes": "Feuilles de Géranium, Verveine odorante, Reine-des-prés",
+        "zikr": "Ya Jamil (Ô Beau) — 83 fois",
+        "mots_application": "Que la grâce du Roi Salomon enveloppe ma parole. Que toute personne m'écoutant accorde sa faveur à mes requêtes. Amen.",
+        "moment": "Matin avant les rendez-vous"
     },
-    "Mangossi": {
-        "nom_africain_synonyme": "Massa_Solo",
-        "nom_latin": "CARCER (La Prison)",
-        "nature": "Mauvais",
-        "signification": "Enfermement, isolement, blocage",
-        "domaines": "Contrainte, procédure juridique, stagnation",
-        "psaume": "Psaume 142",
-        "verset_reference": "Verset 8",
-        "verset_texte": "Tire mon âme de sa prison, afin que je célèbre ton nom !",
-        "huile": "Cyprès de Provence",
-        "moment_bain": "Soir (Libération)",
-        "usage": "Sortir des dettes étouffantes, clore définitivement un problème, briser les blocages."
+    "Allou Badra (Badra)": {
+        "ref": "Allou Badra (PUER)", 
+        "nature": "Bénéfique (Ambivalent)", 
+        "txt": "Force morale invincible, courage physique, gagner un procès difficile, protection routière.",
+        "psaume": "Psaume 144", "verset": "Verset 1", "texte_biblique": "Béni soit l'Éternel, mon rocher, qui exerce mes mains au combat, mes doigts à la bataille !",
+        "huile": "Gingembre Bleu (Vigueur et feu)", "plantes": "Racines de gingembre frais râpé, Poivre noir en grains, Romarin",
+        "zikr": "Ya Qawiyyou (Ô Fort Invincible) — 116 fois",
+        "mots_application": "Aucun piège tendu, aucun complot ourdi ne pourra ébranler ma marche. Je marche en vainqueur protégé par le bouclier du Très-Haut. Amen.",
+        "moment": "Matin (Action)"
     },
-    "Goundo (ou Tchebissaba)": {
-        "nom_africain_synonyme": "Ngansa",
-        "nom_latin": "AMISSIO (La Perte)",
-        "nature": "Mauvais",
-        "signification": "Perte, manque, séparation",
-        "domaines": "Argent, amour, possession",
-        "psaume": "Psaume 51",
-        "verset_reference": "Verset 12",
-        "verset_texte": "Ô Dieu ! crée en moi un cœur pur, renouvelle en moi un esprit bien disposé.",
-        "huile": "Lavande Vraie",
-        "moment_bain": "Soir (Purification)",
-        "usage": "Purification des blocages internes, détachement des erreurs du passé, effacement des dettes."
+    "Adama-Lomara (Al hassan)": {
+        "ref": "Adama-Lomara (CAUDA DRACONIS)", 
+        "nature": "Très Mauvais", 
+        "txt": "Coupure radicale de liens toxiques, briser les dettes, nettoyage karmique en profondeur.",
+        "psaume": "Psaume 18", "verset": "Verset 38", "texte_biblique": "Je les brise, et ils ne peuvent se relever ; ils tombent sous mes pieds.",
+        "huile": "Clou de Girofle (Destruction de l'ombre)", "plantes": "Clous de girofle entiers, Feuille de tabac (ou sauge blanche), Sauge",
+        "zikr": "Ya Moumit (Ô Celui qui fait mourir le mal) — 490 fois",
+        "mots_application": "Je déracine et coupe définitivement tout lien occulte, toute dette karmique ou matérielle qui entrave mon évolution. C'est fait. Amen.",
+        "moment": "Soir (Coupure nette — Ne pas s'essuyer)"
     },
-    "Nouhou-Koro": {
-        "nom_africain_synonyme": "Mangoussi",
-        "nom_latin": "TRISTITIA / PRISTITIA (La Tristesse)",
-        "nature": "Mauvais",
-        "signification": "Tristesse, chagrin, obstacles",
-        "domaines": "Santé mentale, projets bloqués, mauvaises nouvelles",
-        "psaume": "Psaume 30",
-        "verset_reference": "Verset 12",
-        "verset_texte": "Tu as changé mon deuil en allégresse, tu as délié mon sac, et tu m'as ceint de joie.",
-        "huile": "Citronnelle ou Eucalyptus",
-        "moment_bain": "Soir (Déracinement / Consolidation)",
-        "usage": "Bain de consolidation des acquis, ancrage spirituel, protection de la maison."
+    "Tontigui (Garia)": {
+        "ref": "Tontigui (POPULUS)", 
+        "nature": "Bénéfique", 
+        "txt": "Protection blindée contre les calomnies de la foule, rumeurs et ennemis cachés du public.",
+        "psaume": "Psaume 91", "verset": "Verset 11", "texte_biblique": "Car il ordonnera à ses anges de te garder dans toutes tes voies.",
+        "huile": "Arbre à Thé (Bouclier défensif)", "plantes": "Feuilles d'Eucalyptus, Laurier sauce, Armoise",
+        "zikr": "Ya Hafiz (Ô Protecteur) — 998 fois",
+        "mots_application": "Que l'armée céleste dresse une muraille de feu autour de moi. Les complots de la foule glissent sur moi sans m'atteindre. Amen.",
+        "moment": "Matin ou Soir"
     },
-    "Adama-Lomara": {
-        "nom_africain_synonyme": "Lahoussana",
-        "nom_latin": "CAUDA DRACONIS (La Queue de Dragon)",
-        "nature": "Très Mauvais",
-        "signification": "Fin tragique, abandon, conclusion négative",
-        "domaines": "Projets avortés, ruptures, fin dramatique",
-        "psaume": "Psaume 18",
-        "verset_reference": "Verset 38",
-        "verset_texte": "Je les brise, et ils ne peuvent se relever ; ils tombent sous mes pieds.",
-        "huile": "Clou de Girofle",
-        "moment_bain": "Soir (Coupure nette, ne pas s'essuyer)",
-        "usage": "Bain de coupure radicale. Nettoyage karmique, chasser un ennemi tenace."
+    "Mori-Zoumana (Ousmane)": {
+        "ref": "Mori-Zoumana (LAETITIA)", 
+        "nature": "Bénéfique", 
+        "txt": "Joie de vivre spontanée, grands bonheurs à venir, événements heureux, chance pure.",
+        "psaume": "Psaume 100", "verset": "Verset 2", "texte_biblique": "Servez l'Éternel avec joie, venez avec allégresse en sa présence !",
+        "huile": "Pamplemousse (Énergie de joie)", "plantes": "Menthe, Pétales de Tournesol, Lavande",
+        "zikr": "Ya Latif (Ô Bienveillant) — 129 fois",
+        "mots_application": "Que l'allégresse remplace toute tristesse. J'accueille la bénédiction divine qui enrichit et ne se fait suivre d'aucun chagrin. Amen.",
+        "moment": "Matin"
     },
-    "Lomara Blen": {
-        "nom_africain_synonyme": "Lomara",
-        "nom_latin": "RUBEUS (Le Rouge)",
-        "nature": "Mauvais",
-        "signification": "Violence, conflit direct, destruction par le feu",
-        "domaines": "Guerre, litiges, blocages physiques violents",
-        "psaume": "Psaume 35",
-        "verset_reference": "Verset 1",
-        "verset_texte": "Éternel ! Attaque ceux qui m'attaquent, combats ceux qui me combattent !",
-        "huile": "Cannelle (Écorce)",
-        "moment_bain": "Soir (Coucher, ne pas s'essuyer)",
-        "usage": "Retour à l'envoyeur puissant, briser les mauvais sorts immédiatement (Bain de choc)."
+    "Mangossi (Massa Solo)": {
+        "ref": "Mangossi (CARCER)", 
+        "nature": "Mauvais", 
+        "txt": "Libération des prisons matérielles, des blocages juridiques majeurs et des dettes étouffantes.",
+        "psaume": "Psaume 142", "verset": "Verset 8", "texte_biblique": "Tire mon âme de sa prison, afin que je célèbre ton nom !",
+        "huile": "Cyprès de Provence (Libération des chaînes)", "plantes": "Feuilles de lierre, Racine de valériane, Romarin",
+        "zikr": "Ya Moukhrij (Ô Celui qui fait sortir) — 201 fois",
+        "mots_application": "Brise les verrous de la stagnation. Fais-moi sortir immédiatement de l'enfermement financier et professionnel. Je suis libre. Amen.",
+        "moment": "Soir (Bain de Libération)"
+    },
+    "Moussa (Mahamadou)": {
+        "ref": "Mahamadou (ou Moussa)", 
+        "nature": "Neutre", 
+        "txt": "Petite chance rapide, déblocage urgent d'une situation en moins de 24 heures.",
+        "psaume": "Psaume 4", "verset": "Verset 7", "texte_biblique": "Fais lever sur nous la lumière de ta face, ô Éternel !",
+        "huile": "Orange Douce", "plantes": "Citronnelle, Menthe, Cannelle",
+        "zikr": "Ya Sari'u (Ô Rapide) — 202 fois",
+        "mots_application": "Que la lumière balaye l'obscurité instantanément. Que le déblocage demandé se manifeste à ce moment précis. Amen.",
+        "moment": "Matin"
     }
 }
 
-SIGNIFICATION_MAISONS = {
-    1: "Maison de l'Auteur (Le Consultant, son état présent, ses pensées)",
-    2: "Maison des Biens (Finances, commerce, possessions matérielles)",
-    3: "Maison de l'Entourage (Proches, frères, petites démarches, nouvelles)",
-    4: "Maison du Patrimoine (Foyer, le père, la maison, dénouement des affaires)",
-    5: "Maison des Enfants (Amours, plaisirs, chance pure, créativité)",
-    6: "Maison des Malaises (Santé, obstacles subis, travail quotidien)",
-    7: "Maison de l'Union (Conjoint, partenariats, contrats, adversaire connu)",
-    8: "Maison de la Mort (Transformations, crises, héritages, capitaux externes)",
-    9: "Maison des Voyages (Spiritualité, l'étranger, études, grands projets)",
-    10: "Maison du Pouvoir (Carrière, honneurs, position sociale, autorité)",
-    11: "Maison des Appuis (Soutiens, amis fidèles, espoirs secrets)",
-    12: "Maison des Obstacles (Ennemis cachés, épreuves secrètes, blocages occultes)",
-    13: "Maison du Résultat (Conclusion directe, ce qui se matérialise)",
-    14: "Maison des Conséquences (Le futur proche, ce qui se développe après)",
-    15: "Maison de la Clarté (Le Témoin du thème, l'ambiance générale)",
-    16: "Maison de la Sentence (Le Décret final de la consultation)"
-}
-
-THEME_DYNAMIQUE = {
-    1: "Adama", 2: "Idrissa", 3: "Mahamadou", 4: "Tontigui",       
-    5: "Bila", 6: "Mavour", 7: "Lomara Blen", 8: "Yousouf",        
-    9: "Massa Solomane", 10: "Idrissa", 11: "Kalalahou", 12: "Mangossi",      
-    13: "Mori-Zoumana", 14: "Adama-Lomara", 15: "Goundo", 16: "Nouhou-Koro"    
+MAISONS = {
+    1: "Maison de l'Auteur (État présent)", 2: "Maison des Biens (Finances)", 
+    3: "Maison de l'Entourage (Nouvelles)", 4: "Maison du Patrimoine (Foyer)",
+    5: "Maison des Enfants (Plaisirs/Chance)", 6: "Maison des Malaises (Obstacles subis)", 
+    7: "Maison de l'Union (Contrats/Conjoint)", 8: "Maison de la Mort (Transformations/Crises)",
+    9: "Maison des Voyages (Spiritualité)", 10: "Maison du Pouvoir (Carrière)", 
+    11: "Maison des Appuis (Soutiens/Amis)", 12: "Maison des Obstacles (Ennemis cachés)",
+    13: "Maison du Résultat (Conclusion)", 14: "Maison des Conséquences (Futur proche)", 
+    15: "Maison de la Clarté (Témoin du thème)", 16: "Maison de la Sentence (Décret final)"
 }
 
 # ==============================================================================
-# INTERFACE VISUELLE (STREAMLIT)
+# INTERFACE STREAMLIT SMART
 # ==============================================================================
-st.title("🔮 Système d'Interprétation Géomantique Pro")
-st.write("Entrez vos accès secrets pour déverrouiller la base de données théurgique.")
+st.title("🔮 Grimoire Géomantique & Théurgique Interactif")
+st.write("Interface sacrée pour la génération automatique de vos Nassis et rituels psalmadiques.")
 
-# Formulaire de connexion visuel
 with st.sidebar:
     st.header("🔐 Authentification")
-    id_saisi = st.text_input("👤 Identifiant", value="")
-    mdp_saisi = st.text_input("🔑 Mot de passe", type="password", value="")
+    u_id = st.text_input("Identifiant")
+    u_pw = st.text_input("Mot de passe", type="password")
 
-if id_saisi == IDENTIFIANT_SECRET and mdp_saisi == MOT_DE_PASSE_SECRET:
-    st.success("🔓 Accès accordé. Lecture du thème en cours...")
-    st.markdown("---")
+if u_id == ID_SECRET and u_pw == MDP_SECRET:
+    st.success("🔓 Temple théurgique ouvert.")
     
-    # Génération de l'interprétation sur l'écran web
-    for maison, nom_fig in THEME_DYNAMIQUE.items():
-        clef_exacte = None
-        for clef in DATA_THEURGIQUE.keys():
-            if nom_fig.lower() in clef.lower():
-                clef_exacte = clef
-                break
-                
-        if not clef_exacte:
-            continue
-            
-        f_data = DATA_THEURGIQUE[clef_exacte]
-        desc_maison = SIGNIFICATION_MAISONS[maison]
+    # Guide du protocole de fabrication
+    st.header("📜 LE PROTOCOLE DU NASSI (Étape par Étape)")
+    with st.expander("👉 Cliquez ici pour voir la méthode stricte de préparation", expanded=False):
+        st.markdown("""
+        ### 🧪 Comment préparer votre eau sacrée (Nassi) :
+        1. **Écriture Sacrée** : Écrivez sur une tablette en bois propre (ou une feuille blanche) le **Psaume** et le **Verset Clé** indiqués dans votre thème à l'aide d'une encre calligraphique traditionnelle ou pure.
+        2. **Le Lavage** : Lavez la tablette ou la feuille avec de l'eau de source pure (ou eau de pluie) pour en récolter l'encre chargée. Versez cette eau sacrée dans un récipient propre. C'est votre **Nassi de base**.
+        3. **L'Infusion des Plantes** : Faites bouillir les **plantes aromatiques** spécifiques à la maison ciblée dans une marmite d'eau pure, filtrez, puis mélangez cette infusion avec votre Nassi.
+        4. **Le Scellage par l'Huile** : Ajoutez exactement **3 à 7 gouttes de l'Huile Essentielle** prescrite dans l'eau de votre bain.
+        5. **La Consécration par le Zikr** : Asseyez-vous face à l'Est, récitez le **Zikr (Le Nom Divin)** au nombre exact de fois indiqué, puis prononcez à haute voix les **Mots d'Application** au-dessus de l'eau.
+        6. **Le Bain** : Lavez-vous avec cette eau au moment opportun indiqué (Matin ou Soir). *Note pour les figures de nature 'Mauvaise' : ne pas s'essuyer après le bain, laissez sécher à l'air libre pour fixer le bouclier.*
+        """)
+    
+    st.header("📋 Configuration Actuelle de votre Thème")
+    st.info("Modifiez les figures ci-dessous en fonction de votre tracé géomantique actuel.")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    options = list(DATA.keys())
+    
+    # Thème dynamique préconfiguré selon vos données
+    def_val = [
+        "Bila (Seydiou)", "Adama", "Mahamadou (Maldiou)", "Idrissa",
+        "Yousouf (Issa/Nouhou)", "Mavour (Inzan)", "Lomara (Lamora)", "Nouhou-Koro (Mangoussi)",
+        "Kalalahou (Kallaloua)", "Massa Solomane (Salomon)", "Allou Badra (Badra)", "Yousouf (Issa/Nouhou)",
+        "Adama-Lomara (Al hassan)", "Tontigui (Garia)", "Mori-Zoumana (Ousmane)", "Moussa (Mahamadou)"
+    ]
+
+    choix_utilisateur = {}
+    for i in range(1, 17):
+        current_col = [col1, col2, col3, col4][(i-1)%4]
+        with current_col:
+            choix_utilisateur[i] = st.selectbox(f"🏠 M {i} : {MAISONS[i]}", options, index=options.index(def_val[i-1]))
+
+    st.markdown("---")
+    st.header("📖 ANALYSE ET PROTOCOLES DE VOS 16 MAISONS")
+    
+    for m, fig in choix_utilisateur.items():
+        info = DATA[fig]
         
-        # Création d'une boîte propre pour chaque maison
-        with st.expander(f"🏠 MAISON {maison} : {desc_maison}"):
-            st.markdown(f"**Figure active :** {clef_exacte} *(Synonyme : {f_data['nom_africain_synonyme']})*")
+        # Style d'affichage selon le tempérament de la figure
+        if "Mauvais" in info["nature"]:
+            titre_boite = f"🛑 MAISON {m} ({MAISONS[m]}) — {fig} [ALERTE OCCULTE]"
+        else:
+            titre_boite = f"✨ MAISON {m} ({MAISONS[m]}) — {fig} [COURANT LUMINEUX]"
             
-            # Affichage de la couleur selon la nature
-            if "Mauvais" in f_data["nature"]:
-                st.error(f"⚠️ Tempérament : {f_data['nature'].upper()}")
-                st.markdown(f"**Signification :** {f_data['signification']} (Secteur : {f_data['domaines']})")
-                st.markdown(f"🛁 **Bain Correctif :** Huile de *{f_data['huile']}* à appliquer le *{f_data['moment_bain']}*.")
-                st.info(f"📜 **Clé d'activation :** {f_data['psaume']} ({f_data['verset_reference']}) : *\"{f_data['verset_texte']}\"*")
-            else:
-                st.success(f"✨ Tempérament : {f_data['nature'].upper()}")
-                st.markdown(f"**Signification :** {f_data['signification']} (Secteur : {f_data['domaines']})")
-                st.markdown(f"🛁 **Bain de Scellage :** {f_data['usage']}")
-                st.info(f"📜 **Parole sainte :** *\"{f_data['verset_texte']}\"*")
+        with st.expander(titre_boite):
+            tabs = st.tabs(["📊 Diagnostic", "🧪 Recette du Nassi & Plantes", "📿 Zikr & Mots d'Application"])
+            
+            with tabs[0]:
+                st.markdown(f"**Figure Géomantique :** {info['ref']}")
+                st.markdown(f"**Influence vibratoire :** `{info['nature'].upper()}`")
+                st.markdown(f"**Impact temporel :** {info['txt']}")
+                
+            with tabs[1]:
+                st.markdown(f"### 🌿 Composants Organiques & Huiles")
+                st.markdown(f"* **Huile Essentielle de Scellage :** {info['huile']}")
+                st.markdown(f"* **Plantes Aromatiques d'Infusion :** {info['plantes']}")
+                st.markdown(f"* **Moment du Bain :** `{info['moment']}`")
+                st.markdown(f"---")
+                st.markdown(f"### 📜 Écritures pour le Nassi")
+                st.info(f"✒️ **À inscrire sur le support :** {info['psaume']} ({info['verset']})")
+                st.write(f"👉 *\"{info['texte_biblique']}\"*")
+                
+            with tabs[2]:
+                st.markdown(f"### 📿 Activation Spirituelle")
+                st.warning(f"**Zikr Théurgique :** {info['zikr']}")
+                st.markdown(f"### 🗣️ Mots d'Application Essentiels :")
+                st.success(f"\"{info['mots_application']}\"")
+
 else:
-    if id_saisi != "" or mdp_saisi != "":
-        st.error("❌ Accès refusé. Les identifiants saisis dans la barre latérale sont incorrects.")
-    else:
-        st.warning("🔒 En attente de vos identifiants dans la barre latérale gauche pour afficher les résultats.")
+    st.warning("🔒 Saisissez vos identifiants secrets de Théurge dans le panneau latéral pour lever le voile sur le grimoire.")
