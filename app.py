@@ -10,7 +10,7 @@ ID_SECRET = "theurge2026"
 MDP_SECRET = "Salomon777"
 
 # ==============================================================================
-# BASE DE DONNÉES STRUCTURÉE (Basée sur l'image FB_IMG_1781201647620.jpg)
+# BASE DE DONNÉES STRUCTURÉE
 # ==============================================================================
 DATA = {
     "Janfa almamy": {
@@ -186,7 +186,7 @@ DATA = {
     "Badara": {
         "ref": "Badara", "code": (2, 1, 1, 1), "nature": "Bénéfique", "element": "Vent",
         "maison_repos": 11, "nom_maison_repos": "M11 (Espoirs / Protections / Souhaits)", "plante": "Gbè yiri",
-        "txt": "Maison des espoirs, de la protection, de la chose espérée, des aides providentielles et des envies.",
+        "txt": "Maison des espoopes, de la protection, de la chose espérée, des aides providentielles et des envies.",
         "psaume": "Psaume 144", "verset": "Verset 1", 
         "texte_biblique": "Béni soit l'Éternel, mon rocher, qui exerce mes mains au combat, mes doigts à la bataille !",
         "zikr_verset": "Réciter le Verset 1 du Psaume 144 exactement 111 fois pour précipiter la réalisation d'un vœu cher.",
@@ -308,7 +308,7 @@ def interpreter_passation(nom_figure, maison_actuelle):
 # INTERFACE STREAMLIT
 # ==============================================================================
 st.title("🔮 Espace Thérapeutique : Renseignement des 16 Maisons")
-st.write("Saisissez directement les 16 figures de votre thème pour générer instantanément vos ordonnances de bains, zikrs et savons.")
+st.write("Saisissez directement les 16 figures de votre thème pour générer instantanément vos ordonnances.")
 
 with st.sidebar:
     st.header("🔐 Accès au Temple")
@@ -320,7 +320,6 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
     
     options_figures = list(DATA.keys())
     
-    # Formulaire de saisie directe des 16 Maisons sans calcul automatique
     st.header("📥 CONFIGURATION MANUELLE DES 16 MAISONS")
     
     st.markdown("### ⚜️ 1. Les Quatre Mères Fondues (M1 à M4)")
@@ -351,15 +350,11 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
     m15 = c15.selectbox("🏠 Maison 15 (Le Juge)", options_figures, index=14)
     m16 = c16.selectbox("🏠 Maison 16 (Le Décret Final)", options_figures, index=15)
 
-    # Regroupement des saisies dans le dictionnaire final
     theme_complet = {
         1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8,
         9: m9, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15, 16: m16
     }
 
-    # ==============================================================================
-    # AFFICHAGE DU RECAPITULATIF REÇU
-    # ==============================================================================
     st.markdown("---")
     with st.container(border=True):
         st.subheader("🖼️ RÉSUMÉ VISUEL DE VOTRE THÈME RENSEIGNÉ")
@@ -388,9 +383,6 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
         l4_3.error(f"M15 (Juge) : {theme_complet[15]}")
         l4_4.success(f"M16 (Décret) : {theme_complet[16]}")
 
-    # ==============================================================================
-    # DÉPLOIEMENT AUTOMATIQUE DES PROTOCOLES POUR CHAQUE MAISON SAISIE
-    # ==============================================================================
     st.markdown("---")
     st.header("📖 DICTIONNAIRE THÉRAPEUTIQUE, RECETTES DE BAINS ET SAVONS ARTISANAUX")
     st.write("Ouvrez les sections ci-dessous pour découvrir les remèdes appliqués à vos 16 maisons.")
@@ -439,7 +431,7 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
                     st.write(f"- **Scellage :** 15 à 20 gouttes d'huile essentielle de **{bloc['huile']}**.")
                 
                 st.warning(f"🔮 **Consécration Théurgique :**\n"
-                           f"Une fois le savon moulé et bien sec, effectuez le zikr du **{bloc['psaume']}** exactly **{bloc['repetitions']} fois** directement au-dessus du savon pour y fixer solidement l'énergie.")
+                           f"Une fois le savon moulé et bien sec, effectuez le zikr du **{bloc['psaume']}** exactement **{bloc['repetitions']} fois** directement au-dessus du savon pour y fixer solidement l'énergie.")
                 st.write(f"📋 **Formule à prononcer à l'utilisation :** *\"{bloc['mots_application']}\"*.")
 else:
     st.warning("🔒 Système Verrouillé. Veuillez inscrire vos identifiants à gauche pour accéder à la plateforme.")
