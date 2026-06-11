@@ -257,7 +257,7 @@ DATA = {
         "txt": "Maison de la conclusion du thème, du résumé général des affaires, du bilan et de l'environnement final.",
         "psaume": "Psaume 119", "verset": "Verset 105", 
         "texte_biblique": "Ta parole est une lampe à mes pieds, et une lumière sur mon sentier.",
-        "zikr_verset": "Réciter le Verset 105 du Psaume 119 exactement 150 fois le soir pour obtenir une illumination intérieure ou dénouer un problem complexe.",
+        "zikr_verset": "Réciter le Verset 105 du Psaume 119 exactement 150 fois le soir pour obtenir une illumination intérieure ou dénouer un problème complexe.",
         "repetitions": "150",
         "bain_preparation": "Infuser des feuilles de Doualé avec des larmes de résine pure d'Oliban dans de l'eau tiède.",
         "bain_posologie": "Bain de synthèse finale à prendre pendant 3 soirs d'affilée pour clore heureusement une affaire en cours et éclairer vos choix de vie.",
@@ -335,7 +335,7 @@ def interpreter_passation(nom_figure, maison_actuelle):
 # INTERFACE UTILISATEUR STREAMLIT
 # ==============================================================================
 st.title("🔮 Plateforme Théurgique de Géomancie et d'Interprétation au Repos")
-st.write("Dressez le thème. Le système configure automatiquement la matrice par rapport aux 16 positions de repos fondamentales et calcule la passation des figures.")
+st.write("Dressez ou renseignez votre thème. Le système configure automatiquement la matrice par rapport aux 16 positions de repos fondamentales et applique les protocoles.")
 
 with st.sidebar:
     st.header("🔐 Accès au Temple")
@@ -352,38 +352,85 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
             with cols[idx % 4]:
                 st.info(f"**Maison {b['maison_repos']}**\n\n**{nom}**\n\n🌿 Plante : `{b['plante']}`")
 
-    st.header("📥 ENTRÉE : INTRODUIRE LES 4 MÈRES")
+    # CHOIX DE LA MÉTHODE D'ENTRÉE DU THÈME
+    st.markdown("---")
+    st.header("📥 CONFIGURATION DE SOURCING DU THÈME")
+    mode_saisie = st.radio(
+        "Choisissez votre méthode de saisie :",
+        ["Calculer le thème complet à partir des 4 Mères (Standard)", "Introduire le thème au complet manuellement (16 Maisons - Expert)"]
+    )
+
     options_figures = list(DATA.keys())
-    
-    c1, col2, col3, col4 = st.columns(4)
-    with c1: m1 = st.selectbox("🏠 M1 (Première Mère)", options_figures, index=0)
-    with col2: m2 = st.selectbox("🏠 M2 (Deuxième Mère)", options_figures, index=1)
-    with col3: m3 = st.selectbox("🏠 M3 (Troisième Mère)", options_figures, index=2)
-    with col4: m4 = st.selectbox("🏠 M4 (Quatrième Mère)", options_figures, index=3)
+    theme_complet = {}
 
-    # Calcul automatique des autres maisons du thème
-    m5 = generer_fille(m1, m2, m3, m4, 0)
-    m6 = generer_fille(m1, m2, m3, m4, 1)
-    m7 = generer_fille(m1, m2, m3, m4, 2)
-    m8 = generer_fille(m1, m2, m3, m4, 3)
+    if mode_saisie == "Calculer le thème complet à partir des 4 Mères (Standard)":
+        st.subheader("Entrez les 4 Mères fondamentales")
+        c1, col2, col3, col4 = st.columns(4)
+        with c1: m1 = st.selectbox("🏠 M1 (Première Mère)", options_figures, index=0)
+        with col2: m2 = st.selectbox("🏠 M2 (Deuxième Mère)", options_figures, index=1)
+        with col3: m3 = st.selectbox("🏠 M3 (Troisième Mère)", options_figures, index=2)
+        with col4: m4 = st.selectbox("🏠 M4 (Quatrième Mère)", options_figures, index=3)
 
-    m9 = additionner_lignes(m1, m2)
-    m10 = additionner_lignes(m3, m4)
-    m11 = additionner_lignes(m5, m6)
-    m12 = additionner_lignes(m7, m8)
+        # Calcul algorithmique automatique des autres maisons
+        m5 = generer_fille(m1, m2, m3, m4, 0)
+        m6 = generer_fille(m1, m2, m3, m4, 1)
+        m7 = generer_fille(m1, m2, m3, m4, 2)
+        m8 = generer_fille(m1, m2, m3, m4, 3)
 
-    m13 = additionner_lignes(m9, m10)
-    m14 = additionner_lignes(m11, m12)
-    m15 = additionner_lignes(m13, m14)
-    m16 = additionner_lignes(m15, m1)
+        m9 = additionner_lignes(m1, m2)
+        m10 = additionner_lignes(m3, m4)
+        m11 = additionner_lignes(m5, m6)
+        m12 = additionner_lignes(m7, m8)
 
-    theme_complet = {
-        1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8,
-        9: m9, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15, 16: m16
-    }
+        m13 = additionner_lignes(m9, m10)
+        m14 = additionner_lignes(m11, m12)
+        m15 = additionner_lignes(m13, m14)
+        m16 = additionner_lignes(m15, m1)
+
+        theme_complet = {
+            1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8,
+            9: m9, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15, 16: m16
+        }
+    else:
+        st.subheader("✍️ Saisie manuelle des 16 Maisons Géomantiques")
+        st.info("Sélectionnez la figure présente dans chaque secteur de votre thème déjà existant.")
+        
+        # Organisation visuelle par groupe de 4 maisons pour simplifier la saisie complète
+        st.markdown("##### ⚜️ Maisons 1 à 4")
+        cx1, cx2, cx3, cx4 = st.columns(4)
+        m1 = cx1.selectbox("🏠 Maison 1", options_figures, index=0, key="man_m1")
+        m2 = cx2.selectbox("🏠 Maison 2", options_figures, index=1, key="man_m2")
+        m3 = cx3.selectbox("🏠 Maison 3", options_figures, index=2, key="man_m3")
+        m4 = cx4.selectbox("🏠 Maison 4", options_figures, index=3, key="man_m4")
+
+        st.markdown("##### 🌿 Maisons 5 à 8")
+        cx5, cx6, cx7, cx8 = st.columns(4)
+        m5 = cx5.selectbox("🏠 Maison 5", options_figures, index=4, key="man_m5")
+        m6 = cx6.selectbox("🏠 Maison 6", options_figures, index=5, key="man_m6")
+        m7 = cx7.selectbox("🏠 Maison 7", options_figures, index=6, key="man_m7")
+        m8 = cx8.selectbox("🏠 Maison 8", options_figures, index=7, key="man_m8")
+
+        st.markdown("##### ⚡ Maisons 9 à 12")
+        cx9, cx10, cx11, cx12 = st.columns(4)
+        m9 = cx9.selectbox("🏠 Maison 9", options_figures, index=8, key="man_m9")
+        m10 = cx10.selectbox("🏠 Maison 10", options_figures, index=9, key="man_m10")
+        m11 = cx11.selectbox("🏠 Maison 11", options_figures, index=10, key="man_m11")
+        m12 = cx12.selectbox("🏠 Maison 12", options_figures, index=11, key="man_m12")
+
+        st.markdown("##### ⚖️ Tribunal (Maisons 13 à 16)")
+        cx13, cx14, cx15, cx16 = st.columns(4)
+        m13 = cx13.selectbox("🏠 Maison 13 (Tém. D)", options_figures, index=12, key="man_m13")
+        m14 = cx14.selectbox("🏠 Maison 14 (Tém. G)", options_figures, index=13, key="man_m14")
+        m15 = cx15.selectbox("🏠 Maison 15 (Juge)", options_figures, index=14, key="man_m15")
+        m16 = cx16.selectbox("🏠 Maison 16 (Décret)", options_figures, index=15, key="man_m16")
+
+        theme_complet = {
+            1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8,
+            9: m9, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15, 16: m16
+        }
 
     st.markdown("---")
-    st.header("🖼️ THÈME ANALYSÉ ET CONFIGURATION")
+    st.header("🖼️ REPRÉSENTATION DU THÈME EN COURS D'ANALYSE")
     
     with st.container(border=True):
         st.subheader("⚜️ Ligne I : Les 4 Mères")
@@ -462,7 +509,7 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
                     st.markdown("**1. Ingrédients pour la base :**")
                     st.write("- **500g de base neutre :** Savon de Marseille blanc pur râpé ou Savon Noir traditionnel africain.")
                     st.write(f"- **Liquide de fonte :** 100 ml d'une infusion/décoction *ultra-concentrée* de **{bloc['plante']}**.")
-                    st.write("- **Liant végétal :** 2 cuillères à soupe d'huile de Coco ou de Karité.")
+                    st.write("- **Liant vegetal :** 2 cuillères à soupe d'huile de Coco ou de Karité.")
                 with col_d:
                     st.markdown("**2. Additifs aromatiques & Huiles à incorporer :**")
                     st.write(f"- **Éléments pulvérisés :** {bloc['savon_additifs']}")
@@ -471,7 +518,7 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
                 st.info("🥣 **Méthode de cuisson (Fondant/Recuit) :**\n"
                         "1. Faites fondre le savon râpé au bain-marie doux avec les 100 ml de liquide de plante concentré.\n"
                         "2. Hors du feu, incorporez énergiquement le liant, les additifs aromatiques en poudre fine et les gouttes d'huile essentielle.\n"
-                        "3. Coulez la pâte homogène dans un moule. Laissez durcier 24 à 48 heures avant de démouler et découper.")
+                        "3. Coulez la pâte homogène dans un moule. Laissez durcir 24 à 48 heures avant de démouler et découper.")
                 
                 st.warning(f"🔮 **Consécration Théurgique du Savon :**\n"
                            f"Une fois le savon sec, posez-le devant vous. Effectuez le zikr exact de la figure : **{bloc['psaume']} ({bloc['verset']})** exactement **{bloc['repetitions']} fois**.\n\n"
