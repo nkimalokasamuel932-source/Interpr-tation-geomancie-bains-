@@ -333,4 +333,113 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
     st.markdown("### 🌿 2. Les Quatre Filles Émergées (M5 à M8)")
     c5, c6, c7, c8 = st.columns(4)
     m5 = c5.selectbox("🏠 Maison 5 (Enfants/Nouvelles)", options_figures, index=4)
-    m6 = c6.selectbox("🏠 Maison 6 (Maladies/Obstacles)", options_figures,
+    m6 = c6.selectbox("🏠 Maison 6 (Maladies/Obstacles)", options_figures, index=5)
+    m7 = c7.selectbox("🏠 Maison 7 (Union/Adversaires)", options_figures, index=6)
+    m8 = c8.selectbox("🏠 Maison 8 (Peur/Fin/Mort)", options_figures, index=7)
+
+    st.markdown("### ⚡ 3. Les Quatre Neveux (M9 à M12)")
+    c9, c10, c11, c12 = st.columns(4)
+    m9 = c9.selectbox("🏠 Maison 9 (Voyages/Spiritualité)", options_figures, index=8)
+    m10 = c10.selectbox("🏠 Maison 10 (Travail/Pouvoir)", options_figures, index=9)
+    m11 = c11.selectbox("🏠 Maison 11 (Espoirs/Souhaits)", options_figures, index=10)
+    m12 = c12.selectbox("🏠 Maison 12 (Ennemis/Épreuves)", options_figures, index=11)
+
+    st.markdown("### ⚖️ 4. Le Tribunal & Décret Céleste (M13 à M16)")
+    c13, c14, c15, c16 = st.columns(4)
+    m13 = c13.selectbox("🏠 Maison 13 (Témoin Droite)", options_figures, index=12)
+    m14 = c14.selectbox("🏠 Maison 14 (Témoin Gauche)", options_figures, index=13)
+    m15 = c15.selectbox("🏠 Maison 15 (Le Juge)", options_figures, index=14)
+    m16 = c16.selectbox("🏠 Maison 16 (Le Décret Final)", options_figures, index=15)
+
+    # Regroupement des saisies dans le dictionnaire final
+    theme_complet = {
+        1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8,
+        9: m9, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15, 16: m16
+    }
+
+    # ==============================================================================
+    # AFFICHAGE DU RECAPITULATIF REÇU
+    # ==============================================================================
+    st.markdown("---")
+    with st.container(border=True):
+        st.subheader("🖼️ RÉSUMÉ VISUEL DE VOTRE THÈME RENSEIGNÉ")
+        
+        l1_1, l1_2, l1_3, l1_4 = st.columns(4)
+        l1_1.metric("M1", theme_complet[1])
+        l1_2.metric("M2", theme_complet[2])
+        l1_3.metric("M3", theme_complet[3])
+        l1_4.metric("M4", theme_complet[4])
+        
+        l2_1, l2_2, l2_3, l2_4 = st.columns(4)
+        l2_1.metric("M5", theme_complet[5])
+        l2_2.metric("M6", theme_complet[6])
+        l2_3.metric("M7", theme_complet[7])
+        l2_4.metric("M8", theme_complet[8])
+
+        l3_1, l3_2, l3_3, l3_4 = st.columns(4)
+        l3_1.metric("M9", theme_complet[9])
+        l3_2.metric("M10", theme_complet[10])
+        l3_3.metric("M11", theme_complet[11])
+        l3_4.metric("M12", theme_complet[12])
+
+        l4_1, l4_2, l4_3, l4_4 = st.columns(4)
+        l4_1.warning(f"M13 : {theme_complet[13]}")
+        l4_2.warning(f"M14 : {theme_complet[14]}")
+        l4_3.error(f"M15 (Juge) : {theme_complet[15]}")
+        l4_4.success(f"M16 (Décret) : {theme_complet[16]}")
+
+    # ==============================================================================
+    # DÉPLOIEMENT AUTOMATIQUE DES PROTOCOLES POUR CHAQUE MAISON SAISIE
+    # ==============================================================================
+    st.markdown("---")
+    st.header("📖 DICTIONNAIRE THÉRAPEUTIQUE, RECETTES DE BAINS ET SAVONS ARTISANAUX")
+    st.write("Ouvrez les sections ci-dessous pour découvrir les remèdes appliqués à vos 16 maisons.")
+    
+    for m, fig_choisie in theme_complet.items():
+        bloc = DATA[fig_choisie]
+        statut_action = "🛑 SECTEUR CRITIQUE" if "Mauvais" in bloc["nature"] else "✨ SECTEUR HARMONIEUX"
+        titre_boite = f"{MAISONS_NOMINATIVES[m]} ➔ Figure : {fig_choisie} [{statut_action}]"
+        
+        with st.expander(titre_boite):
+            tab_passation, tab_verset, tab_bain, tab_savon = st.tabs([
+                "🔄 Analyse de Position", 
+                "📿 Zikr du Verset Biblique", 
+                "🌿 Recette de Bain & Posologie",
+                "🧼 Fabrication du Savon Rituel"
+            ])
+            
+            with tab_passation:
+                st.info(interpreter_passation(fig_choisie, m))
+                st.markdown(f"**Signification sectorielle :** *{bloc['txt']}*")
+                
+            with tab_verset:
+                st.markdown(f"### 📿 Protocole de Récitation du Verset Sacré ({bloc['psaume']})")
+                st.info(f"**Verset :** *\"{bloc['texte_biblique']}\"* ({bloc['psaume']}, {bloc['verset']})")
+                st.warning(f"**Méthode de Récitation :** {bloc['zikr_verset']}")
+                st.write(f"**Zikr Théurgique :** {bloc['zikr']}")
+                st.caption(f"⏱️ **Moment idéal :** {bloc['moment']}")
+                
+            with tab_bain:
+                st.markdown(f"### 🌱 Préparation du Bain Spirituel (Plante : {bloc['plante']})")
+                st.write(f"**Plante maîtresse :** **{bloc['plante']}**, Éléments aromatiques : *{bloc['aromatiques']}*.")
+                st.success(f"🥣 **Préparation :** {bloc['bain_preparation']}")
+                st.error(f"📋 **Application & Fréquence :** {bloc['bain_posologie']}")
+                st.write(f"🧴 *Huile sacrée :* Après le séchage, appliquez l'huile de **{bloc['huile']}** sur vos centres vibratoires.")
+                
+            with tab_savon:
+                st.markdown("### 🧼 Fabrication et Consécration du Savon Thérapeutique")
+                col_g, col_d = st.columns(2)
+                with col_g:
+                    st.markdown("**1. Ingrédients pour la base :**")
+                    st.write("- **500g de base neutre :** Savon de Marseille râpé ou Savon Noir traditionnel.")
+                    st.write(f"- **Liquide :** Décoction ultra-concentrée de la plante **{bloc['plante']}**.")
+                with col_d:
+                    st.markdown("**2. Additifs aromatiques :**")
+                    st.write(f"- **Éléments en poudre :** {bloc['savon_additifs']}")
+                    st.write(f"- **Scellage :** 15 à 20 gouttes d'huile essentielle de **{bloc['huile']}**.")
+                
+                st.warning(f"🔮 **Consécration Théurgique :**\n"
+                           f"Une fois le savon moulé et bien sec, effectuez le zikr du **{bloc['psaume']}** exactly **{bloc['repetitions']} fois** directement au-dessus du savon pour y fixer solidement l'énergie.")
+                st.write(f"📋 **Formule à prononcer à l'utilisation :** *\"{bloc['mots_application']}\"*.")
+else:
+    st.warning("🔒 Système Verrouillé. Veuillez inscrire vos identifiants à gauche pour accéder à la plateforme.")
