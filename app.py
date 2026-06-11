@@ -1,11 +1,16 @@
-# ==============================================================================
-# CONFIGURATION DE VOS ACCÈS (MODIFIABLE ICI DE MANIÈRE VISIBLE)
-# ==============================================================================
-MON_ID_PERSONNEL  = "theurge2026"
-MON_MDP_PERSONNEL = "Salomon777"
+import streamlit as st
+
+# Configuration de la page Streamlit
+st.set_page_config(page_title="Base Géomantique Pro", page_icon="🔮", layout="centered")
 
 # ==============================================================================
-# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE NETTOYÉE DE TOUT RETOUR À LA LIGNE
+# CONFIGURATION DE VOS ACCÈS SECRETS
+# ==============================================================================
+IDENTIFIANT_SECRET = "theurge2026"
+MOT_DE_PASSE_SECRET = "Salomon777"
+
+# ==============================================================================
+# BASE DE DONNÉES THÉURGIQUE & GÉOMANTIQUE
 # ==============================================================================
 DATA_THEURGIQUE = {
     "Adama": {
@@ -238,30 +243,30 @@ SIGNIFICATION_MAISONS = {
 }
 
 THEME_DYNAMIQUE = {
-    1: "Adama",          
-    2: "Idrissa",        
-    3: "Mahamadou",      
-    4: "Tontigui",       
-    5: "Bila",           
-    6: "Mavour",         
-    7: "Lomara Blen",    
-    8: "Yousouf",        
-    9: "Massa Solomane", 
-    10: "Idrissa",       
-    11: "Kalalahou",     
-    12: "Mangossi",      
-    13: "Mori-Zoumana",  
-    14: "Adama-Lomara",  
-    15: "Goundo",        
-    16: "Nouhou-Koro"    
+    1: "Adama", 2: "Idrissa", 3: "Mahamadou", 4: "Tontigui",       
+    5: "Bila", 6: "Mavour", 7: "Lomara Blen", 8: "Yousouf",        
+    9: "Massa Solomane", 10: "Idrissa", 11: "Kalalahou", 12: "Mangossi",      
+    13: "Mori-Zoumana", 14: "Adama-Lomara", 15: "Goundo", 16: "Nouhou-Koro"    
 }
 
-def interpreter_mouvement_geomantique(theme):
-    print("=" * 95)
-    print(" 🔮 RAPPORT DE CONSULTATION GÉOMANTIQUE SÉCURISÉ")
-    print("=" * 95)
+# ==============================================================================
+# INTERFACE VISUELLE (STREAMLIT)
+# ==============================================================================
+st.title("🔮 Système d'Interprétation Géomantique Pro")
+st.write("Entrez vos accès secrets pour déverrouiller la base de données théurgique.")
+
+# Formulaire de connexion visuel
+with st.sidebar:
+    st.header("🔐 Authentification")
+    id_saisi = st.text_input("👤 Identifiant", value="")
+    mdp_saisi = st.text_input("🔑 Mot de passe", type="password", value="")
+
+if id_saisi == IDENTIFIANT_SECRET and mdp_saisi == MOT_DE_PASSE_SECRET:
+    st.success("🔓 Accès accordé. Lecture du thème en cours...")
+    st.markdown("---")
     
-    for maison, nom_fig in theme.items():
+    # Génération de l'interprétation sur l'écran web
+    for maison, nom_fig in THEME_DYNAMIQUE.items():
         clef_exacte = None
         for clef in DATA_THEURGIQUE.keys():
             if nom_fig.lower() in clef.lower():
@@ -274,30 +279,23 @@ def interpreter_mouvement_geomantique(theme):
         f_data = DATA_THEURGIQUE[clef_exacte]
         desc_maison = SIGNIFICATION_MAISONS[maison]
         
-        print(f"\n🏠 MAISON {maison} : {desc_maison}")
-        print(f"   ▶ Figure Active : {clef_exacte} (Tableau : {f_data['nom_africain_synonyme']})")
-        print(f"   ▶ Tempérament   : [{f_data['nature'].upper()}]")
-        print(f"   ▶ Signification  : {f_data['signification']} ➔ {f_data['domaines']}")
-        
-        if "Mauvais" in f_data["nature"]:
-            print(f"   ❌ DIAGNOSTIC  : Courant négatif bloquant ce secteur.")
-            print(f"   🛁 SOLUTION REQUIS : Préparer un bain d'huile essentielle de {f_data['huile']}.")
-            print(f"   📜 SCRIPTURE   : {f_data['psaume']} ({f_data['verset_reference']}) : \"{f_data['verset_texte']}\"")
-        else:
-            print(f"   ✨ DIAGNOSTIC  : Lumière présente. Aucun obstacle majeur.")
-            print(f"   🛁 PERFECTION  : Consolider l'apport avec le bain du matin : {f_data['usage']}")
-            print(f"   📜 MOTS SAINTS : \"{f_data['verset_texte']}\"")
-        print("-" * 95)
-
-def verifier_acces_global(identifiant, mot_de_passe):
-    secret_id = "theurge2026"
-    secret_mdp = "Salomon777"
-    if identifiant == secret_id and mot_de_passe == secret_mdp:
-        return True
-    return False
-
-if __name__ == "__main__":
-    if verifier_acces_global(MON_ID_PERSONNEL, MON_MDP_PERSONNEL):
-        interpreter_mouvement_geomantique(THEME_DYNAMIQUE)
+        # Création d'une boîte propre pour chaque maison
+        with st.expander(f"🏠 MAISON {maison} : {desc_maison}"):
+            st.markdown(f"**Figure active :** {clef_exacte} *(Synonyme : {f_data['nom_africain_synonyme']})*")
+            
+            # Affichage de la couleur selon la nature
+            if "Mauvais" in f_data["nature"]:
+                st.error(f"⚠️ Tempérament : {f_data['nature'].upper()}")
+                st.markdown(f"**Signification :** {f_data['signification']} (Secteur : {f_data['domaines']})")
+                st.markdown(f"🛁 **Bain Correctif :** Huile de *{f_data['huile']}* à appliquer le *{f_data['moment_bain']}*.")
+                st.info(f"📜 **Clé d'activation :** {f_data['psaume']} ({f_data['verset_reference']}) : *\"{f_data['verset_texte']}\"*")
+            else:
+                st.success(f"✨ Tempérament : {f_data['nature'].upper()}")
+                st.markdown(f"**Signification :** {f_data['signification']} (Secteur : {f_data['domaines']})")
+                st.markdown(f"🛁 **Bain de Scellage :** {f_data['usage']}")
+                st.info(f"📜 **Parole sainte :** *\"{f_data['verset_texte']}\"*")
+else:
+    if id_saisi != "" or mdp_saisi != "":
+        st.error("❌ Accès refusé. Les identifiants saisis dans la barre latérale sont incorrects.")
     else:
-        print("❌ ERREUR DE SÉCURITÉ : Identifiant ou Mot de passe invalide tout en haut du script.")
+        st.warning("🔒 En attente de vos identifiants dans la barre latérale gauche pour afficher les résultats.")
