@@ -146,7 +146,7 @@ DICTIONNAIRE_CAS = {
         9: "Annonce un déplacement sûr et sans contrainte, un très bon voyage et une très bonne nouvelle spirituelle.",
         10: "Prédit honneur, encouragement, réussite, et un très bon voyage dans le contexte du service.",
         11: "Annonce l'espérance, de grands espoirs, des promesses tenues mais exige de faire des efforts pour réussir.",
-        12: "Annonce une difficulty, un obstacle, un retard, un blocage voir même des risques de prison ou d'enfermement.",
+        12: "Annonce une difficulté, un obstacle, un retard, un blocage voir même des risques de prison ou d'enfermement.",
         13: "Très bon présage intime, entente parfaite dans le couple au quotidien.",
         14: "Rentrées d'argent différées mais solides provenant de transactions passées.",
         15: "Clarté de la pensée, résolution mentale d'un problème complexe.",
@@ -205,7 +205,7 @@ DICTIONNAIRE_CAS = {
         2: "Annonce la déception, le regret, la diminution drastique ou la perte sèche de sa chance.",
         3: "Démarches difficiles, jalousie féroce et blocages au sein de l'entourage proche.",
         4: "Magouille, mensonge avéré, vol ou détournement de biens au sein du foyer.",
-        5: "Difficultés, obstacles sévères, risks d'avortement ou enfant souffrant d'un handicap.",
+        5: "Difficultés, obstacles sévères, risques d'avortement ou enfant souffrant d'un handicap.",
         6: "Maladie, perte matérielle, attaques de mauvais génies (djinn mécréant) et grande déception.",
         7: "Mauvaise personne pour le cas d'un mariage (le manuscrit conseille : 'mieux vaut abandonner').",
         8: "Pertes à l'extérieur, voyage dangereux, maladie ou complications à l'étranger.",
@@ -221,7 +221,7 @@ DICTIONNAIRE_CAS = {
         1: "Annonce le voyage, les réunions collectives, l'union ou le regroupement.",
         2: "Annonce la chance globale, le progrès, le succès commercial et les profits partagés.",
         3: "Rencontre fortuite ou programmée d'un proche, d'un parent ou d'un allié précieux.",
-        4: "Réunion de famille importante, gestion d'un problème ou d'un arbitrage de patrimoine.",
+        4: "Réunion de famille importante, gestion d'un problem ou d'un arbitrage de patrimoine.",
         16: "Finition complète. Le projet ou l'épreuve se termine pour ouvrir un nouveau cycle."
     }
 }
@@ -354,7 +354,8 @@ if u_id == "theurge2026" and u_pw == "Salomon777":
                     st.write(f"**Polarité :** `{meta['nature_manuscrit']}`")
                     st.write(f"**Élément Directeur :** `{meta['element']}`")
                     st.write(f"**Rythme :** `{meta['groupe']}`")
-                    st.caption(f"🧬 *Structure : {meta['morphology']}*")
+                    # LIGNE CORRIGÉE : Utilisation de la clé correcte 'morphologie'
+                    st.caption(f"🧬 *Structure : {meta['morphologie']}*")
                 
                 with col_interp:
                     st.markdown("### 📜 Interprétation Spatio-Temporelle")
