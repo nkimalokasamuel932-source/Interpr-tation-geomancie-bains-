@@ -387,3 +387,32 @@ for fig in sorted(figures_uniques_tirage):
         st.caption("⚠️ **Règle Théurgique Impérative :** Lors de l'onction, de l'aspersion ou de l'utilisation du Nassi, "
                    "le théurgiste ou le consultant doit obligatoirement s'orienter vers la direction cardinale de l'élément de la figure "
                    "pour réciter le Psaume et le Verset.")
+# ==============================================================================
+# 7. PHARMACIE SPIRITUELLE AUTOMATISÉE (PRESCRIPTIONS)
+# ==============================================================================
+st.header("⚗️ Pharmacie Spirituelle & Ordonnance des Maîtres")
+
+# On extrait les figures uniques présentes dans tout le thème
+figures_uniques = set(theme_actuel.values())
+
+st.markdown("Basé sur les figures sorties dans votre thème, voici les prescriptions rituelles recommandées :")
+
+for fig in figures_uniques:
+    with st.expander(f"📜 Prescription pour : {fig}"):
+        data = PROPRIETES_FIGURES[fig]
+        col_a, col_b = st.columns(2)
+        with col_a:
+            st.markdown(f"**Psaume :** {data['psaume']}")
+            st.markdown(f"**Verset clé :** {data['verset']}")
+        with col_b:
+            st.markdown(f"**Sagesse Salomonique :** {data['salomon']}")
+        
+        st.divider()
+        st.info(f"**Procédé Nassi (Application) :** {data['nassi']}")
+
+# ==============================================================================
+# 8. FOOTER D'INTÉGRITÉ
+# ==============================================================================
+st.markdown("---")
+st.caption("Oracle Ramrou v1.0 — Système Expert Géomantique & Théurgique. "
+           "L'usage de ces procédés requiert foi, concentration et respect des cycles lunaires.")
