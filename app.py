@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Configuration de la page
-st.set_page_config(page_title="Système Théurgique - Saisie 16 Maisons", page_icon="🔮", layout="wide")
+st.set_page_config(page_title="Système Théurgique & Géomancie Ramrou", page_icon="🔮", layout="wide")
 
 # ==============================================================================
 # ACCÈS SÉCURISÉS
@@ -10,280 +10,296 @@ ID_SECRET = "theurge2026"
 MDP_SECRET = "Salomon777"
 
 # ==============================================================================
-# BASE DE DONNÉES STRUCTURÉE
+# BASE DE DONNÉES COMPLÉMENTAIRE : INTERPRÉTATIONS RAMROU (16 Figures x 16 Maisons)
 # ==============================================================================
-DATA = {
-    "Janfa almamy": {
-        "ref": "Janfa almamy", "code": (1, 2, 1, 1), "nature": "Bénéfique", "element": "Feu",
-        "maison_repos": 1, "nom_maison_repos": "M1 (Demandeur / Esprit-Âme)", "plante": "Balança",
-        "txt": "Maison du demandeur, de son état physique, moral, de son âme et de sa conscience primordiale.",
-        "psaume": "Psaume 20", "verset": "Verset 5", 
-        "texte_biblique": "Qu'il te donne ce que ton cœur désire, et qu'il accomplisse tous tes desseins !",
-        "zikr_verset": "Réciter le Verset 5 du Psaume 20 exactement 77 fois par jour.",
-        "repetitions": "77",
-        "bain_preparation": "Faire bouillir une poignée de feuilles ou d'écorces de Balança dans 5 litres d'eau purifiée pendant 15 minutes. Laisser tiédir et filtrer.",
-        "bain_posologie": "Se laver avec cette décoction pendant 7 jours consécutifs, le matin au lever du soleil, sans utiliser de savon chimique après le rinçage.",
-        "huile": "Laurier Noble", 
-        "aromatiques": "Feuilles de Laurier sauce, Menthe poivrée fraîche, Safran",
-        "zikr": "Ya Wahhab (Ô Donateur Suprême) — 14 fois + Nom Salomonique : EHIEH ASHER EHIEH",
-        "priere_salomonique": "Par la puissance de la Couronne Suprême et le Nom Ineffable EHIEH ASHER EHIEH, j'invoque Ton rayonnement sur mon âme. Brise les verrous de mon esprit, enflamme mon aura de Ta lumière inextinguible et accorde-moi la victoire sur mes propres ombres. Que Ta grâce manifeste les désirs purs de mon cœur et que mes desseins s'accomplissent selon Ton ordre universel. Amen.",
-        "mots_application": "Que mon âme soit purifiée et que les intentions de ce thème reçoivent la clarté. Amen.", "moment": "Matin au lever",
-        "savon_additifs": "Feuilles de laurier broyées en poudre fine et une pincée de safran."
+DICTIONNAIRE_RAMROU = {
+    "Youssouf": {
+        1: "⚠️ Trahison, agitation, frustration. (Dépend grandement du Juge en M15).",
+        2: "💰 Chance sur trahison ou obtenue suite à un emballement soudain.",
+        3: "👥 Trahison ou frustration au sein de l'entourage proche ou lors des démarches.",
+        4: "🏠 Trahison localisée directement dans le cercle familial ou le foyer.",
+        5: "👶 Annonce une trahison venant d'un rival ou d'un ami proche.",
+        6: "🩹 Se traduit par des maux de poitrine, une profonde remise en question ou des idées confuses.",
+        7: "💍 Annonce une trahison dans le mariage, provenant du conjoint ou de l'adversaire direct.",
+        8: "🔄 Trahison avortée (qui n'ira pas jusqu'au bout, avortée par le changement).",
+        9: "🙏 Trahison en cours accompagnée de frustration sur le chemin ou dans la quête spirituelle.",
+        10: "👑 Trahison dans le service (travail) ou liée à un fait professionnel précis.",
+        11: "🕊️ Trahison en cours de promesse non tenue (les appuis ou espoirs font défaut).",
+        12: "⛓️ Trahison avec méchanceté manifeste provenant d'un ennemi résolu.",
+        13: "🛏️ Trahison à domicile (dans la chambre, le dortoir ou l'intimité du foyer).",
+        14: "💵 Trahison sur des biens financiers, des vols ou des crédits non remboursés.",
+        15: "🔮 Annonce clairement la trahison : le Juge confirme que le climat global est trompeur.",
+        16: "📜 Le Décret final clôture et valide la finition de l'affaire de trahison."
     },
     "Adama": {
-        "ref": "Adama", "code": (1, 1, 1, 1), "nature": "Bénéfique", "element": "Feu",
-        "maison_repos": 2, "nom_maison_repos": "M2 (Biens / Flux financiers)", "plante": "Sana",
-        "txt": "Maison des biens, des finances, de la chance matérielle et des flux énergétiques entrants.",
-        "psaume": "Psaume 8", "verset": "Verset 6", 
-        "texte_biblique": "Tu lui as donné l'empire sur les œuvres de tes mains, tu as tout mis sous ses pieds.",
-        "zikr_verset": "Réciter le Verset 6 du Psaume 8 exactement 88 fois après la prière du matin.",
-        "repetitions": "88",
-        "bain_preparation": "Infuser 100g de feuilles de Sana séchées dans de l'eau de source chauffée. Ajouter une cuillère à café de Curcuma pur.",
-        "bain_posologie": "Bain à prendre pendant 3 jours consécutifs en versant l'eau de la tête aux pieds, de préférence le matin, pour attirer l'élévation financière.",
-        "huile": "Cèdre de l'Atlas", 
-        "aromatiques": "Basilic sacré (Tulsi), Romarin officinal, Curcuma en poudre",
-        "zikr": "Ya Rafi'u (Ô Celui qui élève) — 351 fois + Nom Salomonique : ADONAI MELEKH",
-        "priere_salomonique": "Ô Seigneur Souverain, Roi de la Terre, ADONAI MELEKH, Toi qui as façonne l'homme de poussière et d'esprit et l'as couronné de gloire. Par cette onction et ce bain de feu, confère-moi l'empire légitime sur la matière. Éloigne de mes mains le spectre du manque. Que l'abondance infinie se prosterne à mes pieds. Amen.",
-        "mots_application": "Que l'abondance matérielle et l'élévation financière s'installent durablement. Amen.", "moment": "Matin",
-        "savon_additifs": "Une demi-cuillère à café de curcuma pur en poudre pour la couleur or et la fixation financière, avec du romarin séché émietté."
+        1: "✨ Très bonne nouvelle concernant directement le consultant, joie intérieure.",
+        2: "💰 Forte augmentation de la chance financière, opportunité de gain immédiat.",
+        3: "👥 Entourage favorable, démarches couronnées de succès et de bienveillance.",
+        4: "🏠 Stabilité et bonheur dans le foyer, réussite liée au patrimoine immobilier.",
+        5: "👶 Joie liée aux enfants, plaisirs, heureuse nouvelle inattendue.",
+        6: "🩹 Diminution de la chance, fatigue ou perte matérielle/financière.",
+        7: "💍 Union heureuse, mariage prospère ou accord parfait avec un partenaire.",
+        8: "🔄 Chance retardée ou bloquée temporairement par un changement soudain.",
+        9: "✈️ Voyage chanceux, élévation spirituelle ou réussite dans les études/recherches.",
+        10: "👑 Excellente opportunité professionnelle, promotion, faveurs du patron.",
+        11: "🙏 Les espoirs se réalisent, les souhaits de réussite matérielle sont exaucés.",
+        12: "⚠️ Obstacles majeurs bloquant la chance par la faute d'ennemis cachés.",
+        13: "🛏️ La chance s'installe à domicile, sérénité retrouvée dans l'intimité.",
+        14: "💵 Gains financiers futurs garantis, investissement ou épargne fructueuse.",
+        15: "🔮 Le Juge confirme une issue extrêmement favorable et lumineuse.",
+        16: "📜 Décret final très positif, concrétisation absolue des objectifs."
     },
-    "Maleju": {
-        "ref": "Maleju", "code": (1, 1, 1, 2), "nature": "Neutre", "element": "Vent",
-        "maison_repos": 3, "nom_maison_repos": "M3 (Famille / Entourage proche)", "plante": "Cebé",
-        "txt": "Maison de la famille, des voisins, des collègues, des communications et de l'entourage proche.",
-        "psaume": "Psaume 4", "verset": "Verset 7", 
-        "texte_biblique": "Fais lever sur nous la lumière de ta face, ô Éternel !",
-        "zikr_verset": "Réciter le Verset 7 du Psaume 4 exactement 33 fois matin et soir.",
-        "repetitions": "33",
-        "bain_preparation": "Laisser macérer des feuilles fraîches de Cebé dans de l'eau froide exposée aux premiers rayons de soleil pendant 4 heures. Filtrer et ajouter quelques zestes d'orange.",
-        "bain_posologie": "Utiliser comme eau de rinçage après votre douche habituelle pendant 5 jours pour harmoniser les relations familiales et de voisinage.",
-        "huile": "Orange Douce", 
-        "aromatiques": "Zestes d'Orange douce, Menthe douce, Écorce de Cannelle",
-        "zikr": "Ya Nour (Ô Lumière) — 256 fois + Nom Salomonique : ELOHIM SABAOTH",
-        "priere_salomonique": "Souverain des Armées Célestes, ELOHIM SABAOTH, Source éternelle de concorde et de lumière. Que la splendeur sacrée de Ta Face descende sur mon cercle social et familial. Purifie ma langue de toute parole amère, dissout la haine ou la jalousie secrète de mon entourage. Fais de moi un canal de paix. Amen.",
-        "mots_application": "Que la concorde et la paix illuminent mes relations avec mon entourage. Amen.", "moment": "Matin",
-        "savon_additifs": "Poudre fine de cannelle et morceaux très fins de zestes d'orange séchés."
+    "Mahdy": {
+        1: "🔄 Esprit focalisé sur le mouvement, envie de changement ou de déplacement.",
+        2: "💰 Augmentation de la prospérité et gains financiers majeurs en mouvement.",
+        3: "👥 Nouvelles dynamiques avec l'entourage, démarches actives de communication.",
+        4: "🏠 Changement ou déplacement prévu au sein du foyer (déménagement, travaux).",
+        5: "👶 Déplacement agréable pour les plaisirs ou nouvelles d'un enfant en route.",
+        6: "🩹 Retards dans le rétablissement ou blocages dans les tâches quotidiennes.",
+        7: "💍 Rencontre importante en voyage, ou accord dynamique avec l'adversaire.",
+        8: "🔄 Changement radical de situation, transformation profonde et rapide.",
+        9: "✈️ Annonce un déplacement sûr, un voyage très profitable et sans embûches.",
+        10: "👑 Évolution professionnelle rapide, déplacement pour le travail.",
+        11: "🙏 Appuis providentiels extérieurs facilitant les projets à venir.",
+        12: "⛓️ Risque de blocage sévère, de grand retard, voire de restriction de liberté.",
+        13: "🛏️ Arrivée imminente d'une personne ou d'une nouvelle au domicile.",
+        14: "💵 Rentrée d'argent future liée à un commerce ou un déplacement.",
+        15: "🔮 Le Juge annonce que la conclusion dépend entièrement d'un changement de voie.",
+        16: "📜 Sentence rapide et dynamique qui débloque définitivement la situation."
     },
-    "Albayada": {
-        "ref": "Albayada", "code": (2, 2, 1, 2), "nature": "Bénéfique", "element": "Eau",
-        "maison_repos": 4, "nom_maison_repos": "M4 (Foyer / Patrimoine)", "plante": "Djou",
-        "txt": "Maison du foyer, de la maison familiale, du patrimoine immobilier et de l'autorité parentale.",
-        "psaume": "Psaume 112", "verset": "Verset 3", 
-        "texte_biblique": "Il a dans sa maison bien-être et richesse, et sa justice subsiste à jamais.",
-        "zikr_verset": "Réciter le Verset 3 du Psaume 112 exactement 44 fois au cœur de la maison.",
-        "repetitions": "44",
-        "bain_preparation": "Décoction lourde de racines ou feuilles de Djou avec 3 clous de girofle. Faire bouillir longuement à feu doux.",
-        "bain_posologie": "Prendre ce bain protecteur et purificateur le mercredi soir. Asperger également les quatre coins de la maison avec un peu de cette eau.",
-        "huile": "Patchouli", 
-        "aromatiques": "Bâtons de Cannelle, Clous de Girofle, Curcuma",
-        "zikr": "Ya Razzaq (Ô Pourvoyeur) — 308 fois + Nom Salomonique : SHADDAI EL CHAI",
-        "priere_salomonique": "Principe Vivant et Tout-Puissant, SHADDAI EL CHAI, Fondement inébranlable des siècles. J'invoque Ta bénédiction sur ma demeure et mon sang. Fais couler le fleuve du bien-être et de la richesse intarissable dans mon foyer. Que le vice en soit chassé et que Ta justice y règne éternellement. Amen.",
-        "mots_application": "Que la stabilité, le bien-être et la richesse s'ancrent au cœur de mon foyer. Amen.", "moment": "Matin",
-        "savon_additifs": "Clous de girofle pilés en fine poudre et une pincée de curcuma protecteur."
+    "Idriss": {
+        1: "🧘 Esprit sage, calme, serein. Clarté mentale et décisions réfléchies.",
+        2: "💰 Gains financiers stables et mérités, gestion prudente et payante.",
+        3: "👥 Soutien sincère de la part des parents, frères ou voisins respectables.",
+        4: "🏠 Symbole d'union, de paix profonde, de sécurité et de confiance au sein de la famille.",
+        5: "👶 Éducation réussie, sagesse des enfants ou joie tranquille.",
+        6: "🩹 Problèmes de santé durables, maladies chroniques ou difficultés matérielles tenaces.",
+        7: "💍 Mariage solide basé sur la confiance mutuelle, fidélité du conjoint.",
+        8: "🔄 Fin paisible d'un problème, transition douce vers autre chose.",
+        9: "🙏 Haute protection divine, réussite dans la quête spirituelle ou religieuse.",
+        10: "👑 Respect de la hiérarchie, autorité légitime et reconnue au travail.",
+        11: "🙏 Espoirs fondés sur du solide, promesses tenues à coup sûr.",
+        12: "⛓️ Épreuves supportées avec patience, victoire finale sur les épreuves.",
+        13: "🛏️ Paix et harmonie absolues au sein du lit conjugal et du foyer intime.",
+        14: "💵 Patrimoine financier sécurisé, économies bien protégées.",
+        15: "🔮 Le Juge valide la solidité de l'affaire avec une issue juste.",
+        16: "📜 Décret immuable et protecteur qui scelle la paix."
     },
-    "Tariki": {
-        "ref": "Tariki", "code": (1, 1, 2, 1), "nature": "Bénéfique", "element": "Eau",
-        "maison_repos": 5, "nom_maison_repos": "M5 (Enfants / Nouvelles)", "plante": "Djècala",
-        "txt": "Maison des enfants, de la créativité, des plaisirs et des nouvelles ou messages entrants.",
-        "psaume": "Psaume 100", "verset": "Verset 2", 
-        "texte_biblique": "Servez l'Éternel avec joie, venez avec allégresse en sa présence !",
-        "zikr_verset": "Réciter le Verset 2 du Psaume 100 exactement 55 fois avant de lire ou d'envoyer des courriers importants.",
-        "repetitions": "55",
-        "bain_preparation": "Infuser des tiges de Citronnelle et des feuilles de Djècala dans de l'eau bouillante. Laisser refroidir jusqu'à température agréable.",
-        "bain_posologie": "Bain de clarté à effectuer pendant 3 jours consécutifs, idéalement le matin, pour débloquer les situations administratives ou obtenir de bonnes nouvelles.",
-        "huile": "Pamplemousse", 
-        "aromatiques": "Verveine odorante, Citronnelle, Pistils de Safran",
-        "zikr": "Ya Latif (Ô Doux) — 129 fois + Nom Salomonique : YHVH SABAOTH",
-        "priere_salomonique": "Seigneur Souverain de l'Allégresse, YHVH SABAOTH, dont la douceur s'étend sur toute créature. Permets que Ton parfum de joie pénètre mon temple corporel. Chasse la tristesse stérile. Fais lever sur ma vie des messages de triomphe et accorde la protection à ma lignée. Amen.",
-        "mots_application": "Que les nouvelles qui me parviennent apportent la joie, la réussite et l'allégresse. Amen.", "moment": "Matin",
-        "savon_additifs": "Feuilles de verveine séchées réduites en miettes et une pincée de poudres de safran."
+    "Ibrahima": {
+        1: "🤔 État de doute, d'hésitation profonde face à une route ou un projet à entreprendre.",
+        2: "💰 La chance arrive petit à petit (goutte-à-goutte) mais elle s'avère durable.",
+        3: "👥 Hésitations dans les démarches ou communications floues avec l'entourage.",
+        4: "🏠 Climat incertain dans la maison, attente d'une décision familiale.",
+        5: "👶 Projets de conception, créativité en éveil mais demande du temps.",
+        6: "🩹 Petite indisposition physique passagère ou paresse au travail.",
+        7: "💍 Incertitude dans le couple, hésitation avant un engagement officiel.",
+        8: "🔄 Changement lent qui demande de la patience avant de porter ses fruits.",
+        9: "✈️ Voyage retardé ou doutes sur l'orientation spirituelle à prendre.",
+        10: "👑 Statut professionnel en attente de validation, hésitations de la hiérarchie.",
+        11: "🙏 Espoirs fragiles mais réels, les souhaits avancent lentement.",
+        12: "⛓️ Difficultés mineures causées par des doutes internes plus que par des ennemis.",
+        13: "🛏️ Attente ou réflexion solitaire dans la chambre à coucher.",
+        14: "💵 Rentrées financières fragmentées, petits profits réguliers.",
+        15: "🔮 Le Juge indique qu'il ne faut pas se précipiter, l'issue est en gestation.",
+        16: "📜 Décret qui demande une vérification avant la finition complète."
     },
-    "N'gansa": {
-        "ref": "N'gansa", "code": (2, 2, 2, 2), "nature": "Neutre à Mauvais", "element": "Eau",
-        "maison_repos": 6, "nom_maison_repos": "M6 (Maladies / Choses accomplies)", "plante": "Wingninga",
-        "txt": "Maison de la maladie, des blocages corporels, de la servitude et des choses déjà accomplies.",
-        "psaume": "Psaume 51", "verset": "Verset 12", 
-        "texte_biblique": "Ô Dieu ! crée en moi un cœur pur, renouvelle en moi un esprit bien disposé.",
-        "zikr_verset": "Réciter le Verset 12 du Psaume 51 exactement 66 fois à genoux avant de dormir.",
-        "repetitions": "66",
-        "bain_preparation": "Faire bouillir vigoureusement les feuilles de Wingninga avec du sel gemme brut dans 6 litres d'eau.",
-        "bain_posologie": "Bain de purification profonde et d'exorcisme corporel à faire pendant 6 soirs d'affilée juste avant le coucher. Recueillir l'eau résiduelle si possible pour l'évacuer hors de la concession.",
-        "huile": "Lavande Vraie", 
-        "aromatiques": "Fleurs de Lavande, Camomille, Poudre de Santal Blanc",
-        "zikr": "Ya Chafi (Ô Guérisseur) — 391 fois + Nom Salomonique : ELOHIM GIBOR",
-        "priere_salomonique": "Principe de Justice et Forteresse Inflexible, ELOHIM GIBOR, Toi qui sondes les reins et les cœurs. Lave mon corps et mon âme. Crée en moi un réceptacle immaculé. Par le pouvoir de Ton Autel, calcine toute maladie occulte et brise les chaînes de la servitude. Amen.",
-        "mots_application": "Purifie mon être de toute négativité, entrave ou influence maladive cachée. Amen.", "moment": "Soir",
-        "savon_additifs": "Fleurs de lavande séchées, poudre de santal blanc et une cuillère à café de gros sel marin écrasé."
+    "Inssa": {
+        1: "🗣️ Disputes intérieures, nervosité, pensées conflictuelles et mauvaise foi.",
+        2: "💰 Conflits liés à l'argent, discussions tendues pour des intérêts financiers.",
+        3: "👥 Querelles de voisinage, malentendus ou mensonges dans l'entourage proche.",
+        4: "🏠 Disputes familiales, mauvaise foi, mensonges ou discussions conflictuelles au foyer.",
+        5: "👶 Tensions avec les enfants ou plaisirs gâchés par des paroles amères.",
+        6: "🩹 Maux physiques liés au stress, ambiance de travail conflictuelle.",
+        7: "💍 Fortes disputes dans le couple, rupture de dialogue ou procès avec l'adversaire.",
+        8: "🔄 Querelle qui provoque une rupture ou un changement brutal.",
+        9: "✈️ Incidents ou disputes durant un déplacement, blocage clérical.",
+        10: "👑 Tensions majeures avec le patron, risque de blâme ou de conflit d'autorité.",
+        11: "🙏 Espoirs déçus par des promesses mensongères ou des disputes.",
+        12: "⛓️ Complots manifestes, médisances et attaques verbales gratuites d'ennemis.",
+        13: "🛏️ Climat de tension et de dispute au sein du lit conjugal à la maison.",
+        14: "💵 Pertes d'argent dues à des litiges ou des pénalités non prévues.",
+        15: "🔮 Engendre des regrets, une diminution ou une perte de statut général.",
+        16: "📜 Sentence conflictuelle qui nécessite un nettoyage spirituel immédiat."
     },
-    "Lumara": {
-        "ref": "Lumara", "code": (2, 1, 2, 2), "nature": "Mauvais", "element": "Vent",
-        "maison_repos": 7, "nom_maison_repos": "M7 (Adversaires / Époux)", "plante": "Gababelé",
-        "txt": "Maison des adversaires, des rivaux, des conflits déclarés, du mariage et des partenaires.",
-        "psaume": "Psaume 35", "verset": "Verset 1", 
-        "texte_biblique": "Éternel ! Attaque ceux qui m'attaquent, combats ceux qui me combattent !",
-        "zikr_verset": "Réciter le Verset 1 du Psaume 35 vigoureusement 71 fois face à l'Est en cas de conflit avéré.",
-        "repetitions": "71",
-        "bain_preparation": "Préparer une eau de combat tiède en infusant du Gababelé broyé avec du gingembre frais émincé.",
-        "bain_posologie": "Se laver uniquement le soir tard pendant 3 jours. Ce bain agit comme un bouclier de retour à l'envoyeur contre les complots et les litiges.",
-        "huile": "Cannelle Écorce", 
-        "aromatiques": "Poivre noir, Thym fort, Ortie piquante, Gingembre",
-        "zikr": "Ya Jabbar (Ô Contraignant) — 206 fois + Nom Salomonique : ELOHIM GIBOR",
-        "priere_salomonique": "Juge Terrible des Oppresseurs, ELOHIM GIBOR, Puissance des vengeances légitimes. Tire Ton épée flamboyante et dresse Ton bouclier devant mes pas. Combat ceux qui cherchent ma ruine. Que la confusion s'abatte sur mes adversaires invisibles ou visibles. Amen.",
-        "mots_application": "Que toute opposition, conflit ou rivalité se brise face à la justice supérieure. Amen.", "moment": "Soir",
-        "savon_additifs": "Poudre de thym fort et une petite pincée de poivre noir moulu pour briser les attaques."
+    "Omar": {
+        1: "🔥 Impulsivité, colère intérieure, comportement à risque ou agressif.",
+        2: "💰 Danger de perte financière rapide, dépenses impulsives ou vol.",
+        3: "👥 Conflit violent ou rupture brutale avec un membre de l'entourage.",
+        4: "🏠 Risque d'incendie, de casse ou de violente crise au sein de la famille.",
+        5: "👶 Tensions extrêmes, rivalités passionnelles ou impulsivité d'un ami.",
+        6: "🩹 Alerte critique sur un risque d'accident, de blessure grave ou d'incendie.",
+        7: "💍 Crise conjugale majeure, affrontement direct avec la partie adverse.",
+        8: "🔄 Rupture définitive, destruction d'une situation pour en rebâtir une autre.",
+        9: "✈️ Grand danger lors des voyages, agressions ou pannes sévères.",
+        10: "👑 Conflits graves avec l'autorité (juge, police, patron), risque de sanction lourde.",
+        11: "🙏 Espoirs brisés net par une colère ou une action irréfléchie.",
+        12: "⛓️ Attaques violentes d'ennemis déclarés, danger de dommages physiques.",
+        13: "🛏️ Violence ou discorde intime intolérable à domicile.",
+        14: "💵 Ruine financière ou blocage total de crédits par destruction de dossier.",
+        15: "🔮 Le Juge tire la sonnette d'alarme : le climat général est hautement dangereux.",
+        16: "📜 Décret tranchant et foudroyant qui met fin à l'affaire de manière brutale."
     },
-    "Mankusi": {
-        "ref": "Mankusi", "code": (2, 2, 2, 1), "nature": "Mauvais", "element": "Terre",
-        "maison_repos": 8, "nom_maison_repos": "M8 (Mort / Peurs / Patrimoine caché)", "plante": "Kronifin",
-        "txt": "Maison de la mort, des angoisses profondes, des héritages, de la fatalité et du malheur.",
-        "psaume": "Psaume 142", "verset": "Verset 8", 
-        "texte_biblique": "Tire mon âme de sa prison, afin que je célèbre ton nom !",
-        "zikr_verset": "Réciter le Verset 8 du Psaume 142 exactement 82 fois dans l'obscurité pour briser les blocages psychologiques.",
-        "repetitions": "82",
-        "bain_preparation": "Faire bouillir les feuilles de Kronifin avec une poignée de charbon végétal purifié.",
-        "bain_posologie": "Bain de coupure karmique à prendre à minuit pile pendant 1 seul soir. Essuyer le corps avec un tissu propre noir à jeter ensuite.",
-        "huile": "Cyprès de Provence", 
-        "aromatiques": "Sauge officinale, Racine de Gingembre, Charbon de bois",
-        "zikr": "Ya Moukhrij (Ô Celui qui fait sortir) — 201 fois + Nom Salomonique : AGLA",
-        "priere_salomonique": "Souverain Éternel, Force immuable, AGLA, Toi qui as les clés des abîmes et de la via. Entends mon cri du fond de la fosse. Brise les portes d'airain et les verrous de fer de ma prison existentielle. Tire mon âme de l'angoisse et fais-moi remonter vers la lumière. Amen.",
-        "mots_application": "Je me libère des angoisses, des blocages et de toute forme d'enfermement. Amen.", "moment": "Soir",
-        "savon_additifs": "Sauge officinale réduite en poudre et une pincée de charbon actif végétal pour l'absorption des impuretés astrales."
+    "Ayoub": {
+        1: "🖤 Tristesse profonde, mélancolie, blocage psychologique ou angoisse.",
+        2: "📉 Malchance financière sévère, pauvreté temporaire, négativité ambiante.",
+        3: "👥 Isolement social, rupture de communication avec l'entourage proche.",
+        4: "🏠 Climat lourd et triste dans la maison, deuil ou sensation d'enfermement.",
+        5: "👶 Inquiétudes pour les enfants, absence de joie, solitude affective.",
+        6: "🩹 Maladie lente, fatigue générale, épuisement au travail quotidien.",
+        7: "💍 Solitude dans le couple, froideur affective ou divorce douloureux.",
+        8: "🔄 Transformation par la douleur, deuil d'une ancienne situation.",
+        9: "✈️ Voyage annulé ou pénible, crise de foi spirituelle.",
+        10: "👑 Perte d'emploi, destitution, impuissance face à la hiérarchie.",
+        11: "🙏 Perte d'espoir, découragement total face aux projets.",
+        12: "⛓️ Méchanceté d'un ennemi caché, fortes douleurs physiques (maux de ventre).",
+        13: "🛏️ Solitude subie ou tristesse ressentie directement dans la chambre à coucher.",
+        14: "💵 Dettes lourdes, blocage total des rentrées financières à venir.",
+        15: "🔮 Le Juge confirme un climat de blocage, de tristesse et de fatalité.",
+        16: "📜 Conclusion difficile qui demande patience et traitements thérapeutiques."
     },
-    "Kalalaw": {
-        "ref": "Kalalaw", "code": (1, 2, 2, 1), "nature": "Bénéfique", "element": "Feu",
-        "maison_repos": 9, "nom_maison_repos": "M9 (Voyages / Spiritualité / Mobilité)", "plante": "Sadjo ou aladjo",
-        "txt": "Maison des déplacements, des voyages, de la spiritualité, de la recherche et du dynamisme.",
-        "psaume": "Psaume 133", "verset": "Verset 1", 
-        "texte_biblique": "Voici, qu'il est agréable, qu'il est doux pour des frères de demeurer ensemble !",
-        "zikr_verset": "Réciter le Verset 1 du Psaume 133 exactement 99 fois avant d'entreprendre des démarches de visa ou de voyage.",
-        "repetitions": "99",
-        "bain_preparation": "Infuser des feuilles de Sadjo (ou Aladjo) avec des pétales de roses fraîches et de l'anis étoilé.",
-        "bain_posologie": "Prendre ce bain d'ouverture de routes spirituelles et géographiques pendant 7 jours consécutifs le matin.",
-        "huile": "Ylang-Ylang", 
-        "aromatiques": "Pétales de Rose, Anis étoilé, Safran",
-        "zikr": "Ya Wadoud (Ô Aimant) — 20 fois + Nom Salomonique : EL GOLAH",
-        "priere_salomonique": "Souverain Miséricordieux des Univers, EL GOLAH, Source de l'Amour universel et des voies d'ouverture. Que Ton Souffle sacré dissipe les nuages de l'isolement sur mes chemins. Ouvre grand les portes des contrées lointaines et connecte mon esprit aux alliances nobles. Amen.",
-        "mots_application": "Que mes routes et mes déplacements créent des alliances heureuses et fructueuses. Amen.", "moment": "Matin",
-        "savon_additifs": "Pétales de roses séchées broyés et une étoile de badiane (anis étoilé) réduite en poudre très fine."
+    "Allahou": {
+        1: "✨ Esprit élevé, protection divine ressentie, intuition forte.",
+        2: "💰 Fortune mineure, entrée d'argent rapide et inattendue.",
+        3: "👥 Démarches spirituelles ou administratives facilitées avec l'entourage.",
+        4: "🏠 Bénédiction sur le foyer, protection de la maison familiale.",
+        5: "👶 Joie spirituelle, chance pure, cadeaux ou heureuses surprises.",
+        6: "🩹 Guérison rapide d'un mal grâce à une intervention providentielle.",
+        7: "💍 Alliance sacrée, mariage béni ou conciliation facile avec l'adversaire.",
+        8: "🔄 Changement bénéfique et soudain guidé par la providence.",
+        9: "✈️ Voyage rapide, succès éclatant et élévation spirituelle majeure.",
+        10: "👑 Succès soudain au travail, reconnaissance des mérites par les chefs.",
+        11: "🙏 Les souhaits les plus chers reçoivent une validation spirituelle.",
+        12: "⛓️ Dissolution des pièges des ennemis par la grâce divine.",
+        13: "🛏️ Paix et bénédiction dans la chambre, sommeil réparateur.",
+        14: "💵 Prospérité future assurée par des voies claires et honnêtes.",
+        15: "🔮 Le Juge annonce le succès et la lumière sur l'ensemble du thème.",
+        16: "📜 Décret divin hautement favorable qui valide toutes les requêtes."
     },
-    "Mansa Solomani": {
-        "ref": "Mansa Solomani", "code": (2, 1, 1, 2), "nature": "Bénéfique", "element": "Terre",
-        "maison_repos": 10, "nom_maison_repos": "M10 (Travail / Autorité / Royauté)", "plante": "Sira ou baobab",
-        "txt": "Maison de la carrière, du statut social, du lieu de travail, de la royauté et de l'autorité.",
-        "psaume": "Psaume 45", "verset": "Verset 2", 
-        "texte_biblique": "Des paroles pleines de charme bouillonnent dans mon cœur. Je dis : Mon œuvre est pour le roi !",
-        "zikr_verset": "Réciter le Verset 2 du Psaume 45 exactement 100 fois chaque matin avant d'aller travailler pour asseoir son charisme.",
-        "repetitions": "100",
-        "bain_preparation": "Faire bouillir de l'écorce ou des feuilles séchées de Sira (Baobab) pour obtenir une solution ambrée hautement magnétique.",
-        "bain_posologie": "Se laver le corps pendant 9 jours consécutifs au réveil. Ce traitement impose le respect, l'autorité professionnelle et attire les promotions.",
-        "huile": "Géranium Bourbon", 
-        "aromatiques": "Feuilles de Géranium, Marjolaine séchée, Poudre de Curcuma",
-        "zikr": "Ya Jamil (Ô Beau) — 83 fois + Nom Salomonique : ADONAI TZABAOTH",
-        "priere_salomonique": "Roi des Rois, Souverain de l'Ordre Cosmique, ADONAI TZABAOTH, Toi qui as accordé la Sagesse suprême au Roi Salomon. Revêts-moi aujourd'hui de Ton manteau de majesté, de charisme et d'autorité incontestable. Que mes œuvres soient couronnées de succès. Amen.",
-        "mots_application": "Accorde-moi le charisme, le respect et l'autorité nécessaire dans mes entreprises. Amen.", "moment": "Matin",
-        "savon_additifs": "Poudre de feuilles de géranium séchées et une cuillère à soupe de miel pur naturel pour adoucir les relations hiérarchiques."
+    "Souleymane": {
+        1: "🔒 Esprit préoccupé par des responsabilités lourdes ou des blocages.",
+        2: "💰 Argent bloqué ou soumis à des taxes, des contrôles administratifs.",
+        3: "👥 Devoirs familiaux contraignants, démarches lentes et bureaucratiques.",
+        4: "🏠 Autorité paternelle forte, contraintes immobilières ou familiales.",
+        5: "👶 Devoirs envers les enfants, plaisirs limités par le travail.",
+        6: "🩹 Fatigue due aux responsabilités, surmenage professionnel.",
+        7: "💍 Mariage de raison, contrats stricts ou blocages juridiques avec l'adversaire.",
+        8: "🔄 Retards obligatoires, immobilisme nécessaire avant le changement.",
+        9: "✈️ Voyage d'affaires officiel ou démarches administratives complexes.",
+        10: "👑 Affaires complexes liées à un chef, rigueur absolue exigée au travail.",
+        11: "🙏 Espoirs soumis à des conditions strictes, patience demandée.",
+        12: "⛓️ Ennemis puissants (administration, justice) créant des contraintes.",
+        13: "🛏️ Climat sérieux ou distant à la maison, manque de lâcher-prise.",
+        14: "💵 Épargne bloquée à long terme, investissements lourds.",
+        15: "🔮 Le Juge indique que l'affaire est freinée par des règles ou des lois.",
+        16: "📜 Décret final qui structure et stabilise l'affaire après des efforts."
     },
-    "Badara": {
-        "ref": "Badara", "code": (2, 1, 1, 1), "nature": "Bénéfique", "element": "Vent",
-        "maison_repos": 11, "nom_maison_repos": "M11 (Espoirs / Protections / Souhaits)", "plante": "Gbè yiri",
-        "txt": "Maison des espoppes, de la protection, de la chose espérée, des aides providentielles et des envies.",
-        "psaume": "Psaume 144", "verset": "Verset 1", 
-        "texte_biblique": "Béni soit l'Éternel, mon rocher, qui exerce mes mains au combat, mes doigts à la bataille !",
-        "zikr_verset": "Réciter le Verset 1 du Psaume 144 exactement 111 fois pour précipiter la réalisation d'un vœu cher.",
-        "repetitions": "111",
-        "bain_preparation": "Décoction de feuilles de Gbè yiri avec des graines de cardamome pilées.",
-        "bain_posologie": "Bain d'activation de la chance providentielle à effectuer pendant 4 matins de suite, de préférence en début de mois lunaire.",
-        "huile": "Gingembre Bleu", 
-        "aromatiques": "Graines de Cardamome, Menthe des champs, Poudre de Gingembre",
-        "zikr": "Ya Qawiyyou (Ô Fort Invincible) — 116 fois + Nom Salomonique : EL SHADDAI",
-        "priere_salomonique": "Principe Fort et Invincible, EL SHADDAI, mon Rocher et mon rempart indéfectible. Exerce mon âme à la maîtrise des lois de la vie. Injecte Ton feu de courage au plus profond de mes os. Que mes vœux pieux se transforment en décrets de matière. Amen.",
-        "mots_application": "Que mes espérances les plus profondes soient fortifiées et protégées contre tout obstacle. Amen.", "moment": "Matin",
-        "savon_additifs": "Graines de cardamome écrasées et une cuillère à café de racine de gingembre séchée et pulvérisée."
+    "Aliou": {
+        1: "🤝 Esprit ouvert à la conciliation, recherche d'harmonie et d'alliances.",
+        2: "💰 Gains financiers issus de partenariats ou de contrats signés.",
+        3: "👥 Entente parfaite avec l'entourage, réunions amicales ou fraternelles.",
+        4: "🏠 Paix partagée, réunions heureuses au sein du foyer familial.",
+        5: "👶 Joie partagée, plaisirs amoureux, harmonie amicale forte.",
+        6: "🩹 Amélioration de la santé grâce au soutien de l'entourage.",
+        7: "💍 Union, entente parfaite, mariage d'amour ou réconciliation totale.",
+        8: "🔄 Changement négocié en douceur, transition collective réussie.",
+        9: "✈️ Voyage de groupe ou démarche d'alliance à l'étranger réussie.",
+        10: "👑 Signature de contrat importante, association fructueuse avec les chefs.",
+        11: "🙏 Union, entente, documents ou contrats espérés qui arrivent enfin.",
+        12: "⛓️ Les ennemis abandonnent leurs poursuites face à vos alliances.",
+        13: "🛏️ Amour, complicité et tendresse partagés au lit à domicile.",
+        14: "💵 Financement obtenu, crédits accordés grâce à de bons appuis.",
+        15: "🔮 Le Juge valide une issue d'entente et de bonheur partagé.",
+        16: "📜 Décret final scellant définitivement une alliance heureuse."
     },
-    "Nunkoro": {
-        "ref": "Nunkoro", "code": (1, 2, 2, 2), "nature": "Mauvais", "element": "Terre",
-        "maison_repos": 12, "nom_maison_repos": "M12 (Difficultés / Obstacles / Ennemis)", "plante": "kounbè",
-        "txt": "Maison des grandes difficultés, des problèmes structurels, des ennemis cachés et des entraves.",
-        "psaume": "Psaume 30", "verset": "Verset 12", 
-        "texte_biblique": "Tu as changé mon deuil en allégresse, tu as délié mon sac, et tu m'as ceint de joie.",
-        "zikr_verset": "Réciter le Verset 12 du Psaume 30 exactement 122 fois après le coucher du soleil pour dissoudre l'adversité.",
-        "repetitions": "122",
-        "bain_preparation": "Infuser vigoureusement une grande quantité de feuilles de Kounbè avec du thym blanc.",
-        "bain_posologie": "Se laver entièrement pendant 7 soirs d'affilée pour briser les blocages répétitifs et éloigner définitivement les complots cachés.",
-        "huile": "Citronnelle Java", 
-        "aromatiques": "Tiges de Citronnelle, Thym blanc, Clou de Girofle",
-        "zikr": "Ya Latif (Ô Bienveillant) — 129 fois + Nom Salomonique : IAH",
-        "priere_salomonique": "Souverain Absolu du Salut, Nom Sublime IAH, Toi qui as sauvé Noé des eaux du déluge et changé le deuil en allégresse. Abaisse Ton regard onctueux sur mes afflictions. Déchire le sac de mes difficultés, détruis les complots des esprits ténébreux et ceins mes reins de joie. Amen.",
-        "mots_application": "Que tous les pièges de l'ombre soient déracinés et dissous, laissant place au triomphe. Amen.", "moment": "Soir",
-        "savon_additifs": "Poudre de thym blanc purificateur et clous de girofle moulus très fins."
+    "Nouhou": {
+        1: "⏳ Esprit combatif face à l'adversité, endurance psychologique.",
+        2: "💰 Retards dans les rentrées d'argent, mais déblocage financier final.",
+        3: "👥 Relations compliquées avec l'entourage, démarches administratives lentes.",
+        4: "🏠 Difficultés passagères au foyer, résistance face aux crises immobilières.",
+        5: "👶 Inquiétudes légères vite dissipées, plaisirs mérités après l'effort.",
+        6: "🩹 Maladie longue nécessitant de la patience, travail quotidien difficile.",
+        7: "💍 Tensions dans le couple qui demandent de la persévérance pour être résolues.",
+        8: "🔄 Transition lente mais salvatrice vers une nouvelle vie.",
+        9: "✈️ Voyage long avec des escales ou des retards, mais arrivée à bon port.",
+        10: "👑 Évolution de carrière lente, épreuves imposées par le patron.",
+        11: "🙏 Espoirs retardés mais qui finiront par se matérialiser.",
+        12: "⛓️ Difficultés majeures, retards provoqués, mais déblocage final possible.",
+        13: "🛏️ Rétablissement du climat intime après une période de doute.",
+        14: "💵 Rentrées d'argent différées, recouvrement de créances anciennes.",
+        15: "🔮 Le Juge montre que l'issue demande du temps et de la persévérance.",
+        16: "📜 Décret de délivrance qui libère l'affaire après de longs blocages."
     },
-    "Lusiné": {
-        "ref": "Lusiné", "code": (1, 1, 2, 2), "nature": "Neutre", "element": "Eau",
-        "maison_repos": 13, "nom_maison_repos": "M13 (Dortoir / Lit / Présent immédiat)", "plante": "zaman",
-        "txt": "Maison de la situation présente, de la chambre à coucher, du dortoir et des secrets intimes.",
-        "psaume": "Psaume 18", "verset": "Verset 38", 
-        "texte_biblique": "Je les brise, et ils ne peuvent se relever ; ils tombent sous mes pieds.",
-        "zikr_verset": "Réciter le Verset 38 du Psaume 18 exactement 133 fois dans la chambre à coucher avant le repos nocturne.",
-        "repetitions": "133",
-        "bain_preparation": "Préparer une eau de purification calme en infusant de l'écorce ou des feuilles de Zaman avec des feuilles d'Eucalyptus.",
-        "bain_posologie": "Bain apaisant à prendre le soir juste avant le coucher pendant 5 jours pour nettoyer l'atmosphère intime et stabiliser le couple.",
-        "huile": "Clou de Girofle", 
-        "aromatiques": "Feuilles d'Eucalyptus, Clous de girofle, Écorce de cannelle",
-        "zikr": "Ya Moumit (Ô Maître de la libération) — 490 fois + Nom Salomonique : ELOHIM",
-        "priere_salomonique": "Maître Souverain du Temps et de l'Espace, ELOHIM Juste, Toi qui fixes les frontières du jour et de la nuit. Purifie mon sanctuaire intime, ma couche et mes pensées de toute souillure. Que ma situation présente soit redressée par Ta puissance souveraine. Amen.",
-        "mots_application": "Que ma situation actuelle soit clarifiée, purifiée et libérée des énergies stagnantes. Amen.", "moment": "Soir",
-        "savon_additifs": "Poudre de feuilles d'eucalyptus pour la clarté et cannelle fine pour la chaleur relationnelle."
+    "Assane": {
+        1: "⚠️ Sentiments de jalousie, d'envie, doutes intérieurs destructeurs.",
+        2: "💰 Pertes financières dues à des tromperies ou de la jalousie.",
+        3: "👥 Rivalités cachées dans l'entourage proche, commérages.",
+        4: "🏠 Climat de suspicion ou d'infidélité larvée au sein de la maison.",
+        5: "👶 Jalousie, trahison amoureuse, déception affective, négativité.",
+        6: "🩹 Fatigue morale, somatisation des angoisses amoureuses.",
+        7: "💍 Risque d'adultère, crise de confiance majeure avec le conjoint.",
+        8: "🔄 Rupture amoureuse ou affective causée par des tiers jaloux.",
+        9: "✈️ Démarches de voyage compromises par des rivalités ou de la mauvaise foi.",
+        10: "👑 Crocs-en-jambe professionnels, collègues jaloux sabotant votre statut.",
+        11: "🙏 Espoirs déçus par la trahison d'un ami en qui vous aviez confiance.",
+        12: "⛓️ Attaques sournoises d'ennemis agissant par pure jalousie.",
+        13: "🛏️ Trahison ou déception flagrante vécue directement à domicile.",
+        14: "💵 Litiges sur des partages de biens, vols d'économies.",
+        15: "🔮 Le Juge confirme un environnement marqué par la jalousie et l'envie.",
+        16: "📜 Décret final qui nécessite une coupure nette avec les personnes toxiques."
     },
-    "Tontigi": {
-        "ref": "Tontigi", "code": (1, 2, 1, 2), "nature": "Bénéfique", "element": "Terre",
-        "maison_repos": 14, "nom_maison_repos": "M14 (Richesse future / Épargne)", "plante": "dialassogala",
-        "txt": "Maison de l'argent à venir, des gains futurs, de la capitalisation et des projets financiers non accomplis.",
-        "psaume": "Psaume 91", "verset": "Verset 11", 
-        "texte_biblique": "Car il ordonnera à ses anges de te garder dans toutes tes voies.",
-        "zikr_verset": "Réciter le Verset 11 du Psaume 91 exactement 144 fois le matin pour sécuriser vos investissements.",
-        "repetitions": "144",
-        "bain_preparation": "Faire bouillir des écorces de Dialassogala avec des graines de coriandre.",
-        "bain_posologie": "Bain d'attraction financière durable à exécuter pendant 5 matins consécutifs en formulant clairement des vœux de prospérité commerciale.",
-        "huile": "Arbre à Thé / Tea Tree", 
-        "aromatiques": "Laurier noble, Coriandre en graines, Curcuma",
-        "zikr": "Ya Hafiz (Ô Protecteur Suprême) — 998 fois + Nom Salomonique : JEHOVAH JIREH",
-        "priere_salomonique": "Pourvoyeur Universel, JEHOVAH JIREH, Toi qui ordonnes à Tes légions d'Anges d'escorter les pas des Justes. Déploie Tes sentinelles de prospérité autour de mes finances. Scelle mes coffres, fructifie mon travail et attire à moi l'abondance. Amen.",
-        "mots_application": "Que la prospérité future promise par ce thème soit scellée et divinement protégée. Amen.", "moment": "Matin",
-        "savon_additifs": "Graines de coriandre pilées et une cuillère à café de poudre de laurier noble pour sceller les gains."
+    "Younouss": {
+        1: "❤️ Esprit comblé, sentiments d'amour, de plénitude et de joie.",
+        2: "💰 Excellente aisance financière, gains importants, grande chance matérielle.",
+        3: "👥 Entourage extrêmement affectueux, démarches très fluides.",
+        4: "🏠 Richesse et confort au sein du foyer, harmonie familiale totale.",
+        5: "👶 Amour passionné, réussite totale des enfants, plaisirs intenses.",
+        6: "🩹 Santé éclatante, vitalité retrouvée, épanouissement au travail.",
+        7: "💍 Mariage d'amour parfait, harmonie absolue avec le partenaire.",
+        8: "🔄 Changement heureux apportant l'abondance et le soulagement.",
+        9: "✈️ Voyage d'amour ou d'agrément magnifique, haute lumière spirituelle.",
+        10: "👑 Promotion éclatante, succès public, amour et estime du patron.",
+        11: "🙏 Aisance financière, amour, gains, réussite totale de tous les vœux.",
+        12: "⛓️ Triomphe total et sans effort sur tous les ennemis cachés.",
+        13: "🛏️ Passion amoureuse intense et bonheur parfait vécus dans la chambre.",
+        14: "💵 Prospérité financière future majeure, richesse consolidée.",
+        15: "🔮 Le Juge annonce une conclusion couronnée de succès et de bonheur.",
+        16: "📜 Décret de triomphe absolu validant le bonheur du consultant."
     },
-    "Mori Sumana": {
-        "ref": "Mori Sumana", "code": (2, 2, 1, 1), "nature": "Bénéfique", "element": "Vent",
-        "maison_repos": 15, "nom_maison_repos": "M15 (Conclusion générale)", "plante": "Doualé",
-        "txt": "Maison de la conclusion du thème, du résumé général des affaires, du bilan et de l'environnement final.",
-        "psaume": "Psaume 119", "verset": "Verset 105", 
-        "texte_biblique": "Ta parole est une lampe à mes pieds, et une lumière sur mon sentier.",
-        "zikr_verset": "Réciter le Verset 105 du Psaume 119 exactement 150 fois le soir pour obtenir une illumination intérieure ou dénouer un problem complexe.",
-        "repetitions": "150",
-        "bain_preparation": "Infuser des feuilles de Doualé avec des larmes de résine pure d'Oliban dans de l'eau tiède.",
-        "bain_posologie": "Bain de synthèse finale à prendre pendant 3 soirs d'affilée pour clore heureusement une affaire en cours et éclairer vos choix de vie.",
-        "huile": "Encens d'Oliban", 
-        "aromatiques": "Résine d'Oliban, Fleurs de Jasmin séchées, Poudre de Safran",
-        "zikr": "Ya Alim (Ô Omniscient) — 150 fois + Nom Salomonique : TETRAGRAMMATON",
-        "priere_salomonique": "Sagesse Suprême, TETRAGRAMMATON Ineffable, dont le Verbe Sacré est une lampe infaillible à mes pieds. Toi qui connais la fin avant le commencement, illumine l'issue de mon thème et de ma vie. Que Ta vérité triomphe de toute illusion. Amen.",
-        "mots_application": "Que la lumière parfaite éclaire la conclusion de mes démarches et m'apporte la réussite globale. Amen.", "moment": "Soir",
-        "savon_additifs": "Grains de résine d'oliban réduits en poussière microscopique et fleurs de jasmin émiettées."
+    "Ousmane": {
+        1: "🧘 Esprit tourné vers la réflexion profonde, la méditation et la foi.",
+        2: "💰 Gains obtenus grâce à des activités de l'esprit ou de la foi.",
+        3: "👥 Échanges profonds et sincères avec l'entourage, conseils avisés.",
+        4: "🏠 Sérénité et calme philosophique au sein de la maison familiale.",
+        5: "👶 Sagesse précoce des enfants, plaisirs simples et spirituels.",
+        6: "🩹 Paix du corps obtenue par le repos de l'esprit, clarté au travail.",
+        7: "💍 Union spirituelle forte, respect mutuel au sein du couple.",
+        8: "🔄 Transition de vie vécue avec une grande maturité philosophique.",
+        9: "✈️ Pèlerinage, voyage spirituel ou études supérieures hautement profitables.",
+        10: "👑 Statut de conseiller, respect de la hiérarchie pour votre intégrité.",
+        11: "🙏 Spiritualité, méditation, succès éclatant à l'issue de prières intenses.",
+        12: "⛓️ Protection absolue contre le mal grâce à votre force spirituelle.",
+        13: "🛏️ Atmosphère calme, propice aux rêves lucides dans la chambre.",
+        14: "💵 Sécurité financière future obtenue par une gestion sage.",
+        15: "🔮 Le Juge valide une conclusion d'élévation et de paix intérieure.",
+        16: "📜 Décret qui apporte la lumière divine et la clarté finale sur l'affaire."
     },
-    "Jamati Moussa": {
-        "ref": "Jamati Moussa", "code": (2, 1, 2, 1), "nature": "Neutre à Fort", "element": "Feu",
-        "maison_repos": 16, "nom_maison_repos": "M16 (Le Décret / Confirmation)", "plante": "tomy bourou",
-        "txt": "Maison du Décret de l'esprit, de la confirmation finale, de la sentence et de la haute précision.",
-        "psaume": "Psaume 4", "verset": "Verset 7", 
-        "texte_biblique": "Fais lever sur nous la lumière de ta face, ô Éternel !",
-        "zikr_verset": "Réciter le Verset 7 du Psaume 4 exactement 166 fois pour sceller instantanément le travail géomantique.",
-        "repetitions": "166",
-        "bain_preparation": "Préparer une infusion forte de feuilles de Tomy bourou avec de la menthe poivrée fraîche.",
-        "bain_posologie": "Prendre ce dernier bain de scellage le jeudi ou dimanche matin très tôt. Il permet de matérialiser les réponses positives et d'accélérer les signatures de contrats.",
-        "huile": "Orange Douce", 
-        "aromatiques": "Zestes de Citron vert, Feuilles de Menthe, Cannelle",
-        "zikr": "Ya Sari'u (Ô Rapide) — 202 fois + Nom Salomonique : SCHEMHAMPHORASCH",
-        "priere_salomonique": "Par le Grand Nom Sacré et Vibrant SCHEMHAMPHORASCH, Toi le Maître des décrets foudroyants et de la justice immédiate. Fais luire l'éclair de Ta face sur mon destin. Que Ta sentence brise le retard chronique, valide mes requêtes et scelle ce travail. Amen.",
-        "mots_application": "Que le décret final de cette consultation s'exécute en ma faveur avec force et rapidité. Amen.", "moment": "Matin",
-        "savon_additifs": "Poudre fine de cannelle et feuilles de menthe séchées broyées pour accélérer les décrets."
+    "Moussa": {
+        1: "🎉 Esprit festif, soulagement d'arriver au bout d'un long chemin.",
+        2: "💰 Rentrées d'argent finales, clôture de comptes très positive.",
+        3: "👥 Rassemblement de l'entourage, fêtes familiales ou professionnelles.",
+        4: "🏠 Joie partagée au foyer, réussite finale liée à la maison.",
+        5: "👶 Célébrations, réussite publique, bonheur avec les enfants.",
+        6: "🩹 Guérison complète et définitive, fin heureuse des corvées.",
+        7: "💍 Mariage célébré en grande pompe, victoire publique sur l'adversaire.",
+        8: "🔄 Libération totale d'un fardeau, fin heureuse d'un cycle.",
+        9: "✈️ Grand déplacement réussi, retour de voyage triomphal.",
+        10: "👑 Couronnement des efforts, consécration professionnelle devant tous.",
+        11: "🙏 Réalisation finale et publique de tous les espoirs nourris.",
+        12: "⛓️ Élimination définitive de toutes les entraves et des ennemis.",
+        13: "🛏️ Joie et célébration de l'union partagées au cœur du domicile.",
+        14: "💵 Fructification totale des investissements et des crédits.",
+        15: "🔮 Conclusion de l'affaire, rassemblement d'une foule, joie ou déplacement final.",
+        16: "📜 Le Décret final (Moussa) valide et scelle définitivement la réussite."
     }
 }
 
@@ -294,136 +310,69 @@ MAISONS_NOMINATIVES = {
     13: "M13 (Témoin Droite)", 14: "M14 (Témoin Gauche)", 15: "M15 (Conclusion)", 16: "M16 (Le Décret)"
 }
 
-# Mapping de votre dictionnaire de domaines par Maison
-MAISONS_SIGNIFICATIONS_DOMAINES = {
-    1: {
-        "Affectif": "👤 Représente le Questionneur lui-même, son état vibratoire et affectif de départ.",
-        "Professionnel": "👤 Représente le positionnement et l'action du travailleur.",
-        "Santé": "🤰 Grossesse (À analyser obligatoirement en triade avec M5 et M13).",
-        "Justice": "⚖️ Le Questionneur : sa légitimité, sa force morale et sa posture face à la cour."
-    },
-    2: {
-        "Financier": "💰 Argent liquide, revenus directs, capitaux mobiles et flux financiers entrants.",
-        "Affectif": "👤 Représente également le canal vibratoire immédiat du Questionneur.",
-        "Professionnel": "💵 Le traitement, le montant exact du salaire brut, les primes et gratifications.",
-        "Justice": "📄 Les pièces à charge (les documents, éléments matériels ou arguments contre lui)."
-    },
-    3: {
-        "Général": "👥 La famille proche, l'entourage direct, les frères, les sœurs, les voisins et les écrits courts."
-    },
-    4: {
-        "Financier": "🏢 Les biens immobiliers, les parcelles, les concessions, le patrimoine fixe terrien.",
-        "Professionnel": "🏢 Le lieu de travail physique (le bâtiment, les bureaux, le site d'exercice).",
-        "Justice": "🚪 L'issue finale du procès (la conclusion définitive, la fermeture du dossier)."
-    },
-    5: {
-        "Financier": "📈 Les placements financiers volatiles, la bourse, la spéculation, la chance pure.",
-        "Affectif": "❤️ L'amant, la passion amoureuse, les plaisirs partagés et l'harmonie sexuelle.",
-        "Santé": "🤰 La grossesse, la conception et l'enfantement (En triade avec M1 et M13).",
-        "Justice": "💎 La valeur réelle, la crédibilité et le poids final des pièces à conviction."
-    },
-    6: {
-        "Professionnel": "🛠️ Le travail de routine quotidien, les corvées, les relations avec les subordonnés.",
-        "Santé": "🩹 La maladie corporelle déclarée et les interventions / opérations chirurgicales (En duo avec M12).",
-        "Justice": "💼 L'avocat du Questionneur : sa combativité, sa compétence et son niveau d'aide."
-    },
-    7: {
-        "Affectif": "💍 Le conjoint officiel, le mariage légal, les contrats d'union (ou procédures de divorce).",
-        "Professionnel": "🤝 Les associés directs, les partenaires d'affaires ou les collègues de même échelon.",
-        "Justice": "👤 La partie adverse (l'accusateur, le rival, l'ennemi juré dans le procès)."
-    },
-    8: {
-        "Financier": "⚱️ L'héritage, les successions matérielles, les crédits bancaires (l'argent des autres).",
-        "Affectif": "💔 La solitude forcée, la rupture douloureuse, le deuil affectif et la séparation.",
-        "Santé": "⚡ Les attaques mystiques ou physiques soudaines, ainsi que l'issue finale de la maladie."
-    },
-    9: {
-        "Général": "✈️ Les voyages lointains, les démarches de visa, la haute spiritualité, la recherche de vérité."
-    },
-    10: {
-        "Professionnel": "👑 L'évolution de carrière, les promotions, les honneurs, le statut et les relations avec le Patron.",
-        "Santé": "🩺 Le médecin traitant, le spécialiste, la qualité du diagnostic et de l'ordonnance médicale.",
-        "Justice": "👨‍⚖️ La sentence officielle du tribunal, la décision des juges (le verdict direct)."
-    },
-    11: {
-        "Affectif": "🙏 L'espoir secret d'être aimé, les souhaits de retour d'affection, les appuis amicaux.",
-        "Professionnel": "🏦 Le banquier, les investisseurs, la clientèle et la chance qu'a un projet d'aboutir.",
-        "Santé": "🌱 La convalescence active, le retour progressif de l'énergie vitale et de la santé.",
-        "Justice": "🗣️ Les témoins favorables, les alliés inattendus et les soutiens dans la salle d'audience."
-    },
-    12: {
-        "Affectif": "🤫 L'adultère, les relations amoureuses dissimulées, les liaisons secrètes et cachées.",
-        "Professionnel": "⚠️ Les fautes graves, les complots de couloir et les risques réels de licenciement.",
-        "Santé": "🏥 Les hôpitaux, les cliniques, l'internement, l'isolement et la lourde chirurgie.",
-        "Justice": "⛓️ Les peines privatives de liberté, les pièges secrets ou les condamnations lourdes."
-    },
-    13: {
-        "Santé": "🤰 La grossesse (En triade avec M1 et M5) — Représente le lit ou la couche de la mère."
-    },
-    14: {
-        "Général": "💰 Les gains futurs, l'argent à venir, l'épargne en cours de constitution."
-    },
-    15: {
-        "Santé": "🤰 Reflet de la viabilité globale et de l'environnement immédiat de la consultation."
-    },
-    16: {
-        "Général": "📜 Le Décret Suprême, la sentence invisible qui valide ou invalide l'ensemble du thème."
-    }
+# Configuration des données dictionnaire de base (Zikr / Bains / Plantes)
+DATA_THEURGIQUE = {
+    "Youssouf": {"ref": "Youssouf", "nature": "Bénéfique", "plante": "Djècala", "psaume": "Psaume 100", "verset": "Verset 2", "texte_biblique": "Servez l'Éternel avec joie...", "zikr": "Ya Latif — 129 fois", "bain": "Infuser des tiges de Citronnelle et du Djècala."},
+    "Adama": {"ref": "Adama", "nature": "Bénéfique", "plante": "Sana", "psaume": "Psaume 8", "verset": "Verset 6", "texte_biblique": "Tu lui as donné l'empire...", "zikr": "Ya Rafi'u — 351 fois", "bain": "Infuser 100g de feuilles de Sana."},
+    "Mahdy": {"ref": "Mahdy", "nature": "Neutre", "plante": "Cebé", "psaume": "Psaume 4", "verset": "Verset 7", "texte_biblique": "Fais lever sur nous la lumière...", "zikr": "Ya Nour — 256 fois", "bain": "Macération de feuilles de Cebé."},
+    "Idriss": {"ref": "Idriss", "nature": "Bénéfique", "plante": "Djou", "psaume": "Psaume 112", "verset": "Verset 3", "texte_biblique": "Il a dans sa maison bien-être...", "zikr": "Ya Razzaq — 308 fois", "bain": "Décoction de racines de Djou."},
+    "Ibrahima": {"ref": "Ibrahima", "nature": "Bénéfique", "plante": "M'bana", "psaume": "Psaume 1", "verset": "Verset 3", "texte_biblique": "Il est comme un arbre planté...", "zikr": "Ya Bassitou — 72 fois", "bain": "Feuilles de M'bana infusées."},
+    "Inssa": {"ref": "Inssa", "nature": "Neutre à Mauvais", "plante": "Wingninga", "psaume": "Psaume 51", "verset": "Verset 12", "texte_biblique": "Crée en moi un coeur pur...", "zikr": "Ya Chafi — 391 fois", "bain": "Feuilles de Wingninga + sel gemme."},
+    "Omar": {"ref": "Omar", "nature": "Mauvais", "plante": "Gababelé", "psaume": "Psaume 35", "verset": "Verset 1", "texte_biblique": "Attaque ceux qui m'attaquent...", "zikr": "Ya Jabbar — 206 fois", "bain": "Gababelé broyé + gingembre."},
+    "Ayoub": {"ref": "Ayoub", "nature": "Mauvais", "plante": "Kronifin", "psaume": "Psaume 142", "verset": "Verset 8", "texte_biblique": "Tire mon âme de sa prison...", "zikr": "Ya Moukhrij — 201 fois", "bain": "Feuilles de Kronifin + charbon végétal."},
+    "Allahou": {"ref": "Allahou", "nature": "Bénéfique", "plante": "Sadjo", "psaume": "Psaume 23", "verset": "Verset 1", "texte_biblique": "L'Éternel est mon berger...", "zikr": "Ya Malik — 90 fois", "bain": "Feuilles de Sadjo + fleurs de rose."},
+    "Souleymane": {"ref": "Souleymane", "nature": "Bénéfique", "plante": "Sira (Baobab)", "psaume": "Psaume 45", "verset": "Verset 2", "texte_biblique": "Mon oeuvre est pour le roi...", "zikr": "Ya Jamil — 83 fois", "bain": "Écorce de Baobab bouillie."},
+    "Aliou": {"ref": "Aliou", "nature": "Bénéfique", "plante": "Gbè yiri", "psaume": "Psaume 133", "verset": "Verset 1", "texte_biblique": "Qu'il est doux pour des frères...", "zikr": "Ya Wadoud — 20 fois", "bain": "Feuilles de Gbè yiri + cardamome."},
+    "Nouhou": {"ref": "Nouhou", "nature": "Mauvais", "plante": "Kounbè", "psaume": "Psaume 30", "verset": "Verset 12", "texte_biblique": "Tu as changé mon deuil...", "zikr": "Ya Latif — 129 fois", "bain": "Feuilles de Kounbè + thym blanc."},
+    "Assane": {"ref": "Assane", "nature": "Neutre", "plante": "Zaman", "psaume": "Psaume 18", "verset": "Verset 38", "texte_biblique": "Je les brise, ils ne peuvent...", "zikr": "Ya Moumit — 490 fois", "bain": "Écorces de Zaman + eucalyptus."},
+    "Younouss": {"ref": "Younouss", "nature": "Bénéfique", "plante": "Dialassogala", "psaume": "Psaume 91", "verset": "Verset 11", "texte_biblique": "Il ordonnera à ses anges...", "zikr": "Ya Hafiz — 998 fois", "bain": "Écorces de Dialassogala."},
+    "Ousmane": {"ref": "Ousmane", "nature": "Bénéfique", "plante": "Doualé", "psaume": "Psaume 119", "verset": "Verset 105", "texte_biblique": "Ta parole est une lampe...", "zikr": "Ya Alim — 150 fois", "bain": "Feuilles de Doualé + Oliban."},
+    "Moussa": {"ref": "Moussa", "nature": "Neutre à Fort", "plante": "Tomy bourou", "psaume": "Psaume 4", "verset": "Verset 7", "texte_biblique": "Fais lever sur nous la lumière...", "zikr": "Ya Sari'u — 202 fois", "bain": "Feuilles de Tomy bourou + menthe."}
 }
-
-def interpreter_passation(nom_figure, maison_actuelle):
-    maison_repos = DATA[nom_figure]["maison_repos"]
-    nom_maison_repos = DATA[nom_figure]["nom_maison_repos"]
-    plante_associee = DATA[nom_figure]["plante"]
-    
-    if maison_repos == maison_actuelle:
-        return f"✨ **La figure est chez elle (Maison de Repos originelle).** Ses vibrations et sa plante native (**{plante_associee}**) agissent à leur plein potentiel natif."
-    else:
-        return f"🔄 **Passation Métaphysique :** La figure originelle de *{nom_maison_repos}* est positionnée en **Maison {maison_actuelle} ({MAISONS_NOMINATIVES[maison_actuelle]})**. Elle injecte l'influence vibratoire de sa plante native **{plante_associee}** dans ce secteur."
 
 # ==============================================================================
 # INTERFACE STREAMLIT
 # ==============================================================================
-st.title("🔮 Espace Thérapeutique de Haute Précision")
-st.write("Saisissez directement vos 16 Maisons calculées pour obtenir l'interprétation oraculaire par domaine et les remèdes sacrés.")
+st.title("🔮 Oracle Géomantique Ramrou & Traitements Théurgiques")
+st.write("Saisissez le thème géomantique complet pour obtenir instantanément les prédictions Ramrou du document et vos ordonnances de soins.")
 
 with st.sidebar:
-    st.header("🔐 Accès au Temple")
+    st.header("🔐 Accès sécurisé")
     u_id = st.text_input("Identifiant")
     u_pw = st.text_input("Mot de passe", type="password")
 
 if u_id == ID_SECRET and u_pw == MDP_SECRET:
-    st.success("🔓 Formulaire d'entrée des 16 Maisons actif.")
+    st.success("🔓 Connexion établie avec succès.")
     
-    options_figures = list(DATA.keys())
+    options_figures = list(DICTIONNAIRE_RAMROU.keys())
     
-    st.header("📥 CONFIGURATION MANUELLE DES 16 MAISONS")
+    st.header("📥 CONFIGURATION DES 16 MAISONS")
     
-    st.markdown("### ⚜️ 1. Les Quatre Mères Fondues (M1 à M4)")
+    st.markdown("### ⚜️ M1 à M4 : Les Mères")
     c1, c2, c3, c4 = st.columns(4)
     m1 = c1.selectbox("🏠 Maison 1 (Demandeur)", options_figures, index=0)
     m2 = c2.selectbox("🏠 Maison 2 (Argent)", options_figures, index=1)
     m3 = c3.selectbox("🏠 Maison 3 (Entourage)", options_figures, index=2)
-    m4 = c4.selectbox("🏠 Maison 4 (Le Foyer)", options_figures, index=3)
+    m4 = c4.selectbox("🏠 Maison 4 (Foyer)", options_figures, index=3)
 
-    st.markdown("### 🌿 2. Les Quatre Filles Émergées (M5 à M8)")
+    st.markdown("### 🌿 M5 à M8 : Les Filles")
     c5, c6, c7, c8 = st.columns(4)
-    m5 = c5.selectbox("🏠 Maison 5 (Enfants/Nouvelles)", options_figures, index=4)
-    m6 = c6.selectbox("🏠 Maison 6 (Maladies/Obstacles)", options_figures, index=5)
-    m7 = c7.selectbox("🏠 Maison 7 (Union/Adversaires)", options_figures, index=6)
-    m8 = c8.selectbox("🏠 Maison 8 (Peur/Fin/Mort)", options_figures, index=7)
+    m5 = c5.selectbox("🏠 Maison 5 (Nouvelles)", options_figures, index=4)
+    m6 = c6.selectbox("🏠 Maison 6 (Obstacles/Maladie)", options_figures, index=5)
+    m7 = c7.selectbox("🏠 Maison 7 (Union/Adversaire)", options_figures, index=6)
+    m8 = c8.selectbox("🏠 Maison 8 (Fin/Peur/Mort)", options_figures, index=7)
 
-    st.markdown("### ⚡ 3. Les Quatre Neveux (M9 à M12)")
+    st.markdown("### ⚡ M9 à M12 : Les Neveux")
     c9, c10, c11, c12 = st.columns(4)
-    m9 = c9.selectbox("🏠 Maison 9 (Voyages/Spiritualité)", options_figures, index=8)
+    m9 = c9.selectbox("🏠 Maison 9 (Voyages)", options_figures, index=8)
     m10 = c10.selectbox("🏠 Maison 10 (Travail/Pouvoir)", options_figures, index=9)
-    m11 = c11.selectbox("🏠 Maison 11 (Espoirs/Souhaits)", options_figures, index=10)
-    m12 = c12.selectbox("🏠 Maison 12 (Ennemis/Épreuves)", options_figures, index=11)
+    m11 = c11.selectbox("🏠 Maison 11 (Espoirs)", options_figures, index=10)
+    m12 = c12.selectbox("🏠 Maison 12 (Épreuves)", options_figures, index=11)
 
-    st.markdown("### ⚖️ 4. Le Tribunal & Décret Céleste (M13 à M16)")
+    st.markdown("### ⚖️ M13 à M16 : Tribunal & Décret")
     c13, c14, c15, c16 = st.columns(4)
-    m13 = c13.selectbox("🏠 Maison 13 (Témoin Droite)", options_figures, index=12)
-    m14 = c14.selectbox("🏠 Maison 14 (Témoin Gauche)", options_figures, index=13)
+    m13 = c13.selectbox("🏠 Maison 13 (Présent/Intime)", options_figures, index=12)
+    m14 = c14.selectbox("🏠 Maison 14 (Avenir/Gains)", options_figures, index=13)
     m15 = c15.selectbox("🏠 Maison 15 (Le Juge)", options_figures, index=14)
     m16 = c16.selectbox("🏠 Maison 16 (Le Décret Final)", options_figures, index=15)
 
@@ -433,92 +382,38 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
     }
 
     st.markdown("---")
-    with st.container(border=True):
-        st.subheader("🖼️ RÉSUMÉ VISUEL DE VOTRE THÈME RENSEIGNÉ")
-        
-        l1_1, l1_2, l1_3, l1_4 = st.columns(4)
-        l1_1.metric("M1", theme_complet[1])
-        l1_2.metric("M2", theme_complet[2])
-        l1_3.metric("M3", theme_complet[3])
-        l1_4.metric("M4", theme_complet[4])
-        
-        l2_1, l2_2, l2_3, l2_4 = st.columns(4)
-        l2_1.metric("M5", theme_complet[5])
-        l2_2.metric("M6", theme_complet[6])
-        l2_3.metric("M7", theme_complet[7])
-        l2_4.metric("M8", theme_complet[8])
-
-        l3_1, l3_2, l3_3, l3_4 = st.columns(4)
-        l3_1.metric("M9", theme_complet[9])
-        l3_2.metric("M10", theme_complet[10])
-        l3_3.metric("M11", theme_complet[11])
-        l3_4.metric("M12", theme_complet[12])
-
-        l4_1, l4_2, l4_3, l4_4 = st.columns(4)
-        l4_1.warning(f"M13 : {theme_complet[13]}")
-        l4_2.warning(f"M14 : {theme_complet[14]}")
-        l4_3.error(f"M15 (Juge) : {theme_complet[15]}")
-        l4_4.success(f"M16 (Décret) : {theme_complet[16]}")
-
-    st.markdown("---")
-    st.header("📖 DICTIONNAIRE ET GUIDE D'INTERPRÉTATION PAR DOMAINES EXISTANTIELS")
-    st.write("Cliquez sur chaque maison pour déplier l'analyse oraculaire et les ordonnances théurgiques.")
+    st.header("📖 DICTIONNAIRE D'INTERPRÉTATION DIRECTE RAMROU")
+    st.write("Dépliez chaque maison pour lire l'analyse oraculaire exacte et récupérer les protocoles théurgiques.")
     
     for m, fig_choisie in theme_complet.items():
-        bloc = DATA[fig_choisie]
-        statut_action = "🛑 SECTEUR CRITIQUE" if "Mauvais" in bloc["nature"] else "✨ SECTEUR HARMONIEUX"
-        titre_boite = f"{MAISONS_NOMINATIVES[m]} ➔ Figure : {fig_choisie} [{statut_action}]"
+        prediction_ramrou = DICTIONNAIRE_RAMROU[fig_choisie].get(m, "Aucune interprétation spécifique enregistrée.")
+        soin_theurge = DATA_THEURGIQUE.get(fig_choisie, {})
+        
+        titre_boite = f"{MAISONS_NOMINATIVES[m]} ➔ Figure présente : {fig_choisie}"
         
         with st.expander(titre_boite):
-            tab_signification, tab_verset, tab_bain, tab_savon = st.tabs([
-                "🔍 Interprétation de la Question", 
-                "📿 Zikr du Verset Biblique", 
-                "🌿 Recette de Bain & Posologie",
-                "🧼 Fabrication du Savon Rituel"
-            ])
+            # Affichage direct et immédiat de la prédiction issue de la base de données
+            st.markdown("### 📜 Interprétation Prophétique (Selon la Méthode Ramrou) :")
+            st.success(f"🔮 **{prediction_ramrou}**")
             
-            with tab_signification:
-                st.info(interpreter_passation(fig_choisie, m))
-                st.markdown(f"**Signification générale de base :** *{bloc['txt']}*")
-                
-                # Injection automatique de la grille des domaines de questions
-                st.markdown("#### 🎯 Orientation de la Réponse selon la Question posée :")
-                domaines_maison = MAISONS_SIGNIFICATIONS_DOMAINES.get(m, {})
-                
-                if "Général" in domaines_maison:
-                    st.write(domaines_maison["Général"])
-                else:
-                    for domaine, explication in domaines_maison.items():
-                        st.markdown(f"**🔹 Cadre {domaine} :** {explication}")
-                
+            st.markdown("---")
+            st.markdown("### 🛠️ Protocole Thérapeutique & Spirituel Associé :")
+            
+            tab_verset, tab_bain = st.tabs(["📿 Récitation Sacrée (Zikr)", "🌿 Médecine par les plantes"])
+            
             with tab_verset:
-                st.markdown(f"### 📿 Protocole de Récitation du Verset Sacré ({bloc['psaume']})")
-                st.info(f"**Verset :** *\"{bloc['texte_biblique']}\"* ({bloc['psaume']}, {bloc['verset']})")
-                st.warning(f"**Méthode de Récitation :** {bloc['zikr_verset']}")
-                st.write(f"**Zikr Théurgique :** {bloc['zikr']}")
-                st.caption(f"⏱️ **Moment idéal :** {bloc['moment']}")
-                
+                if soin_theurge:
+                    st.write(f"📖 **Livre sacré :** {soin_theurge['psaume']}, {soin_theurge['verset']}")
+                    st.info(f"*\"{soin_theurge['texte_biblique']}\"*")
+                    st.warning(f"📿 **Zikr à exécuter :** {soin_theurge['zikr']}")
+                else:
+                    st.write("Aucun protocole de récitation enregistré pour cette figure.")
+                    
             with tab_bain:
-                st.markdown(f"### 🌱 Préparation du Bain Spirituel (Plante : {bloc['plante']})")
-                st.write(f"**Plante maîtresse :** **{bloc['plante']}**, Éléments aromatiques : *{bloc['aromatiques']}*.")
-                st.success(f"🥣 **Préparation :** {bloc['bain_preparation']}")
-                st.error(f"📋 **Application & Fréquence :** {bloc['bain_posologie']}")
-                st.write(f"🧴 *Huile sacrée :* Après le séchage, appliquez l'huile de **{bloc['huile']}** sur vos centres vibratoires.")
-                
-            with tab_savon:
-                st.markdown("### 🧼 Fabrication et Consécration du Savon Thérapeutique")
-                col_g, col_d = st.columns(2)
-                with col_g:
-                    st.markdown("**1. Ingrédients pour la base :**")
-                    st.write("- **500g de base neutre :** Savon de Marseille râpé ou Savon Noir traditionnel.")
-                    st.write(f"- **Liquide :** Décoction ultra-concentrée de la plante **{bloc['plante']}**.")
-                with col_d:
-                    st.markdown("**2. Additifs aromatiques :**")
-                    st.write(f"- **Éléments en poudre :** {bloc['savon_additifs']}")
-                    st.write(f"- **Scellage :** 15 à 20 gouttes d'huile essentielle de **{bloc['huile']}**.")
-                
-                st.warning(f"🔮 **Consécration Théurgique :**\n"
-                           f"Une fois le savon moulé et bien sec, effectuez le zikr du **{bloc['psaume']}** exactement **{bloc['repetitions']} fois** directement au-dessus du savon pour y fixer solidement l'énergie.")
-                st.write(f"📋 **Formule à prononcer à l'utilisation :** *\"{bloc['mots_application']}\"*.")
+                if soin_theurge:
+                    st.write(f"🍂 **Plante maîtresse :** {soin_theurge['plante']}")
+                    st.info(f"🥣 **Préparation & Bain :** {soin_theurge['bain']}")
+                else:
+                    st.write("Aucun traitement par les plantes enregistré.")
 else:
-    st.warning("🔒 Système Verrouillé. Veuillez inscrire vos identifiants à gauche pour accéder à la plateforme.")
+    st.warning("🔒 Accès restreint. Veuillez entrer vos identifiants secrets dans la barre latérale.")
