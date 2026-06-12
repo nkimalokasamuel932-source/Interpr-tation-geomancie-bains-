@@ -96,7 +96,7 @@ DATA = {
         "zikr": "Ya Latif (Ô Doux) — 129 fois + Nom Salomonique : YHVH SABAOTH",
         "priere_salomonique": "Seigneur Souverain de l'Allégresse, YHVH SABAOTH, dont la douceur s'étend sur toute créature. Permets que Ton parfum de joie pénètre mon temple corporel. Chasse la tristesse stérile. Fais lever sur ma vie des messages de triomphe et accorde la protection à ma lignée. Amen.",
         "mots_application": "Que les nouvelles qui me parviennent apportent la joie, la réussite et l'allégresse. Amen.", "moment": "Matin",
-        "savon_additifs": "Feuilles de verveine séchées réduites en miettes et une pincée de poudre de safran."
+        "savon_additifs": "Feuilles de verveine séchées réduites en miettes et une pincée de poudres de safran."
     },
     "N'gansa": {
         "ref": "N'gansa", "code": (2, 2, 2, 2), "nature": "Neutre à Mauvais", "element": "Eau",
@@ -186,7 +186,7 @@ DATA = {
     "Badara": {
         "ref": "Badara", "code": (2, 1, 1, 1), "nature": "Bénéfique", "element": "Vent",
         "maison_repos": 11, "nom_maison_repos": "M11 (Espoirs / Protections / Souhaits)", "plante": "Gbè yiri",
-        "txt": "Maison des espoopes, de la protection, de la chose espérée, des aides providentielles et des envies.",
+        "txt": "Maison des espoppes, de la protection, de la chose espérée, des aides providentielles et des envies.",
         "psaume": "Psaume 144", "verset": "Verset 1", 
         "texte_biblique": "Béni soit l'Éternel, mon rocher, qui exerce mes mains au combat, mes doigts à la bataille !",
         "zikr_verset": "Réciter le Verset 1 du Psaume 144 exactement 111 fois pour précipiter la réalisation d'un vœu cher.",
@@ -257,7 +257,7 @@ DATA = {
         "txt": "Maison de la conclusion du thème, du résumé général des affaires, du bilan et de l'environnement final.",
         "psaume": "Psaume 119", "verset": "Verset 105", 
         "texte_biblique": "Ta parole est une lampe à mes pieds, et une lumière sur mon sentier.",
-        "zikr_verset": "Réciter le Verset 105 du Psaume 119 exactement 150 fois le soir pour obtenir une illumination intérieure ou dénouer un problème complexe.",
+        "zikr_verset": "Réciter le Verset 105 du Psaume 119 exactement 150 fois le soir pour obtenir une illumination intérieure ou dénouer un problem complexe.",
         "repetitions": "150",
         "bain_preparation": "Infuser des feuilles de Doualé avec des larmes de résine pure d'Oliban dans de l'eau tiède.",
         "bain_posologie": "Bain de synthèse finale à prendre pendant 3 soirs d'affilée pour clore heureusement une affaire en cours et éclairer vos choix de vie.",
@@ -294,6 +294,83 @@ MAISONS_NOMINATIVES = {
     13: "M13 (Témoin Droite)", 14: "M14 (Témoin Gauche)", 15: "M15 (Conclusion)", 16: "M16 (Le Décret)"
 }
 
+# Mapping de votre dictionnaire de domaines par Maison
+MAISONS_SIGNIFICATIONS_DOMAINES = {
+    1: {
+        "Affectif": "👤 Représente le Questionneur lui-même, son état vibratoire et affectif de départ.",
+        "Professionnel": "👤 Représente le positionnement et l'action du travailleur.",
+        "Santé": "🤰 Grossesse (À analyser obligatoirement en triade avec M5 et M13).",
+        "Justice": "⚖️ Le Questionneur : sa légitimité, sa force morale et sa posture face à la cour."
+    },
+    2: {
+        "Financier": "💰 Argent liquide, revenus directs, capitaux mobiles et flux financiers entrants.",
+        "Affectif": "👤 Représente également le canal vibratoire immédiat du Questionneur.",
+        "Professionnel": "💵 Le traitement, le montant exact du salaire brut, les primes et gratifications.",
+        "Justice": "📄 Les pièces à charge (les documents, éléments matériels ou arguments contre lui)."
+    },
+    3: {
+        "Général": "👥 La famille proche, l'entourage direct, les frères, les sœurs, les voisins et les écrits courts."
+    },
+    4: {
+        "Financier": "🏢 Les biens immobiliers, les parcelles, les concessions, le patrimoine fixe terrien.",
+        "Professionnel": "🏢 Le lieu de travail physique (le bâtiment, les bureaux, le site d'exercice).",
+        "Justice": "🚪 L'issue finale du procès (la conclusion définitive, la fermeture du dossier)."
+    },
+    5: {
+        "Financier": "📈 Les placements financiers volatiles, la bourse, la spéculation, la chance pure.",
+        "Affectif": "❤️ L'amant, la passion amoureuse, les plaisirs partagés et l'harmonie sexuelle.",
+        "Santé": "🤰 La grossesse, la conception et l'enfantement (En triade avec M1 et M13).",
+        "Justice": "💎 La valeur réelle, la crédibilité et le poids final des pièces à conviction."
+    },
+    6: {
+        "Professionnel": "🛠️ Le travail de routine quotidien, les corvées, les relations avec les subordonnés.",
+        "Santé": "🩹 La maladie corporelle déclarée et les interventions / opérations chirurgicales (En duo avec M12).",
+        "Justice": "💼 L'avocat du Questionneur : sa combativité, sa compétence et son niveau d'aide."
+    },
+    7: {
+        "Affectif": "💍 Le conjoint officiel, le mariage légal, les contrats d'union (ou procédures de divorce).",
+        "Professionnel": "🤝 Les associés directs, les partenaires d'affaires ou les collègues de même échelon.",
+        "Justice": "👤 La partie adverse (l'accusateur, le rival, l'ennemi juré dans le procès)."
+    },
+    8: {
+        "Financier": "⚱️ L'héritage, les successions matérielles, les crédits bancaires (l'argent des autres).",
+        "Affectif": "💔 La solitude forcée, la rupture douloureuse, le deuil affectif et la séparation.",
+        "Santé": "⚡ Les attaques mystiques ou physiques soudaines, ainsi que l'issue finale de la maladie."
+    },
+    9: {
+        "Général": "✈️ Les voyages lointains, les démarches de visa, la haute spiritualité, la recherche de vérité."
+    },
+    10: {
+        "Professionnel": "👑 L'évolution de carrière, les promotions, les honneurs, le statut et les relations avec le Patron.",
+        "Santé": "🩺 Le médecin traitant, le spécialiste, la qualité du diagnostic et de l'ordonnance médicale.",
+        "Justice": "👨‍⚖️ La sentence officielle du tribunal, la décision des juges (le verdict direct)."
+    },
+    11: {
+        "Affectif": "🙏 L'espoir secret d'être aimé, les souhaits de retour d'affection, les appuis amicaux.",
+        "Professionnel": "🏦 Le banquier, les investisseurs, la clientèle et la chance qu'a un projet d'aboutir.",
+        "Santé": "🌱 La convalescence active, le retour progressif de l'énergie vitale et de la santé.",
+        "Justice": "🗣️ Les témoins favorables, les alliés inattendus et les soutiens dans la salle d'audience."
+    },
+    12: {
+        "Affectif": "🤫 L'adultère, les relations amoureuses dissimulées, les liaisons secrètes et cachées.",
+        "Professionnel": "⚠️ Les fautes graves, les complots de couloir et les risques réels de licenciement.",
+        "Santé": "🏥 Les hôpitaux, les cliniques, l'internement, l'isolement et la lourde chirurgie.",
+        "Justice": "⛓️ Les peines privatives de liberté, les pièges secrets ou les condamnations lourdes."
+    },
+    13: {
+        "Santé": "🤰 La grossesse (En triade avec M1 et M5) — Représente le lit ou la couche de la mère."
+    },
+    14: {
+        "Général": "💰 Les gains futurs, l'argent à venir, l'épargne en cours de constitution."
+    },
+    15: {
+        "Santé": "🤰 Reflet de la viabilité globale et de l'environnement immédiat de la consultation."
+    },
+    16: {
+        "Général": "📜 Le Décret Suprême, la sentence invisible qui valide ou invalide l'ensemble du thème."
+    }
+}
+
 def interpreter_passation(nom_figure, maison_actuelle):
     maison_repos = DATA[nom_figure]["maison_repos"]
     nom_maison_repos = DATA[nom_figure]["nom_maison_repos"]
@@ -307,8 +384,8 @@ def interpreter_passation(nom_figure, maison_actuelle):
 # ==============================================================================
 # INTERFACE STREAMLIT
 # ==============================================================================
-st.title("🔮 Espace Thérapeutique : Renseignement des 16 Maisons")
-st.write("Saisissez directement les 16 figures de votre thème pour générer instantanément vos ordonnances.")
+st.title("🔮 Espace Thérapeutique de Haute Précision")
+st.write("Saisissez directement vos 16 Maisons calculées pour obtenir l'interprétation oraculaire par domaine et les remèdes sacrés.")
 
 with st.sidebar:
     st.header("🔐 Accès au Temple")
@@ -384,8 +461,8 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
         l4_4.success(f"M16 (Décret) : {theme_complet[16]}")
 
     st.markdown("---")
-    st.header("📖 DICTIONNAIRE THÉRAPEUTIQUE, RECETTES DE BAINS ET SAVONS ARTISANAUX")
-    st.write("Ouvrez les sections ci-dessous pour découvrir les remèdes appliqués à vos 16 maisons.")
+    st.header("📖 DICTIONNAIRE ET GUIDE D'INTERPRÉTATION PAR DOMAINES EXISTANTIELS")
+    st.write("Cliquez sur chaque maison pour déplier l'analyse oraculaire et les ordonnances théurgiques.")
     
     for m, fig_choisie in theme_complet.items():
         bloc = DATA[fig_choisie]
@@ -393,16 +470,26 @@ if u_id == ID_SECRET and u_pw == MDP_SECRET:
         titre_boite = f"{MAISONS_NOMINATIVES[m]} ➔ Figure : {fig_choisie} [{statut_action}]"
         
         with st.expander(titre_boite):
-            tab_passation, tab_verset, tab_bain, tab_savon = st.tabs([
-                "🔄 Analyse de Position", 
+            tab_signification, tab_verset, tab_bain, tab_savon = st.tabs([
+                "🔍 Interprétation de la Question", 
                 "📿 Zikr du Verset Biblique", 
                 "🌿 Recette de Bain & Posologie",
                 "🧼 Fabrication du Savon Rituel"
             ])
             
-            with tab_passation:
+            with tab_signification:
                 st.info(interpreter_passation(fig_choisie, m))
-                st.markdown(f"**Signification sectorielle :** *{bloc['txt']}*")
+                st.markdown(f"**Signification générale de base :** *{bloc['txt']}*")
+                
+                # Injection automatique de la grille des domaines de questions
+                st.markdown("#### 🎯 Orientation de la Réponse selon la Question posée :")
+                domaines_maison = MAISONS_SIGNIFICATIONS_DOMAINES.get(m, {})
+                
+                if "Général" in domaines_maison:
+                    st.write(domaines_maison["Général"])
+                else:
+                    for domaine, explication in domaines_maison.items():
+                        st.markdown(f"**🔹 Cadre {domaine} :** {explication}")
                 
             with tab_verset:
                 st.markdown(f"### 📿 Protocole de Récitation du Verset Sacré ({bloc['psaume']})")
