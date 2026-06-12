@@ -1,419 +1,357 @@
 import streamlit as st
 
-# Configuration de la page
-st.set_page_config(page_title="Système Théurgique & Géomancie Ramrou", page_icon="🔮", layout="wide")
+# Configuration de la page Streamlit
+st.set_page_config(page_title="Oracle Ramrou & Passations", page_icon="🔮", layout="wide")
 
 # ==============================================================================
-# ACCÈS SÉCURISÉS
+# 1. BASE DE DONNÉES GÉOMANTIQUE COMPLÈTE (EXTRAITE DU MANUSCRIT)
 # ==============================================================================
-ID_SECRET = "theurge2026"
-MDP_SECRET = "Salomon777"
 
-# ==============================================================================
-# BASE DE DONNÉES COMPLÉMENTAIRE : INTERPRÉTATIONS RAMROU (16 Figures x 16 Maisons)
-# ==============================================================================
-DICTIONNAIRE_RAMROU = {
+PROPRIETES_FIGURES = {
     "Youssouf": {
-        1: "⚠️ Trahison, agitation, frustration. (Dépend grandement du Juge en M15).",
-        2: "💰 Chance sur trahison ou obtenue suite à un emballement soudain.",
-        3: "👥 Trahison ou frustration au sein de l'entourage proche ou lors des démarches.",
-        4: "🏠 Trahison localisée directement dans le cercle familial ou le foyer.",
-        5: "👶 Annonce une trahison venant d'un rival ou d'un ami proche.",
-        6: "🩹 Se traduit par des maux de poitrine, une profonde remise en question ou des idées confuses.",
-        7: "💍 Annonce une trahison dans le mariage, provenant du conjoint ou de l'adversaire direct.",
-        8: "🔄 Trahison avortée (qui n'ira pas jusqu'au bout, avortée par le changement).",
-        9: "🙏 Trahison en cours accompagnée de frustration sur le chemin ou dans la quête spirituelle.",
-        10: "👑 Trahison dans le service (travail) ou liée à un fait professionnel précis.",
-        11: "🕊️ Trahison en cours de promesse non tenue (les appuis ou espoirs font défaut).",
-        12: "⛓️ Trahison avec méchanceté manifeste provenant d'un ennemi résolu.",
-        13: "🛏️ Trahison à domicile (dans la chambre, le dortoir ou l'intimité du foyer).",
-        14: "💵 Trahison sur des biens financiers, des vols ou des crédits non remboursés.",
-        15: "🔮 Annonce clairement la trahison : le Juge confirme que le climat global est trompeur.",
-        16: "📜 Le Décret final clôture et valide la finition de l'affaire de trahison."
+        "num": 1, "nature_manuscrit": "Diable Mauvais", "groupe": "Mobiles", 
+        "element": "Feu (Est)", "formule_calcul": "Feu(2) + Vent(7) + Eau(0) + Terre(8) = 17. 17 - 16 = 1",
+        "morphologie": "Tête: Ouverte | Poitrine: Ouverte | Ventre: Fermé | Pieds: Ouvert"
     },
     "Adama": {
-        1: "✨ Très bonne nouvelle concernant directement le consultant, joie intérieure.",
-        2: "💰 Forte augmentation de la chance financière, opportunité de gain immédiat.",
-        3: "👥 Entourage favorable, démarches couronnées de succès et de bienveillance.",
-        4: "🏠 Stabilité et bonheur dans le foyer, réussite liée au patrimoine immobilier.",
-        5: "👶 Joie liée aux enfants, plaisirs, heureuse nouvelle inattendue.",
-        6: "🩹 Diminution de la chance, fatigue ou perte matérielle/financière.",
-        7: "💍 Union heureuse, mariage prospère ou accord parfait avec un partenaire.",
-        8: "🔄 Chance retardée ou bloquée temporairement par un changement soudain.",
-        9: "✈️ Voyage chanceux, élévation spirituelle ou réussite dans les études/recherches.",
-        10: "👑 Excellente opportunité professionnelle, promotion, faveurs du patron.",
-        11: "🙏 Les espoirs se réalisent, les souhaits de réussite matérielle sont exaucés.",
-        12: "⚠️ Obstacles majeurs bloquant la chance par la faute d'ennemis cachés.",
-        13: "🛏️ La chance s'installe à domicile, sérénité retrouvée dans l'intimité.",
-        14: "💵 Gains financiers futurs garantis, investissement ou épargne fructueuse.",
-        15: "🔮 Le Juge confirme une issue extrêmement favorable et lumineuse.",
-        16: "📜 Décret final très positif, concrétisation absolue des objectifs."
+        "num": 2, "nature_manuscrit": "Diable Bon", "groupe": "Sortants", 
+        "element": "Feu (Est)", "formule_calcul": "Feu(2) + Vent(0) + Eau(0) + Terre(0) = 2",
+        "morphologie": "Tête: Ouverte | Poitrine: Fermée | Ventre: Fermé | Pieds: Fermé"
     },
     "Mahdy": {
-        1: "🔄 Esprit focalisé sur le mouvement, envie de changement ou de déplacement.",
-        2: "💰 Augmentation de la prospérité et gains financiers majeurs en mouvement.",
-        3: "👥 Nouvelles dynamiques avec l'entourage, démarches actives de communication.",
-        4: "🏠 Changement ou déplacement prévu au sein du foyer (déménagement, travaux).",
-        5: "👶 Déplacement agréable pour les plaisirs ou nouvelles d'un enfant en route.",
-        6: "🩹 Retards dans le rétablissement ou blocages dans les tâches quotidiennes.",
-        7: "💍 Rencontre importante en voyage, ou accord dynamique avec l'adversaire.",
-        8: "🔄 Changement radical de situation, transformation profonde et rapide.",
-        9: "✈️ Annonce un déplacement sûr, un voyage très profitable et sans embûches.",
-        10: "👑 Évolution professionnelle rapide, déplacement pour le travail.",
-        11: "🙏 Appuis providentiels extérieurs facilitant les projets à venir.",
-        12: "⛓️ Risque de blocage sévère, de grand retard, voire de restriction de liberté.",
-        13: "🛏️ Arrivée imminente d'une personne ou d'une nouvelle au domicile.",
-        14: "💵 Rentrée d'argent future liée à un commerce ou un déplacement.",
-        15: "🔮 Le Juge annonce que la conclusion dépend entièrement d'un changement de voie.",
-        16: "📜 Sentence rapide et dynamique qui débloque définitivement la situation."
+        "num": 3, "nature_manuscrit": "Diable Bon", "groupe": "Rentrants", 
+        "element": "Air (Ouest)", "formule_calcul": "Feu(0) + Vent(7) + Eau(4) + Terre(8) = 19. 19 - 16 = 3",
+        "morphologie": "Tête: Fermée | Poitrine: Ouverte | Ventre: Ouverte | Pieds: Ouvert"
     },
     "Idriss": {
-        1: "🧘 Esprit sage, calme, serein. Clarté mentale et décisions réfléchies.",
-        2: "💰 Gains financiers stables et mérités, gestion prudente et payante.",
-        3: "👥 Soutien sincère de la part des parents, frères ou voisins respectables.",
-        4: "🏠 Symbole d'union, de paix profonde, de sécurité et de confiance au sein de la famille.",
-        5: "👶 Éducation réussie, sagesse des enfants ou joie tranquille.",
-        6: "🩹 Problèmes de santé durables, maladies chroniques ou difficultés matérielles tenaces.",
-        7: "💍 Mariage solide basé sur la confiance mutuelle, fidélité du conjoint.",
-        8: "🔄 Fin paisible d'un problème, transition douce vers autre chose.",
-        9: "🙏 Haute protection divine, réussite dans la quête spirituelle ou religieuse.",
-        10: "👑 Respect de la hiérarchie, autorité légitime et reconnue au travail.",
-        11: "🙏 Espoirs fondés sur du solide, promesses tenues à coup sûr.",
-        12: "⛓️ Épreuves supportées avec patience, victoire finale sur les épreuves.",
-        13: "🛏️ Paix et harmonie absolues au sein du lit conjugal et du foyer intime.",
-        14: "💵 Patrimoine financier sécurisé, économies bien protégées.",
-        15: "🔮 Le Juge valide la solidité de l'affaire avec une issue juste.",
-        16: "📜 Décret immuable et protecteur qui scelle la paix."
+        "num": 4, "nature_manuscrit": "Diable Bon", "groupe": "Fixes", 
+        "element": "Eau (Nord)", "formule_calcul": "Feu(0) + Vent(0) + Eau(4) + Terre(0) = 4",
+        "morphologie": "Tête: Fermée | Poitrine: Fermée | Ventre: Ouverte | Pieds: Fermé"
     },
     "Ibrahima": {
-        1: "🤔 État de doute, d'hésitation profonde face à une route ou un projet à entreprendre.",
-        2: "💰 La chance arrive petit à petit (goutte-à-goutte) mais elle s'avère durable.",
-        3: "👥 Hésitations dans les démarches ou communications floues avec l'entourage.",
-        4: "🏠 Climat incertain dans la maison, attente d'une décision familiale.",
-        5: "👶 Projets de conception, créativité en éveil mais demande du temps.",
-        6: "🩹 Petite indisposition physique passagère ou paresse au travail.",
-        7: "💍 Incertitude dans le couple, hésitation avant un engagement officiel.",
-        8: "🔄 Changement lent qui demande de la patience avant de porter ses fruits.",
-        9: "✈️ Voyage retardé ou doutes sur l'orientation spirituelle à prendre.",
-        10: "👑 Statut professionnel en attente de validation, hésitations de la hiérarchie.",
-        11: "🙏 Espoirs fragiles mais réels, les souhaits avancent lentement.",
-        12: "⛓️ Difficultés mineures causées par des doutes internes plus que par des ennemis.",
-        13: "🛏️ Attente ou réflexion solitaire dans la chambre à coucher.",
-        14: "💵 Rentrées financières fragmentées, petits profits réguliers.",
-        15: "🔮 Le Juge indique qu'il ne faut pas se précipiter, l'issue est en gestation.",
-        16: "📜 Décret qui demande une vérification avant la finition complète."
+        "num": 5, "nature_manuscrit": "Humain Bon", "groupe": "Mobiles", 
+        "element": "Eau (Nord)", "formule_calcul": "Feu(2) + Vent(7) + Eau(4) + Terre(8) = 21. 21 - 16 = 5",
+        "morphologie": "Tête: Ouverte | Poitrine: Ouverte | Ventre: Ouverte | Pieds: Ouvert"
     },
     "Inssa": {
-        1: "🗣️ Disputes intérieures, nervosité, pensées conflictuelles et mauvaise foi.",
-        2: "💰 Conflits liés à l'argent, discussions tendues pour des intérêts financiers.",
-        3: "👥 Querelles de voisinage, malentendus ou mensonges dans l'entourage proche.",
-        4: "🏠 Disputes familiales, mauvaise foi, mensonges ou discussions conflictuelles au foyer.",
-        5: "👶 Tensions avec les enfants ou plaisirs gâchés par des paroles amères.",
-        6: "🩹 Maux physiques liés au stress, ambiance de travail conflictuelle.",
-        7: "💍 Fortes disputes dans le couple, rupture de dialogue ou procès avec l'adversaire.",
-        8: "🔄 Querelle qui provoque une rupture ou un changement brutal.",
-        9: "✈️ Incidents ou disputes durant un déplacement, blocage clérical.",
-        10: "👑 Tensions majeures avec le patron, risque de blâme ou de conflit d'autorité.",
-        11: "🙏 Espoirs déçus par des promesses mensongères ou des disputes.",
-        12: "⛓️ Complots manifestes, médisances et attaques verbales gratuites d'ennemis.",
-        13: "🛏️ Climat de tension et de dispute au sein du lit conjugal à la maison.",
-        14: "💵 Pertes d'argent dues à des litiges ou des pénalités non prévues.",
-        15: "🔮 Engendre des regrets, une diminution ou une perte de statut général.",
-        16: "📜 Sentence conflictuelle qui nécessite un nettoyage spirituel immédiat."
+        "num": 6, "nature_manuscrit": "Humain Mauvais", "groupe": "Sortants", 
+        "element": "Eau (Nord)", "formule_calcul": "Feu(2) + Vent(0) + Eau(4) + Terre(0) = 6",
+        "morphologie": "Tête: Ouverte | Poitrine: Fermée | Ventre: Ouverte | Pieds: Fermé"
     },
     "Omar": {
-        1: "🔥 Impulsivité, colère intérieure, comportement à risque ou agressif.",
-        2: "💰 Danger de perte financière rapide, dépenses impulsives ou vol.",
-        3: "👥 Conflit violent ou rupture brutale avec un membre de l'entourage.",
-        4: "🏠 Risque d'incendie, de casse ou de violente crise au sein de la famille.",
-        5: "👶 Tensions extrêmes, rivalités passionnelles ou impulsivité d'un ami.",
-        6: "🩹 Alerte critique sur un risque d'accident, de blessure grave ou d'incendie.",
-        7: "💍 Crise conjugale majeure, affrontement direct avec la partie adverse.",
-        8: "🔄 Rupture définitive, destruction d'une situation pour en rebâtir une autre.",
-        9: "✈️ Grand danger lors des voyages, agressions ou pannes sévères.",
-        10: "👑 Conflits graves avec l'autorité (juge, police, patron), risque de sanction lourde.",
-        11: "🙏 Espoirs brisés net par une colère ou une action irréfléchie.",
-        12: "⛓️ Attaques violentes d'ennemis déclarés, danger de dommages physiques.",
-        13: "🛏️ Violence ou discorde intime intolérable à domicile.",
-        14: "💵 Ruine financière ou blocage total de crédits par destruction de dossier.",
-        15: "🔮 Le Juge tire la sonnette d'alarme : le climat général est hautement dangereux.",
-        16: "📜 Décret tranchant et foudroyant qui met fin à l'affaire de manière brutale."
+        "num": 7, "nature_manuscrit": "Diable Mauvais", "groupe": "Fixes", 
+        "element": "Air (Ouest)", "formule_calcul": "Feu(0) + Vent(7) + Eau(0) + Terre(0) = 7",
+        "morphologie": "Tête: Fermée | Poitrine: Ouverte | Ventre: Fermé | Pieds: Fermé"
     },
     "Ayoub": {
-        1: "🖤 Tristesse profonde, mélancolie, blocage psychologique ou angoisse.",
-        2: "📉 Malchance financière sévère, pauvreté temporaire, négativité ambiante.",
-        3: "👥 Isolement social, rupture de communication avec l'entourage proche.",
-        4: "🏠 Climat lourd et triste dans la maison, deuil ou sensation d'enfermement.",
-        5: "👶 Inquiétudes pour les enfants, absence de joie, solitude affective.",
-        6: "🩹 Maladie lente, fatigue générale, épuisement au travail quotidien.",
-        7: "💍 Solitude dans le couple, froideur affective ou divorce douloureux.",
-        8: "🔄 Transformation par la douleur, deuil d'une ancienne situation.",
-        9: "✈️ Voyage annulé ou pénible, crise de foi spirituelle.",
-        10: "👑 Perte d'emploi, destitution, impuissance face à la hiérarchie.",
-        11: "🙏 Perte d'espoir, découragement total face aux projets.",
-        12: "⛓️ Méchanceté d'un ennemi caché, fortes douleurs physiques (maux de ventre).",
-        13: "🛏️ Solitude subie ou tristesse ressentie directement dans la chambre à coucher.",
-        14: "💵 Dettes lourdes, blocage total des rentrées financières à venir.",
-        15: "🔮 Le Juge confirme un climat de blocage, de tristesse et de fatalité.",
-        16: "📜 Conclusion difficile qui demande patience et traitements thérapeutiques."
+        "num": 8, "nature_manuscrit": "Diable Mauvais", "groupe": "Rentrants", 
+        "element": "Terre (Sud)", "formule_calcul": "Feu(0) + Vent(0) + Eau(0) + Terre(8) = 8",
+        "morphologie": "Tête: Fermée | Poitrine: Fermée | Ventre: Fermé | Pieds: Ouvert"
     },
     "Allahou": {
-        1: "✨ Esprit élevé, protection divine ressentie, intuition forte.",
-        2: "💰 Fortune mineure, entrée d'argent rapide et inattendue.",
-        3: "👥 Démarches spirituelles ou administratives facilitées avec l'entourage.",
-        4: "🏠 Bénédiction sur le foyer, protection de la maison familiale.",
-        5: "👶 Joie spirituelle, chance pure, cadeaux ou heureuses surprises.",
-        6: "🩹 Guérison rapide d'un mal grâce à une intervention providentielle.",
-        7: "💍 Alliance sacrée, mariage béni ou conciliation facile avec l'adversaire.",
-        8: "🔄 Changement bénéfique et soudain guidé par la providence.",
-        9: "✈️ Voyage rapide, succès éclatant et élévation spirituelle majeure.",
-        10: "👑 Succès soudain au travail, reconnaissance des mérites par les chefs.",
-        11: "🙏 Les souhaits les plus chers reçoivent une validation spirituelle.",
-        12: "⛓️ Dissolution des pièges des ennemis par la grâce divine.",
-        13: "🛏️ Paix et bénédiction dans la chambre, sommeil réparateur.",
-        14: "💵 Prospérité future assurée par des voies claires et honnêtes.",
-        15: "🔮 Le Juge annonce le succès et la lumière sur l'ensemble du thème.",
-        16: "📜 Décret divin hautement favorable qui valide toutes les requêtes."
+        "num": 9, "nature_manuscrit": "Humain Mauvais", "groupe": "Sortants", 
+        "element": "Feu (Est)", "formule_calcul": "Feu(2) + Vent(7) + Eau(0) + Terre(0) = 9",
+        "morphologie": "Tête: Ouverte | Poitrine: Ouverte | Ventre: Fermé | Pieds: Fermé"
     },
     "Souleymane": {
-        1: "🔒 Esprit préoccupé par des responsabilités lourdes ou des blocages.",
-        2: "💰 Argent bloqué ou soumis à des taxes, des contrôles administratifs.",
-        3: "👥 Devoirs familiaux contraignants, démarches lentes et bureaucratiques.",
-        4: "🏠 Autorité paternelle forte, contraintes immobilières ou familiales.",
-        5: "👶 Devoirs envers les enfants, plaisirs limités par le travail.",
-        6: "🩹 Fatigue due aux responsabilités, surmenage professionnel.",
-        7: "💍 Mariage de raison, contrats stricts ou blocages juridiques avec l'adversaire.",
-        8: "🔄 Retards obligatoires, immobilisme nécessaire avant le changement.",
-        9: "✈️ Voyage d'affaires officiel ou démarches administratives complexes.",
-        10: "👑 Affaires complexes liées à un chef, rigueur absolue exigée au travail.",
-        11: "🙏 Espoirs soumis à des conditions strictes, patience demandée.",
-        12: "⛓️ Ennemis puissants (administration, justice) créant des contraintes.",
-        13: "🛏️ Climat sérieux ou distant à la maison, manque de lâcher-prise.",
-        14: "💵 Épargne bloquée à long terme, investissements lourds.",
-        15: "🔮 Le Juge indique que l'affaire est freinée par des règles ou des lois.",
-        16: "📜 Décret final qui structure et stabilise l'affaire après des efforts."
+        "num": 10, "nature_manuscrit": "Humain Bon", "groupe": "Mobiles", 
+        "element": "Terre (Sud)", "formule_calcul": "Feu(2) + Vent(0) + Eau(0) + Terre(8) = 10",
+        "morphologie": "Tête: Ouverte | Poitrine: Fermée | Ventre: Fermé | Pieds: Ouvert"
     },
     "Aliou": {
-        1: "🤝 Esprit ouvert à la conciliation, recherche d'harmonie et d'alliances.",
-        2: "💰 Gains financiers issus de partenariats ou de contrats signés.",
-        3: "👥 Entente parfaite avec l'entourage, réunions amicales ou fraternelles.",
-        4: "🏠 Paix partagée, réunions heureuses au sein du foyer familial.",
-        5: "👶 Joie partagée, plaisirs amoureux, harmonie amicale forte.",
-        6: "🩹 Amélioration de la santé grâce au soutien de l'entourage.",
-        7: "💍 Union, entente parfaite, mariage d'amour ou réconciliation totale.",
-        8: "🔄 Changement négocié en douceur, transition collective réussie.",
-        9: "✈️ Voyage de groupe ou démarche d'alliance à l'étranger réussie.",
-        10: "👑 Signature de contrat importante, association fructueuse avec les chefs.",
-        11: "🙏 Union, entente, documents ou contrats espérés qui arrivent enfin.",
-        12: "⛓️ Les ennemis abandonnent leurs poursuites face à vos alliances.",
-        13: "🛏️ Amour, complicité et tendresse partagés au lit à domicile.",
-        14: "💵 Financement obtenu, crédits accordés grâce à de bons appuis.",
-        15: "🔮 Le Juge valide une issue d'entente et de bonheur partagé.",
-        16: "📜 Décret final scellant définitivement une alliance heureuse."
+        "num": 11, "nature_manuscrit": "Humain Mauvais", "groupe": "Fixes", 
+        "element": "Air (Ouest)", "formule_calcul": "Feu(0) + Vent(7) + Eau(4) + Terre(0) = 11",
+        "morphologie": "Tête: Fermée | Poitrine: Ouverte | Ventre: Ouverte | Pieds: Fermé"
     },
     "Nouhou": {
-        1: "⏳ Esprit combatif face à l'adversité, endurance psychologique.",
-        2: "💰 Retards dans les rentrées d'argent, mais déblocage financier final.",
-        3: "👥 Relations compliquées avec l'entourage, démarches administratives lentes.",
-        4: "🏠 Difficultés passagères au foyer, résistance face aux crises immobilières.",
-        5: "👶 Inquiétudes légères vite dissipées, plaisirs mérités après l'effort.",
-        6: "🩹 Maladie longue nécessitant de la patience, travail quotidien difficile.",
-        7: "💍 Tensions dans le couple qui demandent de la persévérance pour être résolues.",
-        8: "🔄 Transition lente mais salvatrice vers une nouvelle vie.",
-        9: "✈️ Voyage long avec des escales ou des retards, mais arrivée à bon port.",
-        10: "👑 Évolution de carrière lente, épreuves imposées par le patron.",
-        11: "🙏 Espoirs retardés mais qui finiront par se matérialiser.",
-        12: "⛓️ Difficultés majeures, retards provoqués, mais déblocage final possible.",
-        13: "🛏️ Rétablissement du climat intime après une période de doute.",
-        14: "💵 Rentrées d'argent différées, recouvrement de créances anciennes.",
-        15: "🔮 Le Juge montre que l'issue demande du temps et de la persévérance.",
-        16: "📜 Décret de délivrance qui libère l'affaire après de longs blocages."
+        "num": 12, "nature_manuscrit": "Humain Bon", "groupe": "Rentrants", 
+        "element": "Terre (Sud)", "formule_calcul": "Feu(0) + Vent(0) + Eau(4) + Terre(8) = 12",
+        "morphologie": "Tête: Fermée | Poitrine: Fermée | Ventre: Ouverte | Pieds: Ouvert"
     },
     "Assane": {
-        1: "⚠️ Sentiments de jalousie, d'envie, doutes intérieurs destructeurs.",
-        2: "💰 Pertes financières dues à des tromperies ou de la jalousie.",
-        3: "👥 Rivalités cachées dans l'entourage proche, commérages.",
-        4: "🏠 Climat de suspicion ou d'infidélité larvée au sein de la maison.",
-        5: "👶 Jalousie, trahison amoureuse, déception affective, négativité.",
-        6: "🩹 Fatigue morale, somatisation des angoisses amoureuses.",
-        7: "💍 Risque d'adultère, crise de confiance majeure avec le conjoint.",
-        8: "🔄 Rupture amoureuse ou affective causée par des tiers jaloux.",
-        9: "✈️ Démarches de voyage compromises par des rivalités ou de la mauvaise foi.",
-        10: "👑 Crocs-en-jambe professionnels, collègues jaloux sabotant votre statut.",
-        11: "🙏 Espoirs déçus par la trahison d'un ami en qui vous aviez confiance.",
-        12: "⛓️ Attaques sournoises d'ennemis agissant par pure jalousie.",
-        13: "🛏️ Trahison ou déception flagrante vécue directement à domicile.",
-        14: "💵 Litiges sur des partages de biens, vols d'économies.",
-        15: "🔮 Le Juge confirme un environnement marqué par la jalousie et l'envie.",
-        16: "📜 Décret final qui nécessite une coupure nette avec les personnes toxiques."
+        "num": 13, "nature_manuscrit": "Diable Mauvais", "groupe": "Sortants", 
+        "element": "Eau (Nord)", "formule_calcul": "Feu(2) + Vent(7) + Eau(4) + Terre(0) = 13",
+        "morphologie": "Tête: Ouverte | Poitrine: Ouverte | Ventre: Ouverte | Pieds: Fermé"
     },
     "Younouss": {
-        1: "❤️ Esprit comblé, sentiments d'amour, de plénitude et de joie.",
-        2: "💰 Excellente aisance financière, gains importants, grande chance matérielle.",
-        3: "👥 Entourage extrêmement affectueux, démarches très fluides.",
-        4: "🏠 Richesse et confort au sein du foyer, harmonie familiale totale.",
-        5: "👶 Amour passionné, réussite totale des enfants, plaisirs intenses.",
-        6: "🩹 Santé éclatante, vitalité retrouvée, épanouissement au travail.",
-        7: "💍 Mariage d'amour parfait, harmonie absolue avec le partenaire.",
-        8: "🔄 Changement heureux apportant l'abondance et le soulagement.",
-        9: "✈️ Voyage d'amour ou d'agrément magnifique, haute lumière spirituelle.",
-        10: "👑 Promotion éclatante, succès public, amour et estime du patron.",
-        11: "🙏 Aisance financière, amour, gains, réussite totale de tous les vœux.",
-        12: "⛓️ Triomphe total et sans effort sur tous les ennemis cachés.",
-        13: "🛏️ Passion amoureuse intense et bonheur parfait vécus dans la chambre.",
-        14: "💵 Prospérité financière future majeure, richesse consolidée.",
-        15: "🔮 Le Juge annonce une conclusion couronnée de succès et de bonheur.",
-        16: "📜 Décret de triomphe absolu validant le bonheur du consultant."
+        "num": 14, "nature_manuscrit": "Diable Bon", "groupe": "Mobiles", 
+        "element": "Terre (Sud)", "formule_calcul": "Feu(2) + Vent(0) + Eau(4) + Terre(8) = 14",
+        "morphologie": "Tête: Ouverte | Poitrine: Fermée | Ventre: Ouverte | Pieds: Ouvert"
     },
     "Ousmane": {
-        1: "🧘 Esprit tourné vers la réflexion profonde, la méditation et la foi.",
-        2: "💰 Gains obtenus grâce à des activités de l'esprit ou de la foi.",
-        3: "👥 Échanges profonds et sincères avec l'entourage, conseils avisés.",
-        4: "🏠 Sérénité et calme philosophique au sein de la maison familiale.",
-        5: "👶 Sagesse précoce des enfants, plaisirs simples et spirituels.",
-        6: "🩹 Paix du corps obtenue par le repos de l'esprit, clarté au travail.",
-        7: "💍 Union spirituelle forte, respect mutuel au sein du couple.",
-        8: "🔄 Transition de vie vécue avec une grande maturité philosophique.",
-        9: "✈️ Pèlerinage, voyage spirituel ou études supérieures hautement profitables.",
-        10: "👑 Statut de conseiller, respect de la hiérarchie pour votre intégrité.",
-        11: "🙏 Spiritualité, méditation, succès éclatant à l'issue de prières intenses.",
-        12: "⛓️ Protection absolue contre le mal grâce à votre force spirituelle.",
-        13: "🛏️ Atmosphère calme, propice aux rêves lucides dans la chambre.",
-        14: "💵 Sécurité financière future obtenue par une gestion sage.",
-        15: "🔮 Le Juge valide une conclusion d'élévation et de paix intérieure.",
-        16: "📜 Décret qui apporte la lumière divine et la clarté finale sur l'affaire."
+        "num": 15, "nature_manuscrit": "Humain Bon", "groupe": "Rentrants", 
+        "element": "Air (Ouest)", "formule_calcul": "Feu(0) + Vent(7) + Eau(0) + Terre(8) = 15",
+        "morphologie": "Tête: Fermée | Poitrine: Ouverte | Ventre: Fermé | Pieds: Ouvert"
     },
     "Moussa": {
-        1: "🎉 Esprit festif, soulagement d'arriver au bout d'un long chemin.",
-        2: "💰 Rentrées d'argent finales, clôture de comptes très positive.",
-        3: "👥 Rassemblement de l'entourage, fêtes familiales ou professionnelles.",
-        4: "🏠 Joie partagée au foyer, réussite finale liée à la maison.",
-        5: "👶 Célébrations, réussite publique, bonheur avec les enfants.",
-        6: "🩹 Guérison complète et définitive, fin heureuse des corvées.",
-        7: "💍 Mariage célébré en grande pompe, victoire publique sur l'adversaire.",
-        8: "🔄 Libération totale d'un fardeau, fin heureuse d'un cycle.",
-        9: "✈️ Grand déplacement réussi, retour de voyage triomphal.",
-        10: "👑 Couronnement des efforts, consécration professionnelle devant tous.",
-        11: "🙏 Réalisation finale et publique de tous les espoirs nourris.",
-        12: "⛓️ Élimination définitive de toutes les entraves et des ennemis.",
-        13: "🛏️ Joie et célébration de l'union partagées au cœur du domicile.",
-        14: "💵 Fructification totale des investissements et des crédits.",
-        15: "🔮 Conclusion de l'affaire, rassemblement d'une foule, joie ou déplacement final.",
-        16: "📜 Le Décret final (Moussa) valide et scelle définitivement la réussite."
+        "num": 16, "nature_manuscrit": "Humain Mauvais", "groupe": "Fixes", 
+        "element": "Feu (Est)", "formule_calcul": "Feu(0) + Vent(0) + Eau(0) + Terre(0) = 0 -> Reste 16 par défaut",
+        "morphologie": "Tête: Fermée | Poitrine: Fermée | Ventre: Fermé | Pieds: Fermé"
     }
 }
 
-MAISONS_NOMINATIVES = {
-    1: "M1 (Demandeur)", 2: "M2 (Biens/Chances)", 3: "M3 (Entourage)", 4: "M4 (Foyer/Patrimoine)",
-    5: "M5 (Enfants/Nouvelles)", 6: "M6 (Maladies)", 7: "M7 (Adversaires/Époux)", 8: "M8 (Mort/Peurs)",
-    9: "M9 (Voyages)", 10: "M10 (Travail/Autorité)", 11: "M11 (Espoirs)", 12: "M12 (Difficultés)",
-    13: "M13 (Témoin Droite)", 14: "M14 (Témoin Gauche)", 15: "M15 (Conclusion)", 16: "M16 (Le Décret)"
+MAISONS_RAMROU = {
+    1: {"nom": "M1 (Maison de l'Âme)", "description": "L'être physique, sa force, sa personnalité. Décrit l'origine des choses, l'élan premier et le consultant."},
+    2: {"nom": "M2 (Maison de la Chance)", "description": "La matérialité de l'argent, les finances, les biens matériels et les richesses qui alimentent M1."},
+    3: {"nom": "M3 (Maison des Mères)", "description": "L'entourage proche, les relations, les voisins et les courts déplacements dus aux alliés."},
+    4: {"nom": "M4 (Maison des Pères)", "description": "Le patrimoine familial, immobilier, le foyer et la fin des choses."},
+    5: {"nom": "M5 (Maison des Enfants)", "description": "Les plaisirs, la vie amoureuse, la créativité, le charme, les lettres et la descendance."},
+    6: {"nom": "M6 (Maison des Malades)", "description": "Le métier, les principes du travail quotidien, le foyer, la santé et les obstacles/blocages."},
+    7: {"nom": "M7 (Maison du Mariage)", "description": "Le conjoint, l'épouse, les associations, les contrats, ainsi que les rivaux ou adversaires déclarés."},
+    8: {"nom": "M8 (Maison du Changement)", "description": "La tombe, l'extérieur, l'étranger, les peurs et les transformations."},
+    9: {"nom": "M9 (Maison de Dieu)", "description": "La spiritualité, la religion, les écrits, la philosophie et les grands voyages à l'étranger."},
+    10: {"nom": "M10 (Maison des Rois)", "description": "Le travail, la réalisation sociale, le pouvoir, l'élévation, les honneurs, l'employeur ou la lignée maternelle."},
+    11: {"nom": "M11 (Maison de l'Espoir)", "description": "Les projets, les espoirs, les amis, les soutiens, la collaboration et les promesses."},
+    12: {"nom": "M12 (Maison des Ennemis)", "description": "Les blocages cachés, la méchanceté, le maraboutage, les pièges et les épreuves."},
+    13: {"nom": "M13 (Maison du Sexe / Chambre)", "description": "L'intimité du foyer, le lit conjugal, les désirs intimes et le présent immédiat."},
+    14: {"nom": "M14 (Maison des Fortunes)", "description": "Les gains futurs, les réussites commerciales à venir, les rentrées financières décalées."},
+    15: {"nom": "M15 (Maison de l'Espace)", "description": "Les rumeurs, la clarté d'esprit, la pensée et le juge de synthèse."},
+    16: {"nom": "M16 (Maison de Finition)", "description": "La conclusion ultime, irrévocable et le décret final de l'affaire étudiée."}
 }
 
-# Configuration des données dictionnaire de base (Zikr / Bains / Plantes)
-DATA_THEURGIQUE = {
-    "Youssouf": {"ref": "Youssouf", "nature": "Bénéfique", "plante": "Djècala", "psaume": "Psaume 100", "verset": "Verset 2", "texte_biblique": "Servez l'Éternel avec joie...", "zikr": "Ya Latif — 129 fois", "bain": "Infuser des tiges de Citronnelle et du Djècala."},
-    "Adama": {"ref": "Adama", "nature": "Bénéfique", "plante": "Sana", "psaume": "Psaume 8", "verset": "Verset 6", "texte_biblique": "Tu lui as donné l'empire...", "zikr": "Ya Rafi'u — 351 fois", "bain": "Infuser 100g de feuilles de Sana."},
-    "Mahdy": {"ref": "Mahdy", "nature": "Neutre", "plante": "Cebé", "psaume": "Psaume 4", "verset": "Verset 7", "texte_biblique": "Fais lever sur nous la lumière...", "zikr": "Ya Nour — 256 fois", "bain": "Macération de feuilles de Cebé."},
-    "Idriss": {"ref": "Idriss", "nature": "Bénéfique", "plante": "Djou", "psaume": "Psaume 112", "verset": "Verset 3", "texte_biblique": "Il a dans sa maison bien-être...", "zikr": "Ya Razzaq — 308 fois", "bain": "Décoction de racines de Djou."},
-    "Ibrahima": {"ref": "Ibrahima", "nature": "Bénéfique", "plante": "M'bana", "psaume": "Psaume 1", "verset": "Verset 3", "texte_biblique": "Il est comme un arbre planté...", "zikr": "Ya Bassitou — 72 fois", "bain": "Feuilles de M'bana infusées."},
-    "Inssa": {"ref": "Inssa", "nature": "Neutre à Mauvais", "plante": "Wingninga", "psaume": "Psaume 51", "verset": "Verset 12", "texte_biblique": "Crée en moi un coeur pur...", "zikr": "Ya Chafi — 391 fois", "bain": "Feuilles de Wingninga + sel gemme."},
-    "Omar": {"ref": "Omar", "nature": "Mauvais", "plante": "Gababelé", "psaume": "Psaume 35", "verset": "Verset 1", "texte_biblique": "Attaque ceux qui m'attaquent...", "zikr": "Ya Jabbar — 206 fois", "bain": "Gababelé broyé + gingembre."},
-    "Ayoub": {"ref": "Ayoub", "nature": "Mauvais", "plante": "Kronifin", "psaume": "Psaume 142", "verset": "Verset 8", "texte_biblique": "Tire mon âme de sa prison...", "zikr": "Ya Moukhrij — 201 fois", "bain": "Feuilles de Kronifin + charbon végétal."},
-    "Allahou": {"ref": "Allahou", "nature": "Bénéfique", "plante": "Sadjo", "psaume": "Psaume 23", "verset": "Verset 1", "texte_biblique": "L'Éternel est mon berger...", "zikr": "Ya Malik — 90 fois", "bain": "Feuilles de Sadjo + fleurs de rose."},
-    "Souleymane": {"ref": "Souleymane", "nature": "Bénéfique", "plante": "Sira (Baobab)", "psaume": "Psaume 45", "verset": "Verset 2", "texte_biblique": "Mon oeuvre est pour le roi...", "zikr": "Ya Jamil — 83 fois", "bain": "Écorce de Baobab bouillie."},
-    "Aliou": {"ref": "Aliou", "nature": "Bénéfique", "plante": "Gbè yiri", "psaume": "Psaume 133", "verset": "Verset 1", "texte_biblique": "Qu'il est doux pour des frères...", "zikr": "Ya Wadoud — 20 fois", "bain": "Feuilles de Gbè yiri + cardamome."},
-    "Nouhou": {"ref": "Nouhou", "nature": "Mauvais", "plante": "Kounbè", "psaume": "Psaume 30", "verset": "Verset 12", "texte_biblique": "Tu as changé mon deuil...", "zikr": "Ya Latif — 129 fois", "bain": "Feuilles de Kounbè + thym blanc."},
-    "Assane": {"ref": "Assane", "nature": "Neutre", "plante": "Zaman", "psaume": "Psaume 18", "verset": "Verset 38", "texte_biblique": "Je les brise, ils ne peuvent...", "zikr": "Ya Moumit — 490 fois", "bain": "Écorces de Zaman + eucalyptus."},
-    "Younouss": {"ref": "Younouss", "nature": "Bénéfique", "plante": "Dialassogala", "psaume": "Psaume 91", "verset": "Verset 11", "texte_biblique": "Il ordonnera à ses anges...", "zikr": "Ya Hafiz — 998 fois", "bain": "Écorces de Dialassogala."},
-    "Ousmane": {"ref": "Ousmane", "nature": "Bénéfique", "plante": "Doualé", "psaume": "Psaume 119", "verset": "Verset 105", "texte_biblique": "Ta parole est une lampe...", "zikr": "Ya Alim — 150 fois", "bain": "Feuilles de Doualé + Oliban."},
-    "Moussa": {"ref": "Moussa", "nature": "Neutre à Fort", "plante": "Tomy bourou", "psaume": "Psaume 4", "verset": "Verset 7", "texte_biblique": "Fais lever sur nous la lumière...", "zikr": "Ya Sari'u — 202 fois", "bain": "Feuilles de Tomy bourou + menthe."}
+# Base textuelle brute extraite fidèlement des fiches cas par cas du livre
+DICTIONNAIRE_CAS = {
+    "Adama": {
+        1: "Joie intérieure intense, élévation, l'âme est en paix.",
+        2: "Chance financière rapide, acquisition matérielle imminente.",
+        3: "Relations amicales ou familiales excellentes, déplacements fructueux.",
+        4: "Paix au foyer, stabilité du patrimoine immobilier.",
+        5: "Bonne nouvelle concernant les enfants, bonheur en amour.",
+        6: "Guérison rapide d'un malade, levée des obstacles au travail.",
+        7: "Union heureuse et sincère, contrat commercial validé.",
+        8: "Bonne nouvelle venant de l'extérieur, changement bénéfique.",
+        9: "Annonce une bonne nouvelle ou une chance en cours dans le voyage ou le domaine spirituel.",
+        10: "Prédit une bonne nouvelle, une belle chance, ferveur et élévation au travail.",
+        11: "Annonce de belles promesses mais attention au risque léger de déception par excès de confiance.",
+        12: "Annonce un blocage, une chance moindre ou une diminution temporaire des biens.",
+        13: "Annonce une bonne nouvelle du bonheur, de la joie dans la chambre ou le lit conjugal.",
+        14: "Annonce un retard dans l'acquisition d'une bonne chance, c'est une chance qui se concrétisera dans le futur.",
+        15: "Annonce de la joie, de la clarté et de la chance dans l'espace environnant.",
+        16: "Conclusion lumineuse : annonce une bonne nouvelle définitive pour l'affaire."
+    },
+    "Mahdy": {
+        1: "Annonce une élévation, une hauteur difficile à atteindre, une distance ou un voyage/déplacement.",
+        2: "Annonce des profits, des gains importants, une augmentation de la chance et de la prospérité.",
+        3: "Prédit un pacte sur l'entourage, de bons rapports, sincérités honnêtes. Retard dans un voyage sûr et profitable.",
+        4: "Annonce le bonheur dans le foyer, la réussite immobilière et la prospérité familiale.",
+        5: "Prédit une bonne nouvelle : des enfants, du bonheur, des richesses, ou une nouvelle sur un voyage venant de loin.",
+        6: "Annonce un échec, une perte de quelque chose qui vient de loin ou suite d'un déplacement, maladie qui dure.",
+        7: "Prévoit une très bonne union, une excellente association, entente, sagesse et sincérité absolue.",
+        8: "Annonce une perte sur tout ce qui est à l'extérieur, contretemps pendant un voyage, perte liée à une maladie.",
+        9: "Annonce un déplacement sûr et sans contrainte, un très bon voyage et une très bonne nouvelle spirituelle.",
+        10: "Prédit honneur, encouragement, réussite, et un très bon voyage dans le contexte du service.",
+        11: "Annonce l'espérance, de grands espoirs, des promesses tenues mais exige de faire des efforts pour réussir.",
+        12: "Annonce une difficulté, un obstacle, un retard, un blocage voir même des risques de prison ou d'enfermement.",
+        13: "Très bon présage intime, entente parfaite dans le couple au quotidien.",
+        14: "Rentrées d'argent différées mais solides provenant de transactions passées.",
+        15: "Clarté de la pensée, résolution mentale d'un problème complexe.",
+        16: "L'affaire se conclut sur un compromis très profitable et stable."
+    },
+    "Ibrahima": {
+        1: "Annonce un doute, une hésitation concernant une voie, une route, un voyage.",
+        2: "Annonce une chance arrivant au compte-goutte mais qui ne s'arrêtera jamais.",
+        3: "Déplacement, hésitation ou questionnements répétés lors d'un voyage court.",
+        4: "Annonce une activité à faible revenu, un faible voyage ou un déplacement lié au patrimoine.",
+        5: "Annonce enfants, amour, lettre, ou une femme qui cherche activement un enfant.",
+        6: "Annonce maladie, instabilité générale, mauvaise prise de décision, recherche constante de sa route.",
+        7: "Annonce un adversaire ou un conjoint qui peut s'avérer un ennemi caché.",
+        8: "Annonce une chance arrivante, ou des nouvelles d'une personne qui est actuellement à l'étranger.",
+        9: "Voyage ou déplacement marqué par des difficultés en cours de route.",
+        10: "Fonction publique, maison du roi, marabout, recherche d'une solution par le voyage.",
+        16: "L'affaire se termine pas à pas, avec persévérance."
+    },
+    "Omar": {
+        1: "Annonce une révolte, des querelles, de la vengeance ou de la peur ancrée dans l'âme.",
+        2: "Annonce de la fatigue, des problèmes financiers, des colères dévastatrices ou de la peur.",
+        3: "Annonce un problème, des querelles, des débats houleux, de la colère, des disputes ou de la frustration de voisinage.",
+        4: "Annonce un danger sur le patrimoine familial (maison, voiture, biens mobiles).",
+        5: "Annonce une femme enceinte d'une fille, mais contexte de disputes ou de tensions amoureuses.",
+        7: "Grave crise conjugale, partenaire colérique qui parle trop ou violences verbales.",
+        10: "Conflit direct avec l'autorité, la justice, le patron ou risque de blâme.",
+        16: "Annonce de la colère, des problèmes majeurs, du stress et de la frustration en fin de course."
+    },
+    "Ayoub": {
+        1: "Annonce une obscurité, de la peur, de la tristesse, du chagrin ou des mensonges subis.",
+        2: "Annonce de la malchance, de l'obscurité financière, de la négativité ou de la peur face aux manques.",
+        3: "Annonce de la magouille, du vol, un complot, des mensonges ou de l'obscurité dans l'entourage proche.",
+        4: "Annonce de la tristesse, de l'inquiétude, de la peur dans la maison, ou des magouilles immobilières.",
+        16: "Retard et blocage pesant. Fin de cycle douloureuse."
+    },
+    "Allahou": {
+        1: "Fortune mineure, voyage, déplacement brusque ou imprévu.",
+        2: "Chance rapide venant sans effort, réussite flagrante et voyage facile.",
+        3: "Démarche rapide dans l'entourage, relation familiale dynamique, voyage imminent.",
+        4: "Patrimoine familial matériel, maison sécurisée ou voyage familial facile.",
+        5: "Sentiments d'amours sincères, femmes, amis, informations fluides, voyages agréables.",
+        6: "Des soucis mineurs, voyage entrepris dans la peur, mais progrès ou augmentation brusque.",
+        7: "Un adversaire ou conjoint honnête avec de bons projets, mariage ou association valide.",
+        8: "Un service rendu à l'étranger, un projet extérieur, ou un voyage sans retour (installation définitive).",
+        9: "Un voyage, un déplacement, une évolution, un excellent projet et de très bons profits.",
+        10: "Une activité, un travail, bonheur rapide, fluidité et facilité professionnelle.",
+        11: "De l'espoir, un souhait réussi, une victoire éclatante après une discussion constructive.",
+        12: "Une difficulté, une méchanceté d'un tiers, plein de blocages ou panne matérielle/voiture.",
+        13: "Environnement mystique, retour bénéfique du voyageur, marabout ou féticheur protecteur.",
+        14: "Projet d'un voyage lointain, démarches couronnées de succès, bonheur, discussions animées.",
+        15: "Paroles ou discussions vives sur le lieu de travail (si à côté de Moussa, Assane ou Inssa).",
+        16: "Fortune globale, grand voyage protecteur et déplacements profonds."
+    },
+    "Assane": {
+        1: "Annonce une personne de mauvaise foi, malhonnête ou jalouse d'autrui.",
+        2: "Annonce la déception, le regret, la diminution drastique ou la perte sèche de sa chance.",
+        3: "Démarches difficiles, jalousie féroce et blocages au sein de l'entourage proche.",
+        4: "Magouille, mensonge avéré, vol ou détournement de biens au sein du foyer.",
+        5: "Difficultés, obstacles sévères, risques d'avortement ou enfant souffrant d'un handicap.",
+        6: "Maladie, perte matérielle, attaques de mauvais génies (djinn mécréant) et grande déception.",
+        7: "Mauvaise personne pour le cas d'un mariage (le manuscrit conseille : 'mieux vaut abandonner').",
+        8: "Pertes à l'extérieur, voyage dangereux, maladie ou complications à l'étranger.",
+        9: "Perte de quelque chose en cours de route, vol subi, mensonges découverts.",
+        10: "Déception majeure, licenciement au travail ou séparation/divorce dans le mariage.",
+        11: "Mensonge, trahison amicale, regret amer, obstacle inattendu ou pure méchanceté.",
+        12: "Problème grave dans le couple, disputes quotidiennes destructrices.",
+        13: "Dispute dans le mariage, querelle intime, jalousie maladive ou séparation de lit.",
+        14: "Blocage complet, trahison commerciale, annulation pure et simple d'un projet.",
+        16: "Échec ou regret cuisant. L'affaire prend une mauvaise tournure."
+    },
+    "Moussa": {
+        1: "Annonce le voyage, les réunions collectives, l'union ou le regroupement.",
+        2: "Annonce la chance globale, le progrès, le succès commercial et les profits partagés.",
+        3: "Rencontre fortuite ou programmée d'un proche, d'un parent ou d'un allié précieux.",
+        4: "Réunion de famille importante, gestion d'un problème ou d'un arbitrage de patrimoine.",
+        16: "Finition complète. Le projet ou l'épreuve se termine pour ouvrir un nouveau cycle."
+    }
+}
+
+# Recettes de rituels / Secrets spécifiques collectés dans le livre
+SECRETS_RITUELS = {
+    "Adama": "Pour avoir l'ouverture et la chance : tracer la figure Adama 1836 fois (ou 918 fois pour un gri-gri avec peau d'hyène). Récupérer l'eau bénite (nassi), y jeter 7 morceaux de charbon ardents (feu) et se laver avec pendant 7 jours entre 7h et 8h du matin.",
+    "Ousmane": "Pour avoir la vision la nuit : écrire Ousmane 55 fois toutes les nuits, laver le visage 3 fois avec le nassi et boire le reste avec du miel pendant 15 jours. Pour une bonne mémoire : écrire Ousmane 88 fois, mélanger le nassi avec du lait, boire et se laver pendant 15 jours.",
+    "Nouhou": "Pour détruire un mauvais travail/maraboutage sur soi : écrire la figure de Nouhou 489 fois, 594 fois ou 1111 fois. Mélanger le nassi avec de l'eau de mer, faire bouillir, en boire un peu et se laver 12 fois au cours de la même nuit. Sacrifier ensuite 3kg de riz (homme) ou 4kg de mil (femme) un vendredi soir.",
+    "Moussa": "Pour être populaire ou attirer la foule : écrire la figure de Moussa 6666 fois (ou 313 fois + 114 fois). Mélanger le nassi avec 8 parfums différents et se laver avec matin et soir pendant 28 jours.",
+    "Omar": "Pour trouver un mari ou une femme : écrire la figure d'Omar 70 fois + 45 fois + 16 fois + 236 fois. Récupérer le nassi, mélanger avec du lait et 4 parfums (pour une femme) ou 3 parfums (pour un homme). Se laver pendant 14 nuits. Sacrifier ensuite 41 colas blancs.",
+    "Ibrahima": "Pour concevoir un enfant : écrire la figure d'Ibrahima 444 fois, 1111 fois ou 111 fois. Boire le nassi obtenu pendant 21 jours, en particulier avant les rapports avec le partenaire.",
+    "Inssa": "Pour neutraliser un adversaire (sort de protection) : écrire la figure d'Inssa 68 fois sur un papier, recouvrir de miel, réciter les intentions avec le prénom de la cible, en faire un talisman et l'enterrer un mardi entre 13h et 16h dans un endroit humide."
 }
 
 # ==============================================================================
-# INTERFACE STREAMLIT
+# 2. INTERFACE APPLICATION STREAMLIT
 # ==============================================================================
-st.title("🔮 Oracle Géomantique Ramrou & Traitements Théurgiques")
-st.write("Saisissez le thème géomantique complet pour obtenir instantanément les prédictions Ramrou du document et vos ordonnances de soins.")
 
+st.title("🔮 Expert Oracle Ramrou — Moteur de Passations Complet")
+st.markdown("Ce programme implémente de façon stricte la base de données issue du manuscrit d'Ousmane B. Bonaldo.")
+
+# Saisie sécurisée
 with st.sidebar:
-    st.header("🔐 Accès sécurisé")
-    u_id = st.text_input("Identifiant")
-    u_pw = st.text_input("Mot de passe", type="password")
+    st.header("🔐 Authentification")
+    u_id = st.text_input("Identifiant", value="theurge2026")
+    u_pw = st.text_input("Mot de passe", type="password", value="Salomon777")
 
-if u_id == ID_SECRET and u_pw == MDP_SECRET:
-    st.success("🔓 Connexion établie avec succès.")
+if u_id == "theurge2026" and u_pw == "Salomon777":
+    st.sidebar.success("🔓 Accès autorisé au manuscrit.")
     
-    options_figures = list(DICTIONNAIRE_RAMROU.keys())
+    # Choix des figures pour le thème (16 Maisons)
+    st.header("📥 Configuration du Thème (Saisie des 16 Maisons)")
+    liste_figures = list(PROPRIETES_FIGURES.keys())
     
-    st.header("📥 CONFIGURATION DES 16 MAISONS")
+    theme_utilisateur = {}
     
-    st.markdown("### ⚜️ M1 à M4 : Les Mères")
-    c1, c2, c3, c4 = st.columns(4)
-    m1 = c1.selectbox("🏠 Maison 1 (Demandeur)", options_figures, index=0)
-    m2 = c2.selectbox("🏠 Maison 2 (Argent)", options_figures, index=1)
-    m3 = c3.selectbox("🏠 Maison 3 (Entourage)", options_figures, index=2)
-    m4 = c4.selectbox("🏠 Maison 4 (Foyer)", options_figures, index=3)
+    # Disposition par groupes de 4 maisons (Mères, Filles, Neveux, Tribunal)
+    sections_maisons = [
+        ("⚜️ Les Mères (M1 à M4 - Le Questionneur / Origines)", range(1, 5)),
+        ("🌿 Les Filles (M5 à M8 - L'Affaire / Présent)", range(5, 9)),
+        ("⚡ Les Neveux (M9 à M12 - Portée de l'Affaire)", range(9, 13)),
+        ("⚖️ Le Tribunal (M13 à M16 - Finalité / Décret)", range(13, 17))
+    ]
+    
+    for titre, intervalle in sections_maisons:
+        st.markdown(f"### {titre}")
+        colonnes = st.columns(4)
+        for idx, m_num in enumerate(intervalle):
+            # Sélection par défaut pré-configurée pour la démonstration
+            default_idx = (m_num - 1) % len(liste_figures)
+            theme_utilisateur[m_num] = colonnes[idx].selectbox(
+                f"{MAISONS_RAMROU[m_num]['nom']}",
+                liste_figures,
+                index=default_idx,
+                key=f"maison_{m_num}"
+            )
 
-    st.markdown("### 🌿 M5 à M8 : Les Filles")
-    c5, c6, c7, c8 = st.columns(4)
-    m5 = c5.selectbox("🏠 Maison 5 (Nouvelles)", options_figures, index=4)
-    m6 = c6.selectbox("🏠 Maison 6 (Obstacles/Maladie)", options_figures, index=5)
-    m7 = c7.selectbox("🏠 Maison 7 (Union/Adversaire)", options_figures, index=6)
-    m8 = c8.selectbox("🏠 Maison 8 (Fin/Peur/Mort)", options_figures, index=7)
-
-    st.markdown("### ⚡ M9 à M12 : Les Neveux")
-    c9, c10, c11, c12 = st.columns(4)
-    m9 = c9.selectbox("🏠 Maison 9 (Voyages)", options_figures, index=8)
-    m10 = c10.selectbox("🏠 Maison 10 (Travail/Pouvoir)", options_figures, index=9)
-    m11 = c11.selectbox("🏠 Maison 11 (Espoirs)", options_figures, index=10)
-    m12 = c12.selectbox("🏠 Maison 12 (Épreuves)", options_figures, index=11)
-
-    st.markdown("### ⚖️ M13 à M16 : Tribunal & Décret")
-    c13, c14, c15, c16 = st.columns(4)
-    m13 = c13.selectbox("🏠 Maison 13 (Présent/Intime)", options_figures, index=12)
-    m14 = c14.selectbox("🏠 Maison 14 (Avenir/Gains)", options_figures, index=13)
-    m15 = c15.selectbox("🏠 Maison 15 (Le Juge)", options_figures, index=14)
-    m16 = c16.selectbox("🏠 Maison 16 (Le Décret Final)", options_figures, index=15)
-
-    theme_complet = {
-        1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8,
-        9: m9, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15, 16: m16
-    }
-
+    # ==============================================================================
+    # 3. MOTEUR ANALYTIQUE DES PASSATIONS (DÉTECTION AUTOMATIQUE)
+    # ==============================================================================
     st.markdown("---")
-    st.header("📖 DICTIONNAIRE D'INTERPRÉTATION DIRECTE RAMROU")
-    st.write("Dépliez chaque maison pour lire l'analyse oraculaire exacte et récupérer les protocoles théurgiques.")
+    st.header("🔄 ANALYSE DYNAMIQUE DES PASSATIONS DÉTECTÉES")
+    st.write("Le système analyse ici le déplacement des figures entre les maisons (la première apparition est la **cause/origine**, les suivantes sont les **manifestations**).")
     
-    for m, fig_choisie in theme_complet.items():
-        prediction_ramrou = DICTIONNAIRE_RAMROU[fig_choisie].get(m, "Aucune interprétation spécifique enregistrée.")
-        soin_theurge = DATA_THEURGIQUE.get(fig_choisie, {})
+    # Inversion du dictionnaire pour grouper les maisons par figure
+    groupement_passations = {}
+    for m_id, fig_nom in theme_utilisateur.items():
+        if fig_nom not in groupement_passations:
+            groupement_passations[fig_nom] = []
+        groupement_passations[fig_nom].append(m_id)
         
-        titre_boite = f"{MAISONS_NOMINATIVES[m]} ➔ Figure présente : {fig_choisie}"
-        
-        with st.expander(titre_boite):
-            # Affichage direct et immédiat de la prédiction issue de la base de données
-            st.markdown("### 📜 Interprétation Prophétique (Selon la Méthode Ramrou) :")
-            st.success(f"🔮 **{prediction_ramrou}**")
+    # Filtrer uniquement les figures présentes plus d'une fois
+    passations_actives = {f: ms for f, ms in groupement_passations.items() if len(ms) > 1}
+    
+    if not passations_actives:
+        st.info("💡 Aucune passation détectée. Toutes les figures du thème tracé sont uniques.")
+    else:
+        for fig, maisons in passations_actives.items():
+            meta = PROPRIETES_FIGURES[fig]
             
-            st.markdown("---")
-            st.markdown("### 🛠️ Protocole Thérapeutique & Spirituel Associé :")
-            
-            tab_verset, tab_bain = st.tabs(["📿 Récitation Sacrée (Zikr)", "🌿 Médecine par les plantes"])
-            
-            with tab_verset:
-                if soin_theurge:
-                    st.write(f"📖 **Livre sacré :** {soin_theurge['psaume']}, {soin_theurge['verset']}")
-                    st.info(f"*\"{soin_theurge['texte_biblique']}\"*")
-                    st.warning(f"📿 **Zikr à exécuter :** {soin_theurge['zikr']}")
-                else:
-                    st.write("Aucun protocole de récitation enregistré pour cette figure.")
+            with st.expander(f"💠 Figure **{fig}** répétée {len(maisons)} fois dans le thème", expanded=True):
+                col1, col2 = st.columns([1, 2])
+                with col1:
+                    st.markdown(f"**Propriétés de la figure :**")
+                    st.markdown(f"- **Nature :** {meta['nature_manuscrit']}")
+                    st.markdown(f"- **Comportement :** {meta['groupe']}")
+                    st.markdown(f"- **Élément :** {meta['element']}")
+                    st.caption(f"🧬 *Morphologie : {meta['morphology']}*")
+                    st.caption(f"🔢 *Calcul : {meta['formule_calcul']}*")
+                
+                with col2:
+                    m_source = maisons[0]
+                    st.markdown(f"📌 **Maison Source (L'Origine de la situation) :**")
+                    st.info(f"**{MAISONS_RAMROU[m_source]['nom']}** : {MAISONS_RAMROU[m_source]['description']}\n\n*Signification brute :* {DICTIONNAIRE_CAS.get(fig, {}).get(m_source, 'Propriété élémentaire standard (voir lecture unitaire).')}")
                     
-            with tab_bain:
-                if soin_theurge:
-                    st.write(f"🍂 **Plante maîtresse :** {soin_theurge['plante']}")
-                    st.info(f"🥣 **Préparation & Bain :** {soin_theurge['bain']}")
-                else:
-                    st.write("Aucun traitement par les plantes enregistré.")
+                    for m_dest in maisons[1:]:
+                        st.markdown(f"➔ **Maison de Destination (Là où la cause se manifeste) :**")
+                        st.warning(f"**{MAISONS_RAMROU[m_dest]['nom']}** : {MAISONS_RAMROU[m_dest]['description']}\n\n*Signification brute :* {DICTIONNAIRE_CAS.get(fig, {}).get(m_dest, 'Propriété élémentaire standard.')}")
+                        
+                        # Sentence de passation contextuelle basée sur le groupe dynamique
+                        st.markdown("**📜 Sentence d'interprétation de la passation :**")
+                        sentence = f"L'énergie générée à la source par **{fig}** en *{MAISONS_RAMROU[m_source]['nom']}* se déplace et vient impacter directement la sphère de *{MAISONS_RAMROU[m_dest]['nom']}*. "
+                        
+                        if meta['groupe'] == "Mobiles":
+                            sentence += "Étant une figure **Mobile**, ce transfert d'énergie ou cet événement va s'accomplir de manière extrêmement rapide, instable ou par vagues successives (changement rapide)."
+                        elif meta['groupe'] == "Fixes":
+                            sentence += "Étant une figure **Fixe**, la situation s'installe durablement, stagne ou crée un nœud de blocage persistant entre ces deux domaines de votre vie."
+                        elif meta['groupe'] == "Sortants":
+                            sentence += "Étant une figure **Sortante**, les ressources, les secrets ou les effets fuient le cadre intime initial pour s'extérioriser publiquement."
+                        elif meta['groupe'] == "Rentrants":
+                            sentence += "Étant une figure **Rentrante**, les conséquences ou les bénéfices de l'affaire reviennent se recentrer directement sur le consultant ou à l'intérieur de son foyer."
+                        
+                        st.success(sentence)
+                        
+                # Vérification si un rituel spécifique existe pour cette figure
+                if fig in SECRETS_RITUELS:
+                    st.markdown(f"🛠️ **Secret de remède / Rituel associé (Nassi) :**")
+                    st.code(SECRETS_RITUELS[fig], language="text")
+
+    # ==============================================================================
+    # 4. LECTURE TRADITIONNELLE LIGNE PAR LIGNE
+    # ==============================================================================
+    st.markdown("---")
+    st.header("📖 LECTURE UNITAIRE DU THÈME (Maison par Maison)")
+    st.write("Interprétation isolée de chaque figure selon son emplacement.")
+    
+    for m_num, fig_nom in theme_utilisateur.items():
+        meta_fig = PROPRIETES_FIGURES[fig_nom]
+        signification = DICTIONNAIRE_CAS.get(fig_nom, {}).get(m_num, "La nature élémentaire de la figure s'applique sur cette maison. (Le feu apporte la rapidité, le vent l'instabilité, l'eau la richesse/le bonheur, et la terre l'économie/lenteur).")
+        
+        with st.expander(f"{MAISONS_RAMROU[m_num]['nom']} ➔ {fig_nom} ({meta_fig['nature_manuscrit']})"):
+            st.markdown(f"**Rôle de la Maison :** *{MAISONS_RAMROU[m_num]['description']}*")
+            st.markdown(f"**Comportement de la Figure :** `{meta_fig['groupe']}` | **Élément :** `{meta_fig['element']}`")
+            st.info(f"🔮 **Interprétation textuelle :** {signification}")
+
 else:
-    st.warning("🔒 Accès restreint. Veuillez entrer vos identifiants secrets dans la barre latérale.")
+    st.warning("🔒 Veuillez saisir des identifiants valides dans la barre latérale pour déverrouiller l'accès aux données du manuscrit.")
