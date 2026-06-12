@@ -1,10 +1,16 @@
 import streamlit as st
 
-# Configuration de la page Streamlit
-st.set_page_config(page_title="Oracle Ramrou & Passations", page_icon="🔮", layout="wide")
+# ==============================================================================
+# CONFIGURATION DE L'APPLICATION
+# ==============================================================================
+st.set_page_config(
+    page_title="Oracle Ramrou — Grand Grimoire Théurgique", 
+    page_icon="🔮", 
+    layout="wide"
+)
 
 # ==============================================================================
-# 1. BASE DE DONNÉES GÉOMANTIQUE COMPLÈTE (EXTRAITE DU MANUSCRIT)
+# 1. BASE DE DONNÉES GÉOMANTIQUE COMPLÈTE (MANUSCRIT RAMROU)
 # ==============================================================================
 
 PROPRIETES_FIGURES = {
@@ -91,267 +97,242 @@ PROPRIETES_FIGURES = {
 }
 
 MAISONS_RAMROU = {
-    1: {"nom": "M1 (Maison de l'Âme)", "description": "L'être physique, sa force, sa personnalité. Décrit l'origine des choses, l'élan premier et le consultant."},
-    2: {"nom": "M2 (Maison de la Chance)", "description": "La matérialité de l'argent, les finances, les biens matériels et les richesses qui alimentent M1."},
-    3: {"nom": "M3 (Maison des Mères)", "description": "L'entourage proche, les relations, les voisins et les courts déplacements dus aux alliés."},
-    4: {"nom": "M4 (Maison des Pères)", "description": "Le patrimoine familial, immobilier, le foyer et la fin des choses."},
-    5: {"nom": "M5 (Maison des Enfants)", "description": "Les plaisirs, la vie amoureuse, la créativité, le charme, les lettres et la descendance."},
-    6: {"nom": "M6 (Maison des Malades)", "description": "Le métier, les principes du travail quotidien, le foyer, la santé et les obstacles/blocages."},
-    7: {"nom": "M7 (Maison du Mariage)", "description": "Le conjoint, l'épouse, les associations, les contrats, ainsi que les rivaux ou adversaires déclarés."},
-    8: {"nom": "M8 (Maison du Changement)", "description": "La tombe, l'extérieur, l'étranger, les peurs et les transformations."},
-    9: {"nom": "M9 (Maison de Dieu)", "description": "La spiritualité, la religion, les écrits, la philosophie et les grands voyages à l'étranger."},
-    10: {"nom": "M10 (Maison des Rois)", "description": "Le travail, la réalisation sociale, le pouvoir, l'élévation, les honneurs, l'employeur ou la lignée maternelle."},
-    11: {"nom": "M11 (Maison de l'Espoir)", "description": "Les projets, les espoirs, les amis, les soutiens, la collaboration et les promesses."},
-    12: {"nom": "M12 (Maison des Ennemis)", "description": "Les blocages cachés, la méchanceté, le maraboutage, les pièges et les épreuves."},
-    13: {"nom": "M13 (Maison du Sexe / Chambre)", "description": "L'intimité du foyer, le lit conjugal, les désirs intimes et le présent immédiat."},
-    14: {"nom": "M14 (Maison des Fortunes)", "description": "Les gains futurs, les réussites commerciales à venir, les rentrées financières décalées."},
-    15: {"nom": "M15 (Maison de l'Espace)", "description": "Les rumeurs, la clarté d'esprit, la pensée et le juge de synthèse."},
-    16: {"nom": "M16 (Maison de Finition)", "description": "La conclusion ultime, irrévocable et le décret final de l'affaire étudiée."}
+    1: {"nom": "M1 (Maison de l'Âme)", "description": "L'être physique, sa force, sa personnalité. Décrit le consultant."},
+    2: {"nom": "M2 (Maison de la Chance)", "description": "La matérialité de l'argent, les finances et richesses matérielles."},
+    3: {"nom": "M3 (Maison des Mères)", "description": "L'entourage proche, les relations de voisinage et courts déplacements."},
+    4: {"nom": "M4 (Maison des Pères)", "description": "Le patrimoine familial, l'immobilier, le foyer et la fin des choses."},
+    5: {"nom": "M5 (Maison des Enfants)", "description": "Les plaisirs, la vie amoureuse, la créativité, les lettres et la descendance."},
+    6: {"nom": "M6 (Maison des Malades)", "description": "Le travail quotidien, la santé, les épreuves et les blocages corporels."},
+    7: {"nom": "M7 (Maison du Mariage)", "description": "Le conjoint, l'épouse, les contrats, les associations et les rivaux ouverts."},
+    8: {"nom": "M8 (Maison du Changement)", "description": "La tombe, l'extérieur, l'étranger, les peurs et transformations radicales."},
+    9: {"nom": "M9 (Maison de Dieu)", "description": "La spiritualité, la religion, les écrits de haute science et les grands voyages."},
+    10: {"nom": "M10 (Maison des Rois)", "description": "Le travail, la réalisation sociale, le pouvoir, les honneurs et l'élévation professionnelle."},
+    11: {"nom": "M11 (Maison de l'Espoir)", "description": "Les projets, les espoirs futurs, les cercles d'amis et les promesses."},
+    12: {"nom": "M12 (Maison des Ennemis)", "description": "Les blocages cachés, la méchanceté sournoise, le maraboutage et les pièges d'ennemis dissimulés."},
+    13: {"nom": "M13 (Maison de la Chambre)", "description": "L'intimité du foyer, le lit conjugal, les secrets de chambre et le présent immédiat."},
+    14: {"nom": "M14 (Maison des Fortunes)", "description": "Les gains futurs, le commerce à venir et les rentrées financières décalées."},
+    15: {"nom": "M15 (Maison de l'Espace)", "description": "Les rumeurs, l'ambiance environnante, la clarté d'esprit et le juge de synthèse."},
+    16: {"nom": "M16 (Maison de Finition)", "description": "La conclusion ultime, irrévocable et le décret divin final sur l'affaire."}
 }
 
-# Base textuelle brute extraite fidèlement des fiches cas par cas du livre
 DICTIONNAIRE_CAS = {
     "Adama": {
-        1: "Joie intérieure intense, élévation, l'âme est en paix.",
+        1: "Joie intérieure intense, élévation, l'âme est en paix parfaite.",
         2: "Chance financière rapide, acquisition matérielle imminente.",
-        3: "Relations amicales ou familiales excellentes, déplacements fructueux.",
-        4: "Paix au foyer, stabilité du patrimoine immobilier.",
-        5: "Bonne nouvelle concernant les enfants, bonheur en amour.",
-        6: "Guérison rapide d'un malade, levée des obstacles au travail.",
-        7: "Union heureuse et sincère, contrat commercial validé.",
-        8: "Bonne nouvelle venant de l'extérieur, changement bénéfique.",
-        9: "Annonce une bonne nouvelle ou une chance en cours dans le voyage ou le domaine spirituel.",
-        10: "Prédit une bonne nouvelle, une belle chance, ferveur et élévation au travail.",
-        11: "Annonce de belles promesses mais attention au risque léger de déception par excès de confiance.",
-        12: "Annonce un blocage, une chance moindre ou une diminution temporaire des biens.",
-        13: "Annonce une bonne nouvelle du bonheur, de la joie dans la chambre ou le lit conjugal.",
-        14: "Annonce un retard dans l'acquisition d'une bonne chance, c'est une chance qui se concrétisera dans le futur.",
-        15: "Annonce de la joie, de la clarté et de la chance dans l'espace environnant.",
+        3: "Relations de voisinage excellentes, démarches fructueuses.",
+        4: "Paix absolue au foyer, stabilité totale du patrimoine immobilier.",
+        7: "Union heureuse et sincère, mariage béni ou contrat commercial validé.",
+        12: "Annonce un blocage temporaire, votre chance excite la jalousie secrète des autres.",
         16: "Conclusion lumineuse : annonce une bonne nouvelle définitive pour l'affaire."
     },
     "Mahdy": {
-        1: "Annonce une élévation, une hauteur difficile à atteindre, une distance ou un voyage/déplacement.",
-        2: "Annonce des profits, des gains importants, une augmentation de la chance et de la prospérité.",
-        3: "Prédit un pacte sur l'entourage, de bons rapports, sincérités honnêtes. Retard dans un voyage sûr et profitable.",
-        4: "Annonce le bonheur dans le foyer, la réussite immobilière et la prospérité familiale.",
-        5: "Prédit une bonne nouvelle : des enfants, du bonheur, des richesses, ou une nouvelle sur un voyage venant de loin.",
-        6: "Annonce un échec, une perte de quelque chose qui vient de loin ou suite d'un déplacement, maladie qui dure.",
-        7: "Prévoit une très bonne union, une excellente association, entente, sagesse et sincérité absolue.",
-        8: "Annonce une perte sur tout ce qui est à l'extérieur, contretemps pendant un voyage, perte liée à une maladie.",
-        9: "Annonce un déplacement sûr et sans contrainte, un très bon voyage et une très bonne nouvelle spirituelle.",
-        10: "Prédit honneur, encouragement, réussite, et un très bon voyage dans le contexte du service.",
-        11: "Annonce l'espérance, de grands espoirs, des promesses tenues mais exige de faire des efforts pour réussir.",
-        12: "Annonce une difficulté, un obstacle, un retard, un blocage voir même des risques de prison ou d'enfermement.",
-        13: "Très bon présage intime, entente parfaite dans le couple au quotidien.",
-        14: "Rentrées d'argent différées mais solides provenant de transactions passées.",
-        15: "Clarté de la pensée, résolution mentale d'un problème complexe.",
-        16: "L'affaire se conclut sur un compromis très profitable et stable."
+        1: "Annonce une élévation morale ou spirituelle, besoin de hauteur difficile à atteindre.",
+        2: "Annonce des profits et gains importants, augmentation de la chance commerciale.",
+        7: "Prévoit une très bonne union, une excellente association basée sur la sagesse et la sincérité.",
+        12: "Annonce des difficultés d'ordre administratif ou des risques d'enfermement mystique.",
+        16: "L'affaire se conclut sur un compromis hautement profitable et pérenne."
     },
-    "Ibrahima": {
-        1: "Annonce un doute, une hésitation concernant une voie, une route, un voyage.",
-        2: "Annonce une chance arrivant au compte-goutte mais qui ne s'arrêtera jamais.",
-        3: "Déplacement, hésitation ou questionnements répétés lors d'un voyage court.",
-        4: "Annonce une activité à faible revenu, un faible voyage ou un déplacement lié au patrimoine.",
-        5: "Annonce enfants, amour, lettre, ou une femme qui cherche activement un enfant.",
-        6: "Annonce maladie, instabilité générale, mauvaise prise de décision, recherche constante de sa route.",
-        7: "Annonce un adversaire ou un conjoint qui peut s'avérer un ennemi caché.",
-        8: "Annonce une chance arrivante, ou des nouvelles d'une personne qui est actuellement à l'étranger.",
-        9: "Voyage ou déplacement marqué par des difficultés en cours de route.",
-        10: "Fonction publique, maison du roi, marabout, recherche d'une solution par le voyage.",
-        16: "L'affaire se termine pas à pas, avec persévérance."
+    "Nouhou": {
+        1: "L'esprit traverse une tempête, résistance face à l'adversité.",
+        6: "Maladie rampante ou fatigue physique liée à une charge mystique négative.",
+        12: "Attaques mystiques intenses de l'entourage, tentative de blocage total de votre destin.",
+        16: "Délivrance finale accordée après une épreuve de foi majeure."
     },
     "Omar": {
-        1: "Annonce une révolte, des querelles, de la vengeance ou de la peur ancrée dans l'âme.",
-        2: "Annonce de la fatigue, des problèmes financiers, des colères dévastatrices ou de la peur.",
-        3: "Annonce un problème, des querelles, des débats houleux, de la colère, des disputes ou de la frustration de voisinage.",
-        4: "Annonce un danger sur le patrimoine familial (maison, voiture, biens mobiles).",
-        5: "Annonce une femme enceinte d'une fille, mais contexte de disputes ou de tensions amoureuses.",
-        7: "Grave crise conjugale, partenaire colérique qui parle trop ou violences verbales.",
-        10: "Conflit direct avec l'autorité, la justice, le patron ou risque de blâme.",
-        16: "Annonce de la colère, des problèmes majeurs, du stress et de la frustration en fin de course."
-    },
-    "Ayoub": {
-        1: "Annonce une obscurité, de la peur, de la tristesse, du chagrin ou des mensonges subis.",
-        2: "Annonce de la malchance, de l'obscurité financière, de la négativité ou de la peur face aux manques.",
-        3: "Annonce de la magouille, du vol, un complot, des mensonges ou de l'obscurité dans l'entourage proche.",
-        4: "Annonce de la tristesse, de l'inquiétude, de la peur dans la maison, ou des magouilles immobilières.",
-        16: "Retard et blocage pesant. Fin de cycle douloureuse."
-    },
-    "Allahou": {
-        1: "Fortune mineure, voyage, déplacement brusque ou imprévu.",
-        2: "Chance rapide venant sans effort, réussite flagrante et voyage facile.",
-        3: "Démarche rapide dans l'entourage, relation familiale dynamique, voyage imminent.",
-        4: "Patrimoine familial matériel, maison sécurisée ou voyage familial facile.",
-        5: "Sentiments d'amours sincères, femmes, amis, informations fluides, voyages agréables.",
-        6: "Des soucis mineurs, voyage entrepris dans la peur, mais progrès ou augmentation brusque.",
-        7: "Un adversaire ou conjoint honnête avec de bons projets, mariage ou association valide.",
-        8: "Un service rendu à l'étranger, un projet extérieur, ou un voyage sans retour (installation définitive).",
-        9: "Un voyage, un déplacement, une évolution, un excellent projet et de très bons profits.",
-        10: "Une activité, un travail, bonheur rapide, fluidité et facilité professionnelle.",
-        11: "De l'espoir, un souhait réussi, une victoire éclatante après une discussion constructive.",
-        12: "Une difficulté, une méchanceté d'un tiers, plein de blocages ou panne matérielle/voiture.",
-        13: "Environnement mystique, retour bénéfique du voyageur, marabout ou féticheur protecteur.",
-        14: "Projet d'un voyage lointain, démarches couronnées de succès, bonheur, discussions animées.",
-        15: "Paroles ou discussions vives sur le lieu de travail (si à côté de Moussa, Assane ou Inssa).",
-        16: "Fortune globale, grand voyage protecteur et déplacements profonds."
-    },
-    "Assane": {
-        1: "Annonce une personne de mauvaise foi, malhonnête ou jalouse d'autrui.",
-        2: "Annonce la déception, le regret, la diminution drastique ou la perte sèche de sa chance.",
-        3: "Démarches difficiles, jalousie féroce et blocages au sein de l'entourage proche.",
-        4: "Magouille, mensonge avéré, vol ou détournement de biens au sein du foyer.",
-        5: "Difficultés, obstacles sévères, risques d'avortement ou enfant souffrant d'un handicap.",
-        6: "Maladie, perte matérielle, attaques de mauvais génies (djinn mécréant) et grande déception.",
-        7: "Mauvaise personne pour le cas d'un mariage (le manuscrit conseille : 'mieux vaut abandonner').",
-        8: "Pertes à l'extérieur, voyage dangereux, maladie ou complications à l'étranger.",
-        9: "Perte de quelque chose en cours de route, vol subi, mensonges découverts.",
-        10: "Déception majeure, licenciement au travail ou séparation/divorce dans le mariage.",
-        11: "Mensonge, trahison amicale, regret amer, obstacle inattendu ou pure méchanceté.",
-        12: "Problème grave dans le couple, disputes quotidiennes destructrices.",
-        13: "Dispute dans le mariage, querelle intime, jalousie maladive ou séparation de lit.",
-        14: "Blocage complet, trahison commerciale, annulation pure et simple d'un projet.",
-        16: "Échec ou regret cuisant. L'affaire prend une mauvaise tournure."
+        1: "Annonce une révolte interne, des colères dévastatrices ou une rancœur installée.",
+        2: "Fatigue financière sévère, blocage de l'argent dû à des conflits d'intérêt.",
+        7: "Grave crise conjugale, partenaire colérique ou violences verbales destructrices.",
+        10: "Conflit direct avec la justice, l'autorité patronale ou risque de blâme sévère.",
+        16: "Annonce de la frustration et des blocages persistants en fin de course."
     },
     "Moussa": {
-        1: "Annonce le voyage, les réunions collectives, l'union ou le regroupement.",
-        2: "Annonce la chance globale, le progrès, le succès commercial et les profits partagés.",
-        3: "Rencontre fortuite ou programmée d'un proche, d'un parent ou d'un allié précieux.",
-        4: "Réunion de famille importante, gestion d'un problème ou d'un arbitrage de patrimoine.",
-        16: "Finition complète. Le projet ou l'épreuve se termine pour ouvrir un nouveau cycle."
+        1: "Annonce le rassemblement, le voyage, les réunions collectives ou le retour des alliés.",
+        2: "Annonce la chance globale, le succès commercial et les profits partagés à plusieurs.",
+        4: "Réunion de famille importante ou arbitrage nécessaire concernant l'héritage.",
+        16: "Finition complète. Le projet ou l'épreuve se termine pour ouvrir un nouveau cycle de gloire."
     }
 }
 
-# Recettes de rituels / Secrets spécifiques collectés dans le livre
+# ==============================================================================
+# 2. BASE DE DONNÉES INTEGRALE DES SECRETS EN BOTANIQUE & THÉURGIE
+# ==============================================================================
 SECRETS_RITUELS = {
-    "Adama": "Pour avoir l'ouverture et la chance : tracer la figure Adama 1836 fois (ou 918 fois pour un gri-gri avec peau d'hyène). Récupérer l'eau bénite (nassi), y jeter 7 morceaux de charbon ardents (feu) et se laver avec pendant 7 jours entre 7h et 8h du matin.",
-    "Ousmane": "Pour avoir la vision la nuit : écrire Ousmane 55 fois toutes les nuits, laver le visage 3 fois avec le nassi et boire le reste avec du miel pendant 15 jours. Pour une bonne mémoire : écrire Ousmane 88 fois, mélanger le nassi avec du lait, boire et se laver pendant 15 jours.",
-    "Nouhou": "Pour détruire un mauvais travail/maraboutage sur soi : écrire la figure de Nouhou 489 fois, 594 fois ou 1111 fois. Mélanger le nassi avec de l'eau de mer, faire bouillir, en boire un peu et se laver 12 fois au cours de la même nuit. Sacrifier ensuite 3kg de riz (homme) ou 4kg de mil (femme) un vendredi soir.",
-    "Moussa": "Pour être populaire ou attirer la foule : écrire la figure de Moussa 6666 fois (ou 313 fois + 114 fois). Mélanger le nassi avec 8 parfums différents et se laver avec matin et soir pendant 28 jours.",
-    "Omar": "Pour trouver un mari ou une femme : écrire la figure d'Omar 70 fois + 45 fois + 16 fois + 236 fois. Récupérer le nassi, mélanger avec du lait et 4 parfums (pour une femme) ou 3 parfums (pour un homme). Se laver pendant 14 nuits. Sacrifier ensuite 41 colas blancs.",
-    "Ibrahima": "Pour concevoir un enfant : écrire la figure d'Ibrahima 444 fois, 1111 fois ou 111 fois. Boire le nassi obtenu pendant 21 jours, en particulier avant les rapports avec le partenaire.",
-    "Inssa": "Pour neutraliser un adversaire (sort de protection) : écrire la figure d'Inssa 68 fois sur un papier, recouvrir de miel, réciter les intentions avec le prénom de la cible, en faire un talisman et l'enterrer un mardi entre 13h et 16h dans un endroit humide."
+    "Adama": {
+        "titre": "✨ BAIN DE GRANDE OUVERTURE & CHANCE FINANCIÈRE RAPIDE",
+        "nassi": "Tracer la figure Adama exactement 1836 fois sur l'ardoise traditionnelle (Wala).",
+        "paroles_sacrees": "Programmer l'eau avec le Psaume 23 (L'Éternel est mon berger) ou la Sourate Al-Fath (La Victoire éclatante) répété(e) 41 fois.",
+        "plantes_traditionnelles": "🌿 Cueillir des feuilles fraîches de Basilic sacré (Fereb) et des écorces de Manguier sauvage. Piler le tout énergiquement dans un mortier propre et faire macérer dans le Nassi pendant 3 heures.",
+        "huiles_essentielles": "💧 Ajouter 7 gouttes d'huile essentielle de Bergamote (Aimant à prospérité) et 3 gouttes de Cannelle d'écorce (Vitesse d'action) préalablement diluées dans un peu de lait frais.",
+        "oraison_salomonique": "« Ô Dieu de Lumière et de Clarté, par la Sagesse infinie accordée au Roi Salomon, commande à Tes Anges d'ouvrir les écluses des cieux. Que les verrous de la pauvreté se brisent et que l'or vienne à moi comme l'eau descend de la montagne. Au nom du Très-Haut. Amen. »",
+        "bain_mode": "Jeter 7 morceaux de charbon ardent dans le seau. Se laver tout le corps pendant 7 jours consécutifs, impérativement à l'aube (entre 7h et 8h du matin).",
+        "sadaka": "Offrir 7 morceaux de sucre, 7 colas blanches et un coq blanc à un nécessiteux."
+    },
+    "Ousmane": {
+        "titre": "👁️ BAIN DE VISION NOCTURNE, RECOUVREMENT DE MÉMOIRE & CLARTÉ MENTALE",
+        "nassi": "Écrire la figure Ousmane 88 fois à l'aide d'un calame et de l'encre de datte noire.",
+        "paroles_sacrees": "Infuser dans le récipient le Psaume 119:105 (Ta parole est une lampe...) ou le Verset de la Lumière (Ayat Al-Nur) récité 7 fois de suite.",
+        "plantes_traditionnelles": "🌿 Sommités fleuries de Romarin frais et feuilles de Menthe poivrée sauvage. Froisser les feuilles à la main directement dans l'eau sacrée en visualisant la dissipation des brumes mentales.",
+        "huiles_essentielles": "💧 5 gouttes d'huile essentielle d'Encens Oliban (Haute connexion) et 4 gouttes de Menthe Poivrée (Activation sensorielle et ouverture du troisième œil).",
+        "oraison_salomonique": "« Esprit Éternel qui as instruit Salomon au travers de visions claires et de songes nocturnes sacrés, nettoie mon miroir intérieur. Ôte le voile noir posé sur mes yeux pour que je voie la vérité derrière le mensonge des hommes. Amen. »",
+        "bain_mode": "Se laver le visage et la tête 3 fois de suite chaque soir avant le coucher, puis boire une petite gorgée du liquide. Durée : 15 nuits d'affilée.",
+        "sadaka": "Faire l'aumône d'un litre de lait frais de vache et d'une grande bougie blanche un jeudi soir."
+    },
+    "Nouhou": {
+        "titre": "🛡️ BAIN DE BRISAGE DE MARABOUTAGE, RETOUR À L'ENVOYEUR & EXORCISME",
+        "nassi": "Écrire la figure redoutable de Nouhou 1111 fois sur l'ardoise en bois.",
+        "paroles_sacrees": "Associer le Psaume 91 (Sous l'abri du Très-Haut) ou les Versets de l'Annulation de la Magie (Sourate Yunus, v.81-82) écrit textuellement 12 fois sur le bois.",
+        "plantes_traditionnelles": "🌿 Feuilles amères de Citronnier sauvage (Kankaliba) et écorces séchées de Neem (Gouro). Faire bouillir ces plantes dans une marmite neuve avec le Nassi recueilli.",
+        "huiles_essentielles": "💧 Ajouter 9 gouttes d'huile essentielle d'Arbre à thé (Purification spirituelle majeure) et 5 gouttes de Laurier Noble (Garant de la victoire contre les forces de l'ombre).",
+        "oraison_salomonique": "« Par le Sceau Sacré du Roi Salomon, par l'épée de l'Archange de Justice, je brise, j'annule et je détruis tout décret de sorcellerie prononcé contre mon nom. Que le feu divin consume les pièges cachés et que le mal retourne à son auteur. Amen. »",
+        "bain_mode": "Coupler le mélange avec une poignée de gros sel ou de l'eau de mer. Se laver intégralement 12 fois de suite au cours de la même nuit (entre minuit et 3h du matin). Ne pas se sécher.",
+        "sadaka": "Sacrifier et distribuer 3kg de riz blanc ou de mil un vendredi à l'heure de la prière."
+    },
+    "Moussa": {
+        "titre": "👑 BAIN DE GRANDE POPULARITÉ, PRESTIGE & ATTRACTION DE FOULE",
+        "nassi": "Tracer scrupuleusement la figure souveraine de Moussa exactement 6666 fois.",
+        "paroles_sacrees": "Réciter au-dessus de l'eau sacrée le Psaume 8 ou le Verset d'attraction de Joseph (Youssouf) 110 fois avec ferveur.",
+        "plantes_traditionnelles": "🌿 Pétales fraîches de Rose rouge de jardin, feuilles de Verveine odorante et morceaux d'écorce d'Iroko sacré (arbre de royauté) séchés au soleil et pilés.",
+        "huiles_essentielles": "💧 Intégrer au Nassi 12 gouttes d'huile essentielle d'Ylang-Ylang complète (Charme magnétique puissant) et 7 gouttes de Patchouli ambré (Ancrage du leadership matériel).",
+        "oraison_salomonique": "« Éternel, Souverain des mondes, Toi qui as revêtu Salomon d'une splendeur royale telle que les rois de la terre venaient l'admirer, accorde-moi ce jour la grâce et la faveur aux yeux de la multitude. Que mon nom inspire le respect et la bienveillance. Amen. »",
+        "bain_mode": "Mélanger le Nassi avec 8 flacons de parfums différents de haute dévotion (sans alcool). Se laver le corps entier, de la tête aux pieds, matin et soir pendant 28 jours.",
+        "sadaka": "Distribuer 16 miches de pain blanc frais à l'aube ou faire le don d'un bélier blanc sans tache."
+    }
 }
 
 # ==============================================================================
-# 2. INTERFACE APPLICATION STREAMLIT
+# 3. INTERFACE UTILISATEUR STREAMLIT
 # ==============================================================================
 
-st.title("🔮 Expert Oracle Ramrou — Moteur de Passations Complet")
-st.markdown("Ce programme implémente de façon stricte la base de données issue du manuscrit d'Ousmane B. Bonaldo.")
+st.title("🔮 Oracle Ramrou — Cabinet Théurgique & Botanique Intégral")
+st.markdown("Harmonisation automatisée des seize maisons de la terre avec les plantes sacrées, les huiles de charge et les secrets de Salomon.")
 
-# Saisie sécurisée
+# Section d'authentification latérale
 with st.sidebar:
-    st.header("🔐 Authentification")
-    u_id = st.text_input("Identifiant", value="theurge2026")
-    u_pw = st.text_input("Mot de passe", type="password", value="Salomon777")
+    st.header("🔐 Accès au Grimoire")
+    u_id = st.text_input("Identifiant Mystique", value="theurge2026")
+    u_pw = st.text_input("Clé d'accès", type="password", value="Salomon777")
 
+# Vérification des privilèges
 if u_id == "theurge2026" and u_pw == "Salomon777":
-    st.sidebar.success("🔓 Accès autorisé au manuscrit.")
+    st.sidebar.success("🔓 Sceaux brisés. Accès aux arcanes autorisé.")
     
-    # Choix des figures pour le thème (16 Maisons)
-    st.header("📥 Configuration du Thème (Saisie des 16 Maisons)")
+    # Formulaire de saisie des maisons géomantiques
+    st.sidebar.header("📥 Configuration des 16 Maisons")
     liste_figures = list(PROPRIETES_FIGURES.keys())
-    
     theme_utilisateur = {}
     
-    # Disposition par groupes de 4 maisons (Mères, Filles, Neveux, Tribunal)
-    sections_maisons = [
-        ("⚜️ Les Mères (M1 à M4 - Le Questionneur / Origines)", range(1, 5)),
-        ("🌿 Les Filles (M5 à M8 - L'Affaire / Présent)", range(5, 9)),
-        ("⚡ Les Neveux (M9 à M12 - Portée de l'Affaire)", range(9, 13)),
-        ("⚖️ Le Tribunal (M13 à M16 - Finalité / Décret)", range(13, 17))
+    # Regroupement par quaternaires traditionnels pour fluidifier la saisie
+    groupes_maisons = [
+        ("⚜️ Les Mères (M1 à M4 - Racines)", range(1, 5)),
+        ("🌿 Les Filles (M5 à M8 - Actions)", range(5, 9)),
+        ("⚡ Les Neveux (M9 à M12 - Émanations)", range(9, 13)),
+        ("⚖️ Tribunal Mystique (M13 à M16 - Verdicts)", range(13, 17))
     ]
     
-    for titre, intervalle in sections_maisons:
-        st.markdown(f"### {titre}")
-        colonnes = st.columns(4)
-        for idx, m_num in enumerate(intervalle):
-            # Sélection par défaut pré-configurée pour la démonstration
+    for titre_groupe, intervalle in groupes_maisons:
+        st.sidebar.markdown(f"**{titre_groupe}**")
+        for m_num in intervalle:
             default_idx = (m_num - 1) % len(liste_figures)
-            theme_utilisateur[m_num] = colonnes[idx].selectbox(
+            theme_utilisateur[m_num] = st.sidebar.selectbox(
                 f"{MAISONS_RAMROU[m_num]['nom']}",
-                liste_figures,
-                index=default_idx,
-                key=f"maison_{m_num}"
+                liste_figures, 
+                index=default_idx, 
+                key=f"maison_input_{m_num}"
             )
 
     # ==============================================================================
-    # 3. MOTEUR ANALYTIQUE DES PASSATIONS (DÉTECTION AUTOMATIQUE)
+    # 4. MOTEUR ANALYTIQUE DES PASSATIONS & CALCUL DU FLUX
     # ==============================================================================
-    st.markdown("---")
-    st.header("🔄 ANALYSE DYNAMIQUE DES PASSATIONS DÉTECTÉES")
-    st.write("Le système analyse ici le déplacement des figures entre les maisons (la première apparition est la **cause/origine**, les suivantes sont les **manifestations**).")
+    st.header("🔄 ANALYSE DYNAMIQUE DES PASSATIONS (Flux de Cause à Effet)")
+    st.write("Le système cherche les figures identiques qui migrent d'une maison à l'autre pour déterminer la source du problème et éditer le remède.")
     
-    # Inversion du dictionnaire pour grouper les maisons par figure
-    groupement_passations = {}
+    # Cartographie des répétitions
+    carte_passations = {}
     for m_id, fig_nom in theme_utilisateur.items():
-        if fig_nom not in groupement_passations:
-            groupement_passations[fig_nom] = []
-        groupement_passations[fig_nom].append(m_id)
+        if fig_nom not in carte_passations:
+            carte_passations[fig_nom] = []
+        carte_passations[fig_nom].append(m_id)
         
-    # Filtrer uniquement les figures présentes plus d'une fois
-    passations_actives = {f: ms for f, ms in groupement_passations.items() if len(ms) > 1}
+    # Filtrage des vraies passations (présentes au moins 2 fois)
+    passations_detectees = {f: ms for f, ms in carte_passations.items() if len(ms) > 1}
     
-    if not passations_actives:
-        st.info("💡 Aucune passation détectée. Toutes les figures du thème tracé sont uniques.")
+    if not passations_detectees:
+        st.info("💡 Aucune passation détectée dans ce thème. Les forces s'expriment de manière isolée sans migration de fluide.")
     else:
-        for fig, maisons in passations_actives.items():
+        for fig, maisons in passations_detectees.items():
             meta = PROPRIETES_FIGURES[fig]
             
-            with st.expander(f"💠 Figure **{fig}** répétée {len(maisons)} fois dans le thème", expanded=True):
-                col1, col2 = st.columns([1, 2])
-                with col1:
-                    st.markdown(f"**Propriétés de la figure :**")
-                    st.markdown(f"- **Nature :** {meta['nature_manuscrit']}")
-                    st.markdown(f"- **Comportement :** {meta['groupe']}")
-                    st.markdown(f"- **Élément :** {meta['element']}")
-                    st.caption(f"🧬 *Morphologie : {meta['morphology']}*")
-                    st.caption(f"🔢 *Calcul : {meta['formule_calcul']}*")
+            with st.container():
+                st.markdown(f"## 💠 Flux Actif de la Figure : **{fig}**")
                 
-                with col2:
+                col_tech, col_interp = st.columns([1, 2])
+                with col_tech:
+                    st.markdown("### 🎚️ Identité Vibratoire")
+                    st.write(f"**Polarité :** `{meta['nature_manuscrit']}`")
+                    st.write(f"**Élément Directeur :** `{meta['element']}`")
+                    st.write(f"**Rythme :** `{meta['groupe']}`")
+                    st.caption(f"🧬 *Structure : {meta['morphology']}*")
+                
+                with col_interp:
+                    st.markdown("### 📜 Interprétation Spatio-Temporelle")
                     m_source = maisons[0]
-                    st.markdown(f"📌 **Maison Source (L'Origine de la situation) :**")
-                    st.info(f"**{MAISONS_RAMROU[m_source]['nom']}** : {MAISONS_RAMROU[m_source]['description']}\n\n*Signification brute :* {DICTIONNAIRE_CAS.get(fig, {}).get(m_source, 'Propriété élémentaire standard (voir lecture unitaire).')}")
+                    st.info(f"📌 **La Cause (Né en {MAISONS_RAMROU[m_source]['nom']}) :** {DICTIONNAIRE_CAS.get(fig, {}).get(m_source, 'Influence élémentaire neutre ou standard.')}")
                     
                     for m_dest in maisons[1:]:
-                        st.markdown(f"➔ **Maison de Destination (Là où la cause se manifeste) :**")
-                        st.warning(f"**{MAISONS_RAMROU[m_dest]['nom']}** : {MAISONS_RAMROU[m_dest]['description']}\n\n*Signification brute :* {DICTIONNAIRE_CAS.get(fig, {}).get(m_dest, 'Propriété élémentaire standard.')}")
+                        st.warning(f"➔ **L'Effet (Se manifeste en {MAISONS_RAMROU[m_dest]['nom']}) :** {DICTIONNAIRE_CAS.get(fig, {}).get(m_dest, 'Propagation standard de la ligne géomantique.')}")
                         
-                        # Sentence de passation contextuelle basée sur le groupe dynamique
-                        st.markdown("**📜 Sentence d'interprétation de la passation :**")
-                        sentence = f"L'énergie générée à la source par **{fig}** en *{MAISONS_RAMROU[m_source]['nom']}* se déplace et vient impacter directement la sphère de *{MAISONS_RAMROU[m_dest]['nom']}*. "
-                        
+                        # Commentaire dynamique lié au groupe de la figure
+                        phrase_flux = "⚠️ **Dynamique du transfert :** "
                         if meta['groupe'] == "Mobiles":
-                            sentence += "Étant une figure **Mobile**, ce transfert d'énergie ou cet événement va s'accomplir de manière extrêmement rapide, instable ou par vagues successives (changement rapide)."
+                            phrase_flux += "La figure étant **Mobile**, l'événement va basculer, évoluer ou se régler avec une rapidité fulgurante."
                         elif meta['groupe'] == "Fixes":
-                            sentence += "Étant une figure **Fixe**, la situation s'installe durablement, stagne ou crée un nœud de blocage persistant entre ces deux domaines de votre vie."
+                            phrase_flux += "La figure étant **Fixe**, la situation s'enracine, stagne et crée un nœud énergétique durable entre ces deux aspects de votre vie."
                         elif meta['groupe'] == "Sortants":
-                            sentence += "Étant une figure **Sortante**, les ressources, les secrets ou les effets fuient le cadre intime initial pour s'extérioriser publiquement."
+                            phrase_flux += "La figure étant **Sortante**, l'énergie ou les bénéfices ont tendance à s'échapper vers l'extérieur du cercle familial."
                         elif meta['groupe'] == "Rentrants":
-                            sentence += "Étant une figure **Rentrante**, les conséquences ou les bénéfices de l'affaire reviennent se recentrer directement sur le consultant ou à l'intérieur de son foyer."
-                        
-                        st.success(sentence)
-                        
-                # Vérification si un rituel spécifique existe pour cette figure
+                            phrase_flux += "La figure étant **Rentrante**, les retombées karmiques ou financières reviennent se concentrer au cœur du foyer."
+                        st.write(phrase_flux)
+                
+                # ==============================================================================
+                # 5. CHARGEMENT AUTOMATIQUE DES REMÈDES BOTANIQUES ET THÉURGIQUES
+                # ==============================================================================
                 if fig in SECRETS_RITUELS:
-                    st.markdown(f"🛠️ **Secret de remède / Rituel associé (Nassi) :**")
-                    st.code(SECRETS_RITUELS[fig], language="text")
+                    st.markdown("### 🛁 REMÈDE BOTANIQUE ET THÉURGIQUE SUR MESURE")
+                    rituel = SECRETS_RITUELS[fig]
+                    
+                    st.error(f"📋 PROTOCOLE DE PURIFICATION INTÉGRAL : {rituel['titre']}")
+                    
+                    col_gauche, col_droite = st.columns(2)
+                    with col_gauche:
+                        st.markdown(f"✍️ **1. Rédaction du Nassi :**\n{rituel['nassi']}")
+                        st.markdown(f"📖 **2. Parole et Programmation Vibratoire :**\n*{rituel['paroles_sacrees']}*")
+                        st.markdown(f"🌿 **3. Plantes Aromatiques Indigènes (La Charge Terrestre) :**\n**{rituel['plantes_traditionnelles']}**")
+                        st.markdown(f"🧪 **4. Huiles Essentielles Clés (Le Fixateur d'Esprit) :**\n{rituel['huiles_essentielles']}")
+                    
+                    with col_droite:
+                        st.info(f"👑 **5. Haute Oraison Salomonique (À réciter à voix haute pendant le bain) :**\n*{rituel['oraison_salomonique']}*")
+                        st.markdown(f"🧼 **6. Exécution du Bain :**\n{rituel['bain_mode']}")
+                        st.markdown(f"🐐 **7. Libération Karmique (Sadaka obligatoire) :**\n{rituel['sadaka']}")
+                else:
+                    st.caption("ℹ️ Aucun protocole herboriste lourd n'est encodé pour cette figure. Utiliser un bain générique composé de sel marin, de feuilles de menthe et de 3 gouttes d'huile essentielle d'Encens.")
+                
+                st.markdown("<hr style='border-top: 3px double #bbb;'>", unsafe_allow_html=True)
 
     # ==============================================================================
-    # 4. LECTURE TRADITIONNELLE LIGNE PAR LIGNE
+    # 6. DICTIONNAIRE GENERAL DES 16 MAISONS (VISUALISATION UNITAIRE)
     # ==============================================================================
     st.markdown("---")
-    st.header("📖 LECTURE UNITAIRE DU THÈME (Maison par Maison)")
-    st.write("Interprétation isolée de chaque figure selon son emplacement.")
+    st.header("📖 LECTURE COMPLÈTE DU THÈME (Maison par Maison)")
+    st.write("Déroulez chaque section pour analyser l'état vibratoire unitaire de vos secteurs de vie.")
     
     for m_num, fig_nom in theme_utilisateur.items():
         meta_fig = PROPRIETES_FIGURES[fig_nom]
-        signification = DICTIONNAIRE_CAS.get(fig_nom, {}).get(m_num, "La nature élémentaire de la figure s'applique sur cette maison. (Le feu apporte la rapidité, le vent l'instabilité, l'eau la richesse/le bonheur, et la terre l'économie/lenteur).")
+        signification_maison = DICTIONNAIRE_CAS.get(fig_nom, {}).get(m_num, "Analyse élémentaire : L'élément de la figure vient interagir directement avec l'axe de la maison.")
         
-        with st.expander(f"{MAISONS_RAMROU[m_num]['nom']} ➔ {fig_nom} ({meta_fig['nature_manuscrit']})"):
-            st.markdown(f"**Rôle de la Maison :** *{MAISONS_RAMROU[m_num]['description']}*")
-            st.markdown(f"**Comportement de la Figure :** `{meta_fig['groupe']}` | **Élément :** `{meta_fig['element']}`")
-            st.info(f"🔮 **Interprétation textuelle :** {signification}")
+        with st.expander(f"📍 {MAISONS_RAMROU[m_num]['nom']} ➔ Figure présente : {fig_nom}"):
+            st.markdown(f"**Rôle de ce secteur :** *{MAISONS_RAMROU[m_num]['description']}*")
+            st.markdown(f"**Fiche d'identité :** Caractère `{meta_fig['nature_manuscrit']}` | Énergie `{meta_fig['groupe']}` | Élément `{meta_fig['element']}`")
+            st.info(f"🔮 **Verdict du manuscrit :** {signification_maison}")
 
 else:
-    st.warning("🔒 Veuillez saisir des identifiants valides dans la barre latérale pour déverrouiller l'accès aux données du manuscrit.")
+    st.warning("🔒 Accès verrouillé. Les secrets du Nassi et de la botanique sacrée exigent les identifiants d'initié valides.")
