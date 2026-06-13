@@ -170,4 +170,4 @@ for fig in sorted(set(theme_actuel.values())):
         col1, col2 = st.columns(2)
         col1.markdown(f"📖 **Psaume:** {data['psaume']}\n👑 **Prière:** {data['priere']}")
         col2.info(f"🧪 **Protocole Nassi:** {data['nassi']}")
-```[cite: 1]
+
