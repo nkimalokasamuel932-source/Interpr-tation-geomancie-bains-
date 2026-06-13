@@ -1,5 +1,25 @@
 import streamlit as st
-
+# ==============================================================================
+# 5. BIBLIOTHÈQUE DES PRIÈRES SALOMONIQUES
+# ==============================================================================
+PRIERES_SALOMONIQUES = {
+    "Youssouf": "Seigneur, Dieu de Joseph, par Ton Nom Adonaï, je Te supplie de dissiper les ténèbres de la calomnie. Comme Tu as transformé la captivité de Joseph en gloire, transforme cette situation présente. Que tout complot contre moi s'effondre et que Ta lumière restaure mon honneur.",
+    "Adama": "Par le Nom Elohim, Créateur du premier homme, j'invoque l'ancrage de mes racines dans la terre fertile de la bénédiction. Que les portes de mes biens soient ouvertes et que tout obstacle foncier ou matériel soit levé par Ta Puissance.",
+    "Mahdy": "Par le Nom El-Shaddaï, Source de toute subsistance, je demande que les canaux de l'abondance soient débouchés. Que l'énergie de cette figure attire la grâce, la faveur des hommes et les ressources nécessaires à l'accomplissement de mon destin.",
+    "Idriss": "Par le Nom El-Choura, Dieu de Sagesse, je sollicite l'illumination de mon esprit. Accorde-moi la mémoire d'Hénoch et le discernement pour lire à travers les mystères et guider mes pas avec une intelligence supérieure.",
+    "Ibrahima": "Par le Nom El-Elyon, Dieu de l'Alliance, je scelle aujourd'hui la protection de ma lignée. Que l'extension de mes limites soit bénie et que la fécondité, tant spirituelle que matérielle, demeure sur ma maison.",
+    "Inssa": "Par le Nom Rapha, Dieu qui guérit, je demande la délivrance immédiate de toute affliction. Que Ta main curative efface la maladie, apaise les douleurs du corps et restaure la vigueur de mon esprit.",
+    "Omar": "Par le Nom Shalom, Dieu de Paix, j'invoque l'harmonie sur mes relations. Que les discordes soient neutralisées, que les cœurs soient apaisés et que les intrigues de mes rivaux se dissolvent devant Ta Lumière.",
+    "Ayoub": "Par le Nom Yahvé, Rédempteur des affligés, je demande la restauration de ce qui a été perdu. Que la patience de Job soit ma force et que le décret de ruine soit brisé par Ta Miséricorde infinie.",
+    "Allahou": "Par le Nom El-Qahhar, Dieu Souverain, je Te demande d'être ma Forteresse. Que chaque sortilège soit annulé, que toute emprise malveillante soit rompue et que Ta Protection soit le bouclier impénétrable autour de moi.",
+    "Souleymane": "Par le Nom Malek, Roi des Rois, je demande l'accès à la sagesse de Salomon. Accorde-moi l'autorité nécessaire pour diriger mes affaires, la justice pour mes actes et la reconnaissance de mes pairs.",
+    "Aliou": "Par le Nom Tsébaot, Dieu des Armées, je revêts Ton Armure de Lumière. Que Ta puissance soit mon bouclier contre les agressions, et que Ton bouclier invincible disperse mes ennemis dans tous les combats.",
+    "Nouhou": "Par le Nom El-Hafiz, Dieu Protecteur, je demande à être préservé au milieu de la tempête. Que Ta Grâce soit mon arche, et que toute malice dirigée contre mon foyer soit neutralisée par Ta Puissance salvatrice.",
+    "Assane": "Par le Nom El-Adl, Dieu de Justice, je demande le retournement de mon sort. Que la honte soit transmutée en honneur, et que les jugements injustes soient annulés par Ton intervention magistrale.",
+    "Younouss": "Par le Nom El-Latif, Dieu de Douceur et de Délivrance, je Te supplie de me libérer des chaînes de la dette. Comme Tu as fait sortir Jonas des profondeurs, fais sortir mes finances de toute impasse.",
+    "Ousmane": "Par le Nom El-Rouah, Esprit de Vérité, j'ouvre mon canal à la connexion supérieure. Guide mes pas dans la lumière, éclaire mon intelligence et connecte mon âme aux plans de la haute guidance prophétique.",
+    "Moussa": "Par le Nom El-Fattah, Celui qui ouvre, je demande le passage là où tout est bloqué. Comme Tu as ouvert la Mer Rouge pour Moïse, ouvre devant moi les chemins du succès et brise toutes les barrières majeures."
+}
 # ==============================================================================
 # CONFIGURATION DE L'APPLICATION
 # ==============================================================================
@@ -381,6 +401,31 @@ for fig in sorted(figures_uniques_tirage):
             st.markdown(f"📜 **Verset Biblique Pilier Ancestral :** \n\n> *{infos['verset']}*")
             st.markdown(f"👑 **Prière de Salomon Dédiée :** \n\n{infos['salomon']}")
             
+            # --- Remplacement de la section Pharmacie Spirituelle ---
+st.header("⚗️ Pharmacie Spirituelle & Ordonnance des Maîtres")
+st.markdown("Basé sur les figures sorties dans votre thème, voici les prescriptions rituelles recommandées :")
+
+# On extrait les figures uniques présentes dans le thème calculé
+figures_uniques = set(theme.values())
+
+for fig in figures_uniques:
+    # Récupération sécurisée des données
+    data = PROPRIETES_FIGURES.get(fig, {})
+    priere = PRIERES_SALOMONIQUES.get(fig, "Prière non disponible.")
+    
+    with st.expander(f"📜 Prescription et Prière pour : {fig}"):
+        col_a, col_b = st.columns(2)
+        
+        with col_a:
+            st.markdown(f"**Psaume :** {data.get('psaume', 'N/A')}")
+            st.markdown(f"**Verset clé :** {data.get('verset', 'N/A')}")
+            st.markdown("**🙏 Prière de Salomon :**")
+            st.info(priere) # C'est ici que votre nouvelle bibliothèque est appelée
+            
+        with col_b:
+            st.markdown(f"**Sagesse Salomonique (Concept) :** {data.get('salomon', 'N/A')}")
+            st.divider()
+            st.info(f"**Procédé Nassi (Application) :** {data.get('nassi', 'N/A')}")
         with col2:
             st.info(f"🧪 **Protocole de Confection du Nassi & Comment procéder :** \n\n{infos['nassi']}")
             
