@@ -1,9 +1,8 @@
 import streamlit as st
-
 # ==============================================================================
 # 1. BASES DE DONNÉES
 # ==============================================================================
-PROPRIETES_FIGURES = {
+PROPRIETES_FIGURES = 
     "Youssouf": {"element": "Feu (Est)", "psaume": "Psaume 109", "verset": "Genèse 39:2", "priere": "Seigneur, Dieu de Joseph, par Ton Nom Adonaï, je Te supplie de dissiper les ténèbres de la calomnie. Comme Tu as transformé la captivité de Joseph en gloire, transforme cette situation présente. Que tout complot contre moi s'effondre et que Ta lumière restaure mon honneur.", "nassi": "111 fois, eau de puits + safran + rose. Bain 7 jours."},
     "Adama": {"element": "Feu (Est)", "psaume": "Psaume 121", "verset": "Genèse 2:7", "priere": "Par le Nom Elohim, Créateur du premier homme, j'invoque l'ancrage de mes racines dans la terre fertile de la bénédiction. Que les portes de mes biens soient ouvertes.", "nassi": "Tracer 45 fois, eau + gros sel béni. Aspersion du corps et du seuil."},
     "Mahdy": {"element": "Air (Ouest)", "psaume": "Psaume 23", "verset": "Jérémie 29:11", "priere": "Par le Nom El-Shaddaï, Source de toute subsistance, je demande que les canaux de l'abondance soient débouchés. Que Ta faveur attire les ressources nécessaires.", "nassi": "Écrire 66 fois, eau de rose + musc. Boire à jeun."},
