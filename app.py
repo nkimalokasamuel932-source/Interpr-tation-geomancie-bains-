@@ -21,7 +21,7 @@ PROPRIETES_FIGURES = {
     "Ousmane": {"element": "Air (Ouest)", "psaume": "Psaume 119:105", "verset": "Actes 2:4", "priere": "Par le Nom El-Rouah, Esprit de Vérité, j'ouvre mon canal. Guide mes pas dans la lumière prophétique.", "nassi": "Écrire 19 fois, encens Oliban. Boire avant consultation."},
     "Moussa": {"element": "Feu (Est)", "psaume": "Psaume 68", "verset": "Exode 14:13", "priere": "Par le Nom El-Fattah, Celui qui ouvre, demande le passage. Ouvre devant moi les chemins du succès.", "nassi": "Écrire 16 fois, eau de l'aube. Nettoyer le seuil ou grand bain."}
 }
-PROPRIETES_FIGURES = {
+PROPRIETES_FIGURES = 
     "Youssouf": {
         "psaume": "Psaume 109",
         "verset": "Genèse 39:2",
