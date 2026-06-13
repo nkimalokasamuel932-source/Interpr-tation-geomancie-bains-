@@ -1,16 +1,16 @@
 import streamlit as st
 
 # ==============================================================================
-# 1. BASE DE DONNÉES THÉURGIQUE COMPLÈTE
+# 1. BASES DE DONNÉES
 # ==============================================================================
 PROPRIETES_FIGURES = {
-    "Youssouf": {"element": "Feu (Est)", "psaume": "Psaume 109", "verset": "Genèse 39:2", "priere": "Seigneur, Dieu de Joseph, par Ton Nom Adonaï, je Te supplie de dissiper les ténèbres de la calomnie. Comme Tu as transformé la captivité de Joseph en gloire, transforme cette situation présente. Que tout complot contre moi s'effondre et que Ta lumière restaure mon honneur.", "nassi": "Écrire 111 fois, eau de puits + safran + rose. Bain 7 jours."},
+    "Youssouf": {"element": "Feu (Est)", "psaume": "Psaume 109", "verset": "Genèse 39:2", "priere": "Seigneur, Dieu de Joseph, par Ton Nom Adonaï, je Te supplie de dissiper les ténèbres de la calomnie. Comme Tu as transformé la captivité de Joseph en gloire, transforme cette situation présente. Que tout complot contre moi s'effondre et que Ta lumière restaure mon honneur.", "nassi": "111 fois, eau de puits + safran + rose. Bain 7 jours."},
     "Adama": {"element": "Feu (Est)", "psaume": "Psaume 121", "verset": "Genèse 2:7", "priere": "Par le Nom Elohim, Créateur du premier homme, j'invoque l'ancrage de mes racines dans la terre fertile de la bénédiction. Que les portes de mes biens soient ouvertes.", "nassi": "Tracer 45 fois, eau + gros sel béni. Aspersion du corps et du seuil."},
     "Mahdy": {"element": "Air (Ouest)", "psaume": "Psaume 23", "verset": "Jérémie 29:11", "priere": "Par le Nom El-Shaddaï, Source de toute subsistance, je demande que les canaux de l'abondance soient débouchés. Que Ta faveur attire les ressources nécessaires.", "nassi": "Écrire 66 fois, eau de rose + musc. Boire à jeun."},
     "Idriss": {"element": "Eau (Nord)", "psaume": "Psaume 119:9-16", "verset": "Hébreux 11:5", "priere": "Par le Nom El-Choura, Dieu de Sagesse, je sollicite l'illumination. Accorde-moi le discernement pour lire à travers les mystères.", "nassi": "Écrire 360 fois, eau de pluie. Oindre la tête avant étude."},
     "Ibrahima": {"element": "Eau (Nord)", "psaume": "Psaume 112", "verset": "Genèse 12:2", "priere": "Par le Nom El-Elyon, Dieu de l'Alliance, je scelle la protection de ma lignée. Que Ta bénédiction s'étende sur ma maison.", "nassi": "Écrire 72 fois, menthe fraîche. Boire ou asperger la chambre."},
     "Inssa": {"element": "Eau (Nord)", "psaume": "Psaume 6", "verset": "Ésaïe 53:5", "priere": "Par le Nom Rapha, Dieu qui guérit, je demande la délivrance de toute affliction. Que Ta main curative efface la maladie.", "nassi": "Écrire 99 fois, décoction de neem. Laver le corps."},
-    "Omar": {"element": "Air (Ouest)", "psaume": "Psaume 35", "verset": "Proverbes 31:10", "priere": "Par le Nom Shalom, Dieu de Paix, j'invoque l'harmonie. Que les discordes soient neutralisées et les intrigues dissoutes.", "nassi": "Tracer 28 fois, eau + 7 gouttes de parfum sans alcool. Aspersion maison."},
+    "Omar": {"element": "Air (Ouest)", "psaume": "Psaume 35", "verset": "Proverbes 31:10", "priere": "Par le Nom Shalom, Dieu de Paix, j'invoque l'harmonie. Que les discordes soient neutralisées et les intrigues dissoutes.", "nassi": "Tracer 28 fois, eau + 7 gouttes parfum sans alcool. Aspersion maison."},
     "Ayoub": {"element": "Terre (Sud)", "psaume": "Psaume 88", "verset": "Job 19:25", "priere": "Par le Nom Yahvé, Rédempteur des affligés, je demande la restauration. Que la patience soit ma force face à la ruine.", "nassi": "Écrire 88 fois, eau tiède + miel. Laver le samedi soir."},
     "Allahou": {"element": "Feu (Est)", "psaume": "Psaume 91", "verset": "Exode 20:2", "priere": "Par le Nom El-Qahhar, Dieu Souverain, je Te demande d'être ma Forteresse. Que chaque sortilège soit annulé.", "nassi": "Écrire 114 fois, eau de puits. Boire le vendredi, purifier commerce."},
     "Souleymane": {"element": "Terre (Sud)", "psaume": "Psaume 72", "verset": "1 Rois 3:12", "priere": "Par le Nom Malek, Roi des Rois, je demande l'accès à la sagesse de Salomon. Accorde-moi l'autorité pour diriger avec justice.", "nassi": "Écrire 110 fois, santal. Oindre mains et visage."},
@@ -22,38 +22,41 @@ PROPRIETES_FIGURES = {
     "Moussa": {"element": "Feu (Est)", "psaume": "Psaume 68", "verset": "Exode 14:13", "priere": "Par le Nom El-Fattah, Celui qui ouvre, demande le passage. Ouvre devant moi les chemins du succès.", "nassi": "Écrire 16 fois, eau de l'aube. Nettoyer le seuil ou grand bain."}
 }
 
+CORRESPONDANCES = {
+    "Feu (Est)": {"plantes": "Laurier, Cannelle, Gingembre", "huiles": "Encens (Oliban), Clou de girofle, Orange"},
+    "Eau (Nord)": {"plantes": "Neem, Verveine, Aloès", "huiles": "Lavande, Camomille, Ylang-Ylang"},
+    "Air (Ouest)": {"plantes": "Menthe, Sauge, Eucalyptus", "huiles": "Menthe poivrée, Citron, Bergamote"},
+    "Terre (Sud)": {"plantes": "Santal, Patchouli, Cèdre", "huiles": "Santal, Vétiver, Cèdre"}
+}
+
 # ==============================================================================
-# 2. LOGIQUE D'ANALYSE
+# 2. INTERFACE ET LOGIQUE
 # ==============================================================================
 st.set_page_config(page_title="Oracle Ramrou", layout="wide")
 st.title("🔮 Oracle Ramrou — Cabinet de Haute Théurgie")
 
-# Saisie
-st.sidebar.header("📋 Saisie")
-question = st.sidebar.text_area("Question posée :")
+st.sidebar.header("📥 Saisie du Thème")
 theme = {m: st.sidebar.selectbox(f"Maison {m}", list(PROPRIETES_FIGURES.keys()), key=f"m_{m}") for m in range(1, 17)}
-
-def get_sadaka(fig):
-    el = PROPRIETES_FIGURES[fig]["element"]
-    if "Feu" in el: return "Donner du pain ou des dattes (couleur rouge/feu) le Mardi."
-    if "Terre" in el: return "Donner des pièces ou des céréales le Samedi."
-    return "Donner de l'eau, du sucre ou du lait le Lundi ou Jeudi."
 
 if st.button("🔮 ANALYSER LE JUGEMENT (M16)"):
     juge = theme[16]
     data = PROPRIETES_FIGURES[juge]
+    corr = CORRESPONDANCES[data['element']]
     
-    st.subheader(f"⚖️ Verdict du Juge : {juge}")
-    st.markdown(f"La figure **{juge}** en M16 indique que votre situation est régie par l'élément **{data['element']}**.")
+    st.subheader(f"⚖️ Verdict du Juge : {juge} ({data['element']})")
     
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown(f"**Psaume :** {data['psaume']}")
+        st.markdown(f"**Verset (Nassi) :** {data['verset']}")
+        st.warning(f"**Prière Salomonique :**\n\n> *{data['priere']}*")
+    
+    with col2:
+        st.info(f"**Protocole Nassi :** {data['nassi']}")
+        st.success(f"**Supports Végétaux :**\n- Plantes : {corr['plantes']}\n- Huiles : {corr['huiles']}")
+        
     st.divider()
-    
-    st.subheader("📜 ORDONNANCE THÉURGIQUE")
-    st.markdown(f"**Psaume d'Activation :** {data['psaume']}")
-    st.markdown(f"**Verset (Nassi) :** {data['verset']}")
-    st.warning(f"**Prière Salomonique :**\n\n> *{data['priere']}*")
-    st.info(f"**Protocole Nassi :** {data['nassi']}")
-    st.success(f"**Aumône (Sadaka) :** {get_sadaka(juge)}")
-    
-    st.write("---")
-    st.write("💡 *Orientation : Effectuez le rite face à la direction cardinale de l'élément pour charger votre travail.*")
+    st.markdown(f"**Conseil Sadaka :** Donnez à un nécessiteux selon l'élément :")
+    if "Feu" in data['element']: st.write("• Mardi (Denrées chaudes, pain, dattes)")
+    elif "Terre" in data['element']: st.write("• Samedi (Pièces de monnaie, céréales)")
+    else: st.write("• Lundi/Jeudi (Eau, sucre, lait)")
