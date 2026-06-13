@@ -1,63 +1,59 @@
 import streamlit as st
 
 # ==============================================================================
-# BASE DE DONNÉES COMPLÈTE
+# 1. BASE DE DONNÉES THÉURGIQUE COMPLÈTE
 # ==============================================================================
 PROPRIETES_FIGURES = {
-    "Youssouf": {"element": "Feu (Est)", "psaume": "Psaume 109", "verset": "Genèse 39:2", "priere": "Par le Nom Adonaï, dissipe les calomnies.", "nassi": "Écrire 111 fois, eau de puits + safran. Bain 7j."},
-    "Adama": {"element": "Feu (Est)", "psaume": "Psaume 121", "verset": "Genèse 2:7", "priere": "Par le Nom Elohim, ancre mes racines dans la terre fertile.", "nassi": "Tracer 45 fois, gros sel. Aspersion seuil."},
-    "Mahdy": {"element": "Air (Ouest)", "psaume": "Psaume 23", "verset": "Jérémie 29:11", "priere": "Par le Nom El-Shaddaï, débouche les canaux de l'abondance.", "nassi": "Écrire 66 fois, eau de rose + musc. Boire à jeun."},
-    "Idriss": {"element": "Eau (Nord)", "psaume": "Psaume 119", "verset": "Hébreux 11:5", "priere": "Par le Nom El-Choura, illumine mon esprit.", "nassi": "Écrire 360 fois, eau de pluie. Oindre la tête."},
-    "Ibrahima": {"element": "Eau (Nord)", "psaume": "Psaume 112", "verset": "Genèse 12:2", "priere": "Par le Nom El-Elyon, protège ma lignée et ma maison.", "nassi": "Écrire 72 fois, menthe. Asperger la chambre."},
-    "Inssa": {"element": "Eau (Nord)", "psaume": "Psaume 6", "verset": "Ésaïe 53:5", "priere": "Par le Nom Rapha, efface la maladie.", "nassi": "Écrire 99 fois, feuilles de neem. Bain rituel."},
-    "Omar": {"element": "Air (Ouest)", "psaume": "Psaume 35", "verset": "Proverbes 31:10", "priere": "Par le Nom Shalom, neutralise les intrigues.", "nassi": "Tracer 28 fois, parfum sans alcool. Aspersion maison."},
-    "Ayoub": {"element": "Terre (Sud)", "psaume": "Psaume 88", "verset": "Job 19:25", "priere": "Par le Nom Yahvé, restaure ce qui a été perdu.", "nassi": "Écrire 88 fois, miel. Laver le samedi soir."},
-    "Allahou": {"element": "Feu (Est)", "psaume": "Psaume 91", "verset": "Exode 20:2", "priere": "Par le Nom El-Qahhar, sois ma Forteresse.", "nassi": "Écrire 114 fois, eau de puits. Purifier commerce."},
-    "Souleymane": {"element": "Terre (Sud)", "psaume": "Psaume 72", "verset": "1 Rois 3:12", "priere": "Par le Nom Malek, accorde-moi sagesse et justice.", "nassi": "Écrire 110 fois, santal. Oindre mains et visage."},
-    "Aliou": {"element": "Air (Ouest)", "psaume": "Psaume 144", "verset": "Éphésiens 6:11", "priere": "Par le Nom Tsébaot, sois mon bouclier contre les agressions.", "nassi": "Écrire 63 fois, camphre. Laver le mardi."},
-    "Nouhou": {"element": "Terre (Sud)", "psaume": "Psaume 29", "verset": "Genèse 6:8", "priere": "Par le Nom El-Hafiz, préserve-moi de la tempête.", "nassi": "Écrire 77 fois, sel marin. Laver le sol."},
-    "Assane": {"element": "Eau (Nord)", "psaume": "Psaume 3", "verset": "Psaume 3:3", "priere": "Par le Nom El-Adl, transmute la honte en honneur.", "nassi": "Écrire 55 fois, laurier. Bain 3 jours."},
-    "Younouss": {"element": "Terre (Sud)", "psaume": "Psaume 4", "verset": "Jonas 2:10", "priere": "Par le Nom El-Latif, libère-moi de la dette.", "nassi": "Écrire 40 fois, pièce argent. Friction des mains."},
-    "Ousmane": {"element": "Air (Ouest)", "psaume": "Psaume 119:105", "verset": "Actes 2:4", "priere": "Par le Nom El-Rouah, guide mes pas dans la lumière.", "nassi": "Écrire 19 fois, encens Oliban. Boire avant consultation."},
-    "Moussa": {"element": "Feu (Est)", "psaume": "Psaume 68", "verset": "Exode 14:13", "priere": "Par le Nom El-Fattah, ouvre le chemin du succès.", "nassi": "Écrire 16 fois, eau de l'aube. Nettoyer le seuil."}
+    "Youssouf": {"element": "Feu (Est)", "psaume": "Psaume 109", "verset": "Genèse 39:2", "priere": "Seigneur, Dieu de Joseph, par Ton Nom Adonaï, je Te supplie de dissiper les ténèbres de la calomnie. Comme Tu as transformé la captivité de Joseph en gloire, transforme cette situation présente. Que tout complot contre moi s'effondre et que Ta lumière restaure mon honneur.", "nassi": "Écrire 111 fois, eau de puits + safran + rose. Bain 7 jours."},
+    "Adama": {"element": "Feu (Est)", "psaume": "Psaume 121", "verset": "Genèse 2:7", "priere": "Par le Nom Elohim, Créateur du premier homme, j'invoque l'ancrage de mes racines dans la terre fertile de la bénédiction. Que les portes de mes biens soient ouvertes.", "nassi": "Tracer 45 fois, eau + gros sel béni. Aspersion du corps et du seuil."},
+    "Mahdy": {"element": "Air (Ouest)", "psaume": "Psaume 23", "verset": "Jérémie 29:11", "priere": "Par le Nom El-Shaddaï, Source de toute subsistance, je demande que les canaux de l'abondance soient débouchés. Que Ta faveur attire les ressources nécessaires.", "nassi": "Écrire 66 fois, eau de rose + musc. Boire à jeun."},
+    "Idriss": {"element": "Eau (Nord)", "psaume": "Psaume 119:9-16", "verset": "Hébreux 11:5", "priere": "Par le Nom El-Choura, Dieu de Sagesse, je sollicite l'illumination. Accorde-moi le discernement pour lire à travers les mystères.", "nassi": "Écrire 360 fois, eau de pluie. Oindre la tête avant étude."},
+    "Ibrahima": {"element": "Eau (Nord)", "psaume": "Psaume 112", "verset": "Genèse 12:2", "priere": "Par le Nom El-Elyon, Dieu de l'Alliance, je scelle la protection de ma lignée. Que Ta bénédiction s'étende sur ma maison.", "nassi": "Écrire 72 fois, menthe fraîche. Boire ou asperger la chambre."},
+    "Inssa": {"element": "Eau (Nord)", "psaume": "Psaume 6", "verset": "Ésaïe 53:5", "priere": "Par le Nom Rapha, Dieu qui guérit, je demande la délivrance de toute affliction. Que Ta main curative efface la maladie.", "nassi": "Écrire 99 fois, décoction de neem. Laver le corps."},
+    "Omar": {"element": "Air (Ouest)", "psaume": "Psaume 35", "verset": "Proverbes 31:10", "priere": "Par le Nom Shalom, Dieu de Paix, j'invoque l'harmonie. Que les discordes soient neutralisées et les intrigues dissoutes.", "nassi": "Tracer 28 fois, eau + 7 gouttes de parfum sans alcool. Aspersion maison."},
+    "Ayoub": {"element": "Terre (Sud)", "psaume": "Psaume 88", "verset": "Job 19:25", "priere": "Par le Nom Yahvé, Rédempteur des affligés, je demande la restauration. Que la patience soit ma force face à la ruine.", "nassi": "Écrire 88 fois, eau tiède + miel. Laver le samedi soir."},
+    "Allahou": {"element": "Feu (Est)", "psaume": "Psaume 91", "verset": "Exode 20:2", "priere": "Par le Nom El-Qahhar, Dieu Souverain, je Te demande d'être ma Forteresse. Que chaque sortilège soit annulé.", "nassi": "Écrire 114 fois, eau de puits. Boire le vendredi, purifier commerce."},
+    "Souleymane": {"element": "Terre (Sud)", "psaume": "Psaume 72", "verset": "1 Rois 3:12", "priere": "Par le Nom Malek, Roi des Rois, je demande l'accès à la sagesse de Salomon. Accorde-moi l'autorité pour diriger avec justice.", "nassi": "Écrire 110 fois, santal. Oindre mains et visage."},
+    "Aliou": {"element": "Air (Ouest)", "psaume": "Psaume 144", "verset": "Éphésiens 6:11", "priere": "Par le Nom Tsébaot, Dieu des Armées, je revêts Ton Armure. Sois mon bouclier contre toute agression.", "nassi": "Écrire 63 fois, eau + camphre. Laver le mardi."},
+    "Nouhou": {"element": "Terre (Sud)", "psaume": "Psaume 29", "verset": "Genèse 6:8", "priere": "Par le Nom El-Hafiz, Dieu Protecteur, je demande à être préservé au milieu de la tempête.", "nassi": "Écrire 77 fois, eau de mer ou sel. Laver le sol."},
+    "Assane": {"element": "Eau (Nord)", "psaume": "Psaume 3", "verset": "Psaume 3:3", "priere": "Par le Nom El-Adl, Dieu de Justice, je demande le retournement de mon sort. Que la honte soit transmutée en honneur.", "nassi": "Écrire 55 fois, laurier. Bain 3 jours consécutifs."},
+    "Younouss": {"element": "Terre (Sud)", "psaume": "Psaume 4", "verset": "Jonas 2:10", "priere": "Par le Nom El-Latif, Dieu de Douceur, libère-moi des chaînes de la dette.", "nassi": "Écrire 40 fois, pièce d'argent trempée. Friction sur les mains."},
+    "Ousmane": {"element": "Air (Ouest)", "psaume": "Psaume 119:105", "verset": "Actes 2:4", "priere": "Par le Nom El-Rouah, Esprit de Vérité, j'ouvre mon canal. Guide mes pas dans la lumière prophétique.", "nassi": "Écrire 19 fois, encens Oliban. Boire avant consultation."},
+    "Moussa": {"element": "Feu (Est)", "psaume": "Psaume 68", "verset": "Exode 14:13", "priere": "Par le Nom El-Fattah, Celui qui ouvre, demande le passage. Ouvre devant moi les chemins du succès.", "nassi": "Écrire 16 fois, eau de l'aube. Nettoyer le seuil ou grand bain."}
 }
 
 # ==============================================================================
-# INTERFACE
+# 2. LOGIQUE D'ANALYSE
 # ==============================================================================
 st.set_page_config(page_title="Oracle Ramrou", layout="wide")
 st.title("🔮 Oracle Ramrou — Cabinet de Haute Théurgie")
 
-# Saisie de la question
-st.sidebar.header("📋 Contextualisation")
-question = st.sidebar.text_area("Quelle est la question ou l'objet du thème ?")
-intention = st.sidebar.selectbox("Intention du rituel :", ["Déblocage", "Protection", "Attraction", "Apaisement"])
-
-# Sélection des figures
-st.sidebar.header("📥 Figures du Tirage")
+# Saisie
+st.sidebar.header("📋 Saisie")
+question = st.sidebar.text_area("Question posée :")
 theme = {m: st.sidebar.selectbox(f"Maison {m}", list(PROPRIETES_FIGURES.keys()), key=f"m_{m}") for m in range(1, 17)}
 
-# Affichage de l'analyse
-if question:
-    st.info(f"💡 **Analyse pour :** {question}")
+def get_sadaka(fig):
+    el = PROPRIETES_FIGURES[fig]["element"]
+    if "Feu" in el: return "Donner du pain ou des dattes (couleur rouge/feu) le Mardi."
+    if "Terre" in el: return "Donner des pièces ou des céréales le Samedi."
+    return "Donner de l'eau, du sucre ou du lait le Lundi ou Jeudi."
 
-def generer_ordonnance(theme, intention):
-    f_maitre = theme[1]
-    data = PROPRIETES_FIGURES[f_maitre]
+if st.button("🔮 ANALYSER LE JUGEMENT (M16)"):
+    juge = theme[16]
+    data = PROPRIETES_FIGURES[juge]
     
-    conseil_sadaka = "Donner à un nécessiteux selon l'élément de la figure (Feu: Mardi/Rouge, Terre: Samedi/Pièces, Eau/Air: Lundi/Eau-Sucre)."
+    st.subheader(f"⚖️ Verdict du Juge : {juge}")
+    st.markdown(f"La figure **{juge}** en M16 indique que votre situation est régie par l'élément **{data['element']}**.")
     
-    return f"""
-    ### 🛡️ ORDONNANCE : {intention.upper()}
-    **Basée sur la figure en M1 : {f_maitre}**
+    st.divider()
     
-    * **Prière Salomonique :** {data['priere']}
-    * **Protocole Nassi :** {data['nassi']}
-    * **Activation Vibratoire :** {data['psaume']} - {data['verset']}
-    * **Conseil Sadaka (Aumône) :** {conseil_sadaka}
+    st.subheader("📜 ORDONNANCE THÉURGIQUE")
+    st.markdown(f"**Psaume d'Activation :** {data['psaume']}")
+    st.markdown(f"**Verset (Nassi) :** {data['verset']}")
+    st.warning(f"**Prière Salomonique :**\n\n> *{data['priere']}*")
+    st.info(f"**Protocole Nassi :** {data['nassi']}")
+    st.success(f"**Aumône (Sadaka) :** {get_sadaka(juge)}")
     
-    *Note : Effectuez ce rite en vous orientant selon l'élément **{data['element']}** pour charger votre travail.*
-    """
-
-if st.button("🔮 GÉNÉRER L'ORDONNANCE DE RÉSOLUTION"):
-    st.markdown(generer_ordonnance(theme, intention))
+    st.write("---")
+    st.write("💡 *Orientation : Effectuez le rite face à la direction cardinale de l'élément pour charger votre travail.*")
