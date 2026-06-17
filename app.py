@@ -1,4 +1,11 @@
 import streamlit as st
+# Ajoutez ceci juste après st.title("🔮 Oracle Ramrou...")
+st.markdown("""
+> *« Toi seul, ô Dieu de Salomon, règnes sur ce qui est visible et sur ce qui ne l'est pas. 
+> Je me présente devant Toi, non comme un étranger, mais comme un héritier de Ton Alliance. 
+> Que Ta Sagesse guide cette consultation. »*
+""")
+st.divider()
 
 # ==============================================================================
 # BASE DE DONNÉES MAÎTRE (16 FIGURES)
