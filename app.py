@@ -240,6 +240,32 @@ ANA_BEKOACH = """ANA BEKOACH (Clé des 42 Lettres) :
 6. Yachid ge-e, le-amcha peneh, zochrei kedouchatecha
 7. Chav’aténou kabel, ouchma tsa-akaténou, yodei-a ta-aloumout"""
 INV_FERMETURE = "Lève-Toi, Seigneur Dieu, pour aller à Ton lieu de repos. Que Tes serviteurs soient revêtus du salut. Que cette prière soit scellée."
+# Interface
+st.set_page_config(page_title="Oracle Ramrou", layout="wide")
+st.title("🔮 Oracle Ramrou — Cabinet de Haute Théurgie")
+st.markdown(f"> *{INV_OUVERTURE}*")
+st.divider()
+st.sidebar.header("📋 Saisie des 16 Maisons")
+question = st.sidebar.text_area("Question posée :")
+theme_actuel = {m: st.sidebar.selectbox(f"Maison M{m}", list(DB.keys()), key=f"m{m}") for m in range(1, 17)}
+st.sidebar.header("📋 Saisie des 16 Maisons")
+question = st.sidebar.text_area("Question posée :")
+theme_actuel = {m: st.sidebar.selectbox(f"Maison M{m}", list(DB.keys()), key=f"m{m}") for m in range(1, 17)}
+
+if st.button("🔮 GÉNÉRER L'ORDONNANCE"):
+    juge = theme_actuel[16]
+    d = DB[juge]
+    
+    st.subheader(f"⚖️ Verdict du Juge : {juge} ({d['element']})")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown(f"**Psaume :** {d['psaume']}\n**Prière :** {d['priere']}")
+        st.warning(f"**Clé Ana Bekoach (Méditation) :**\n{ANA_BEKOACH}")
+    with c2:
+        st.markdown(f"**Protocole :** {d['nassi']}\n**Sadaka :** {d['sadaka']}")
+    
+    export = f"{INV_OUVERTURE}\n\n{ANA_BEKOACH}\n\nORDONNANCE POUR {juge.upper()}\n{d}\n\n{INV_FERMETURE}"
+    st.download_button("📥 Télécharger l'Ordonnance", data=export, file_name=f"Ordonnance_{juge}.txt")
 
 # Invocations textuelles fixes
 INV_OUVERTURE = "Toi seul, ô Dieu de Salomon, règnes sur ce qui est visible et sur ce qui ne l'est pas. Je me présente devant Toi, non comme un étranger, mais comme un héritier de Ton Alliance. Que Ta Sagesse guide cette consultation."
