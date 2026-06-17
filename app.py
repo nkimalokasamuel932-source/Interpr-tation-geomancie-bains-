@@ -229,6 +229,17 @@ DB = {
         "sadaka": "Mardi (Denrées, dattes)"
     }
 }
+# Invocations
+INV_OUVERTURE = "Toi seul, ô Dieu de Salomon, règnes sur ce qui est visible et sur ce qui ne l'est pas. Je me présente devant Toi, non comme un étranger, mais comme un héritier de Ton Alliance."
+ANA_BEKOACH = """ANA BEKOACH (Clé des 42 Lettres) :
+1. Ana bekoach, gedoulat yemincha, tatir tsourourah
+2. Kabel rinat, amcha saguenu, tahareinou nora
+3. Na guibor, dorshei yichoudcha, kevavat chomrem
+4. Barchem taharem, rachamei tsidkat’cha, tamid gamlem
+5. Chasin kadoch, berov touvcha, nahel adatecha
+6. Yachid ge-e, le-amcha peneh, zochrei kedouchatecha
+7. Chav’aténou kabel, ouchma tsa-akaténou, yodei-a ta-aloumout"""
+INV_FERMETURE = "Lève-Toi, Seigneur Dieu, pour aller à Ton lieu de repos. Que Tes serviteurs soient revêtus du salut. Que cette prière soit scellée."
 
 # Invocations textuelles fixes
 INV_OUVERTURE = "Toi seul, ô Dieu de Salomon, règnes sur ce qui est visible et sur ce qui ne l'est pas. Je me présente devant Toi, non comme un étranger, mais comme un héritier de Ton Alliance. Que Ta Sagesse guide cette consultation."
