@@ -22,11 +22,10 @@ DB = {
     "Moussa": {"element": "Feu (Est)", "psaume": "Psaume 68", "verset": "Exode 14:13", "priere": "Par le Nom El-Fattah, ouvre les chemins du succès.", "nassi": "16 fois, eau aube. Nettoyer seuil", "plantes": "Cannelle, Laurier", "huiles": "Encens, Orange", "heure": "Mardi, Midi", "support": "Papier, Encre Safran", "couleur": "Rouge", "cloture": "Psaume 68", "sadaka": "Dattes"}
 }
 
-# Invocations
 INV_OUVERTURE = "Toi seul, ô Dieu de Salomon, règnes sur ce qui est visible et sur ce qui ne l'est pas. Je me présente devant Toi, non comme un étranger, mais comme un héritier de Ton Alliance."
 ANA_BEKOACH = """Ana bekoach, Je t'en prie, par la force de la grandeur de Ta main droite, délie les nœuds (les liens).
-Accueille le chant de Ton peuple, élève-nous, purifie-nous, Toi qui es Redoutable.Je T'en prie, Héros, ceux qui cherchent Ton unicité, garde-les comme la prunelle de Tes yeux.
-Bénis-les, purifie-les, accorde-leur toujours Ta miséricorde et Ta justice.Puissant et Saint, par Ta grande bonté, conduis Ton assemblée.
+Accueille le chant de Ton peuple, élève-nous, purifie-nous, Toi qui es Redoutable. Je T'en prie, Héros, ceux qui cherchent Ton unicité, garde-les comme la prunelle de Tes yeux.
+Bénis-les, purifie-les, accorde-leur toujours Ta miséricorde et Ta justice. Puissant et Saint, par Ta grande bonté, conduis Ton assemblée.
 Unique et Majestueux, tourne-Toi vers Ton peuple, ceux qui se souviennent de Ta sainteté.
 Reçois notre supplique et entends notre cri, Toi qui connais les secrets."""
 INV_FERMETURE = "Lève-Toi, Seigneur Dieu, pour aller à Ton lieu de repos. Que Tes serviteurs soient revêtus du salut. Que cette prière soit scellée."
@@ -35,11 +34,21 @@ INV_FERMETURE = "Lève-Toi, Seigneur Dieu, pour aller à Ton lieu de repos. Que 
 st.set_page_config(page_title="Oracle Ramrou", layout="wide")
 st.title("🔮 Oracle Ramrou — Cabinet de Haute Théurgie")
 st.markdown(f"> *{INV_OUVERTURE}*")
+
+# Ajout du guide explicatif
+with st.expander("ℹ️ Comprendre le Nassi et la Procédure"):
+    st.write("""
+    Le **Nassi** est l'acte de fixation d'une énergie spirituelle dans la matière. 
+    1. **Le Verset** : Est la parole source qui porte la vibration divine.
+    2. **L'Écriture** : En utilisant le support et l'encre indiqués, vous transcrivez le verset le nombre de fois prescrit. 
+    3. **La Charge** : Pendant l'écriture, récitez l'Ana Bekoach pour ouvrir le canal spirituel.
+    4. **La Dilution** : Le support est lavé dans de l'eau pure ou naturelle, créant une eau chargée qui servira à vos bains ou aspersions.
+    5. **La Clôture** : Récitez le Psaume indiqué et la prière de clôture pour sceller le travail.
+    """)
+
 st.divider()
 
 st.sidebar.header("📋 Configuration du Thème")
-question = st.sidebar.text_area("Question posée :")
-intention = st.sidebar.selectbox("Intention :", ["Déblocage", "Protection", "Attraction", "Apaisement"])
 theme = {m: st.sidebar.selectbox(f"Maison M{m}", list(DB.keys()), key=f"m{m}") for m in range(1, 17)}
 
 if st.button("🔮 GÉNÉRER L'ORDONNANCE DE RÉSOLUTION"):
@@ -48,13 +57,14 @@ if st.button("🔮 GÉNÉRER L'ORDONNANCE DE RÉSOLUTION"):
     st.subheader(f"⚖️ Verdict du Juge : {juge}")
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown(f"**📖 Psaume :** {d['psaume']}\n**🙏 Prière :** {d['priere']}")
-        st.info(f"**🧪 Nassi :** {d['nassi']}")
-        st.warning(f"**🔑 Clé Ana Bekoach :** {ANA_BEKOACH}")
+        st.markdown(f"**📖 Psaume :** {d['psaume']}")
+        st.markdown(f"**📜 Verset Bible :** {d['verset']}")
+        st.markdown(f"**🙏 Prière :** {d['priere']}")
+        st.info(f"**🧪 Nassi (Action) :** {d['nassi']}")
     with c2:
+        st.warning(f"**🔑 Clé Ana Bekoach :**\n{ANA_BEKOACH}")
         st.success(f"**🌿 Supports :** {d['plantes']}, {d['huiles']}")
-        st.write(f"**⏰ Heure :** {d['heure']} | **🎨 Couleur :** {d['couleur']}")
         st.error(f"**⚡ Clôture :** {d['cloture']} | **🪙 Sadaka :** {d['sadaka']}")
     
-    export = f"ORACLE RAMROU - ORDONNANCE\n\n{INV_OUVERTURE}\n\nANA BEKOACH: {ANA_BEKOACH}\n\nVERDICT M16: {juge}\n{d}\n\n{INV_FERMETURE}"
+    export = f"ORDONNANCE RAMROU\n\nJuge: {juge}\n------------------\nNassi: {d['nassi']}\nVerset: {d['verset']}\n\n{INV_FERMETURE}"
     st.download_button("📥 Télécharger l'Ordonnance", data=export, file_name=f"Ordonnance_{juge}.txt")
