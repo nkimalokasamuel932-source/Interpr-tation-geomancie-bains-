@@ -24,7 +24,15 @@ DB = {
 
 # Invocations
 INV_OUVERTURE = "Toi seul, ô Dieu de Salomon, règnes sur ce qui est visible et sur ce qui ne l'est pas. Je me présente devant Toi, non comme un étranger, mais comme un héritier de Ton Alliance."
-ANA_BEKOACH = "Ana bekoach, gedoulat yemincha, tatir tsourourah; Kabel rinat, amcha saguenu, tahareinou nora; Na guibor, dorshei yichoudcha, kevavat chomrem; Barchem taharem, rachamei tsidkat’cha, tamid gamlem; Chasin kadoch, berov touvcha, nahel adatecha; Yachid ge-e, le-amcha peneh, zochrei kedouchatecha; Chav’aténou kabel, ouchma tsa-akaténou, yodei-a ta-aloumout."
+ANA_BEKOACH = "Ana bekoach, Je t'en prie, par la force de la grandeur de Ta main droite, délie les nœuds (les liens).
+
+Accueille le chant de Ton peuple, élève-nous, purifie-nous, Toi qui es Redoutable.Je T'en prie, Héros, ceux qui cherchent Ton unicité, garde-les comme la prunelle de Tes yeux.
+
+Bénis-les, purifie-les, accorde-leur toujours Ta miséricorde et Ta justice.Puissant et Saint, par Ta grande bonté, conduis Ton assemblée."
+
+Unique et Majestueux, tourne-Toi vers Ton peuple, ceux qui se souviennent de Ta sainteté.
+
+Reçois notre supplique et entends notre cri, Toi qui connais les secrets.
 INV_FERMETURE = "Lève-Toi, Seigneur Dieu, pour aller à Ton lieu de repos. Que Tes serviteurs soient revêtus du salut. Que cette prière soit scellée."
 
 # Interface
