@@ -1,5 +1,4 @@
 import streamlit as st
-
 # ==============================================================================
 DB_CASES = {
     "Case 1": {
@@ -220,14 +219,12 @@ DB = {
     "Mori Zoumana": {"fig": FIGURES[14], "psaume": "Psaume 119:105", "priere": "Par le Nom El-Rouah, guide mes pas.", "nassi": "19 fois, encens Oliban", "plantes": "Sauge", "huiles": "Citron", "cloture": "Psaume 119", "sadaka": "Sucre"},
     "Moussa": {"fig": FIGURES[15], "psaume": "Psaume 68", "priere": "Par le Nom El-Fattah, ouvre le succès.", "nassi": "16 fois, eau aube", "plantes": "Cannelle", "huiles": "Encens", "cloture": "Psaume 68", "sadaka": "Dattes"}
 }
-
 # Intégration complète de vos cases d'interprétation
 DB_CASES = {
     "Case 1": {"Djanvalimam": "Aggravation de maladie...", "Adama": "Bon employé et bon matériel...", "Malidjou": "Envoûtement se dissipera...", "Bayadou": "Activité menée comme un malade.", "Tariqi": "Angoisse s’en ira.", "Issa": "Angoisse, trouble.", "Lomara": "Information sans joie.", "Mangoussi": "Destruction et fatigue.", "Kalalaho": "Situation qui ne s’améliore pas.", "Massa Souleymane": "Amènera beaucoup de bien.", "Badra Ali": "Voie difficile.", "Noukoro": "Rentrée d’argent.", "Lacina": "Maladie grave.", "Totiqi": "Fin de difficultés.", "Mori Zoumana": "Victoire sur les ennemis.", "Moussa": "Faillite après difficultés."},
     "Case 7": {"Djanvalimam": "Désir irréalisable.", "Adama": "Gain de cause.", "Malidjou": "Bon domicile.", "Bayadou": "Réunion avec la personne.", "Tariqi": "Relations, enfants.", "Issa": "Ce qu’on recherche.", "Lomara": "Destruction de domicile.", "Mangoussi": "Malédiction qui s’en ira.", "Kalalaho": "Position bonne.", "Massa Souleymane": "Entente va voler en éclats.", "Badra Ali": "Bonnes personnes.", "Noukoro": "Joie à venir.", "Lacina": "Gain faible.", "Totiqi": "Voie retrouvée.", "Mori Zoumana": "Affaire bénéfique.", "Moussa": "Réalisation rapide."},
     # ... [Vous pouvez ajouter ici le reste de vos cases 8 à 16 en suivant ce modèle]
 }
-
 # ==============================================================================
 # INTERFACE
 # ==============================================================================
