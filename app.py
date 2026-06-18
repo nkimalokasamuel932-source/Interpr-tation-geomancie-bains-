@@ -226,26 +226,34 @@ DB_CASES = {
     # ... [Vous pouvez ajouter ici le reste de vos cases 8 à 16 en suivant ce modèle]
 }
 # ==============================================================================
-# INTERFACE
+# 3. INTERFACE STREAMLIT
 # ==============================================================================
 st.set_page_config(page_title="Oracle Ramrou", layout="wide")
-st.title("🔮 Oracle Ramrou — Cabinet de Haute Théurgie")
+st.title("ðŸ”® Oracle Ramrou â€” Cabinet de Haute ThÃ©urgie")
 
-# Sélection des maisons
-theme = {m: st.sidebar.selectbox(f"Maison M{m}", list(DB.keys()), key=f"sel_{m}") for m in range(1, 17)}
+st.sidebar.header("Configuration du Tirage")
+theme = {m: st.sidebar.selectbox(f"Maison M{m}", list(DB_TH.keys()), key=f"m{m}") for m in range(1, 17)}
 
-if st.button("🔮 ANALYSER LE TIRAGE COMPLET"):
+if st.button("ðŸ”® ANALYSER LE TIRAGE COMPLET"):
+    st.subheader("ðŸ“‹ Analyse des Maisons")
     cols = st.columns(4)
-    for m in range(1, 17):
-        with cols[(m-1) % 4]:
-            fig = theme[m]
-            # Utilisation de DB_CASES pour l'interprétation
-            txt = DB_CASES.get(f"Case {m}", {}).get(fig, "Information non disponible.")
-            st.write(f"**M{m} ({fig})**: {txt}")
+    for i, m in enumerate(range(1, 17)):
+        with cols[i % 4]:
+            fig_name = theme[m]
+            case_key = f"Case {m}"
+            interp = DB_CASES.get(case_key, {}).get(fig_name, "Information non disponible")
+            st.write(f"**M{m} ({fig_name})**: {interp}")
 
-    # Verdict
     st.divider()
+    
+    # Verdict ThÃ©urgique (Juge M16)
     juge = theme[16]
-    d = DB[juge]
-    st.subheader(f"⚖️ Verdict (Juge: {juge})")
-    st.info(f"**Psaume:** {d['psaume']} | **Protocole Nassi:** {d['nassi']}")
+    d = DB_TH[juge]
+    st.subheader(f"âš–ï¸ Verdict ThÃ©urgique (Juge: {juge})")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.info(f"**Psaume :** {d['psaume']}\n**PriÃ¨re :** {d['priere']}")
+    with col2:
+        st.success(f"**Plantes :** {d['plantes']}\n**Huiles :** {d['huiles']}")
+    st.error(f"**Protocole Nassi :** {d['nassi']}")
