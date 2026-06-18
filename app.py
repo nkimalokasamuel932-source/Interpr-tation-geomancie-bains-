@@ -1,27 +1,4 @@
 import streamlit as st
-
-# ==============================================================================
-# 1. BASE DE DONNÉES THÉURGIQUE (PROTOCOLES)
-# ==============================================================================
-DB_TH = {
-    "Djanvalimam": {"psaume": "Psaume 109", "priere": "Par le Nom Adonaï, dissipe les ténèbres.", "nassi": "111 fois, eau de puits", "plantes": "Laurier", "huiles": "Encens"},
-    "Adama": {"psaume": "Psaume 121", "priere": "Par le Nom Elohim, ancre mes racines.", "nassi": "45 fois, eau + sel", "plantes": "Gingembre", "huiles": "Orange"},
-    "Malidjou": {"psaume": "Psaume 23", "priere": "Par le Nom El-Shaddaï, ouvre l'abondance.", "nassi": "66 fois, eau de rose", "plantes": "Menthe", "huiles": "Citron"},
-    "Bayadou": {"psaume": "Psaume 119", "priere": "Par le Nom El-Choura, accorde discernement.", "nassi": "360 fois, eau de pluie", "plantes": "Aloès", "huiles": "Lavande"},
-    "Tariqi": {"psaume": "Psaume 112", "priere": "Par le Nom El-Elyon, protège ma lignée.", "nassi": "72 fois, menthe fraîche", "plantes": "Verveine", "huiles": "Camomille"},
-    "Issa": {"psaume": "Psaume 6", "priere": "Par le Nom Rapha, restaure ma vigueur.", "nassi": "99 fois, feuilles de neem", "plantes": "Neem", "huiles": "Ylang-Ylang"},
-    "Lomara": {"psaume": "Psaume 35", "priere": "Par le Nom Shalom, neutralise les intrigues.", "nassi": "28 fois, parfum sans alcool", "plantes": "Sauge", "huiles": "Menthe"},
-    "Mangoussi": {"psaume": "Psaume 88", "priere": "Par le Nom Yahvé, demande restauration.", "nassi": "88 fois, miel", "plantes": "Santal", "huiles": "Vétiver"},
-    "Kalalaho": {"psaume": "Psaume 91", "priere": "Par le Nom El-Qahhar, sois ma Forteresse.", "nassi": "114 fois, eau de puits", "plantes": "Laurier", "huiles": "Clou de girofle"},
-    "Massa Souleymane": {"psaume": "Psaume 72", "priere": "Par le Nom Malek, accorde-moi la justice.", "nassi": "110 fois, eau de santal", "plantes": "Patchouli", "huiles": "Santal"},
-    "Badra Ali": {"psaume": "Psaume 144", "priere": "Par le Nom Tsébaot, sois mon bouclier.", "nassi": "63 fois, camphre", "plantes": "Eucalyptus", "huiles": "Bergamote"},
-    "Noukoro": {"psaume": "Psaume 29", "priere": "Par le Nom El-Hafiz, préserve-moi.", "nassi": "77 fois, eau de mer", "plantes": "Cèdre", "huiles": "Cèdre"},
-    "Lacina": {"psaume": "Psaume 3", "priere": "Par le Nom El-Adl, transmute la honte.", "nassi": "55 fois, laurier", "plantes": "Neem", "huiles": "Lavande"},
-    "Totiqi": {"psaume": "Psaume 4", "priere": "Par le Nom El-Latif, libère des chaînes.", "nassi": "40 fois, pièce argent", "plantes": "Santal", "huiles": "Vétiver"},
-    "Mori Zoumana": {"psaume": "Psaume 119", "priere": "Par le Nom El-Rouah, guide mes pas.", "nassi": "19 fois, encens Oliban", "plantes": "Sauge", "huiles": "Citron"},
-    "Moussa": {"psaume": "Psaume 68", "priere": "Par le Nom El-Fattah, ouvre le succès.", "nassi": "16 fois, eau aube", "plantes": "Cannelle", "huiles": "Encens"}
-}
-
 # ==============================================================================
 # 2. BASE DE DONNÉES DES INTERPRÉTATIONS
 # ==============================================================================
