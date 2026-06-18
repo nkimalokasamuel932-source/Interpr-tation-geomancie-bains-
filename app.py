@@ -209,7 +209,7 @@ st.set_page_config(page_title="Oracle Ramrou", layout="wide")
 st.title("🔮 Oracle Ramrou — Cabinet de Haute Théurgie")
 
 st.sidebar.header("Configuration du Tirage")
-theme = {m: st.sidebar.selectbox(f"Maison M{m}", list(DB_TH.keys()), key=f"m{m}") for m in range(1, 17)}
+theme = {m: st.sidebar.selectbox(f"Maison M{m}", list(DB_B.keys()), key=f"m{m}") for m in range(1, 17)}
 
 if st.button("🔮 ANALYSER LE TIRAGE COMPLET"):
     st.subheader("📋 Analyse des Maisons")
