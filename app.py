@@ -2,7 +2,7 @@ import streamlit as st
 from engine import OracleRamrouComplet
 
 oracle = OracleRamrouComplet()
-st.title("Oracle de Koutala")
+st.title("Oracle géomancie")
 
 theme = {}
 for i in range(1, 17):
