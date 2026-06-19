@@ -103,14 +103,7 @@ DB_CASES = {
         "Mori Zoumana": "Voyage avec espoir, considération et joie.",
         "Moussa": "Voyage avec espoir, considération et joie et retour absent."
     },
-    Conversation avec Gemini
-35 Case 15 Eléments Interprétations 1 - Djanvalimam 2 - Adama 3 - Malidjou 4 - Bayadou 5 -Tariqi 6 - Issa 7 - Lomara 8 - Mangoussi 9 - Kalalaho 10 - Massa Souleymane 11 - Badra Ali 12 - Noukoro 13 - Lacina 14 - Totiqi 15 – Mori Zoumana 16 - Moussa Sécurité et vaincra sa peur Sortie et acquisition de quelque chose de force Aura ce qu’il espère Mensonge. Hypocrisie et désespoir Bienfaits multiples Ce qui se renouvelle et voyage évident Atteinte de tou t désir et réalisation de l’affaire aboutit sur tous les plans Situation s’arrêtera. On lui ordonnera d’être patient.
-
-La Maison 15 (le destin, l'imprévu ou la conclusion immédiate) est le dernier maillon nécessaire pour compléter votre système avant le verdict final du Juge (M16).
-
-Voici le code mis à jour pour intégrer cette Case 15.
-
-Python
+    
 import streamlit as st
 
 # ==============================================================================
