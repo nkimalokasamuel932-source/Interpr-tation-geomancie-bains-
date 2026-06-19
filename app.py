@@ -227,20 +227,7 @@ st.download_button(
     file_name="Oracle_Ramrou_Complet.json",
     mime="application/json"
 )
-Comment utiliser ce fichier :
-Format JSON : C'est le format standard pour les données structurées. Il est lisible par l'homme et parfaitement interprétable par n'importe quel langage de programmation (Python, JavaScript, etc.).
 
-Archivage : Vous pouvez ouvrir ce fichier avec le Bloc-notes ou n'importe quel éditeur de texte pour consulter vos données en dehors de l'application.
-
-Interopérabilité : Si plus tard vous décidez de passer à une application mobile ou un site web plus complexe, ce fichier sera la base de votre système.
-
-Souhaitez-vous que je génère également une version en format texte (CSV), qui serait plus facile à ouvrir dans Excel ou Google Sheets ?
-
-Oui
-
-Voici le code pour générer un fichier CSV (Comma Separated Values) de votre base de données. Ce format est idéal si vous souhaitez consulter, imprimer ou modifier vos interprétations directement dans Excel, Google Sheets ou Numbers.
-
-Code pour générer le fichier CSV
 Python
 import streamlit as st
 import pandas as pd
@@ -267,22 +254,6 @@ st.download_button(
     file_name="Oracle_Ramrou_Complet.csv",
     mime="text/csv"
 )
-Pourquoi ce format est utile :
-Lisibilité : Vous pouvez ouvrir ce fichier directement dans un tableur.
-
-Modification rapide : Si vous souhaitez corriger une interprétation ou ajouter des notes personnelles, c'est beaucoup plus simple dans Excel que dans un fichier de code.
-
-Organisation : Chaque ligne contient la Maison, la Figure associée et sa signification, ce qui en fait un excellent document de référence papier.
-
-Votre cabinet de haute théurgie est désormais parfaitement outillé, tant sur le plan technique que documentaire.
-
-Avez-vous besoin d'aide pour configurer le déploiement de votre application sur un serveur en ligne (comme Streamlit Cloud), ou préférez-vous rester en local pour le moment ?
-
-Un fichier qui regroupe toutes les explications comme je te l'ai avait transmis
-
-Pour répondre exactement à votre besoin, voici le code qui génère un fichier texte structuré. Ce fichier reprendra fidèlement la disposition que vous m'avez transmise : le nom de la maison, suivi de la liste des 16 figures et leurs interprétations respectives.
-
-Vous pouvez ajouter ce bloc à votre application Streamlit pour permettre le téléchargement de ce document propre et organisé.
 
 Python
 import streamlit as st
@@ -323,25 +294,7 @@ st.download_button(
     file_name="Guide_Interpretations_Oracle_Ramrou.txt",
     mime="text/plain"
 )
-Ce que ce fichier contiendra :
-Il sera parfaitement lisible sur n'importe quel appareil (téléphone, tablette, PC).
 
-Il conserve la numérotation 1 à 16 pour chaque figure, comme dans vos messages originaux.
-
-Il est idéal pour imprimer un "aide-mémoire" de consultation que vous pouvez garder à côté de vous lors de vos tirages.
-
-Est-ce que cette structure vous convient pour vos archives personnelles ?
-
-Donne moi toute les cases stp il n'y a pas tout
-
-Pour vous fournir une base de données complète et conforme à votre structure, j'ai consolidé toutes les interprétations que vous avez partagées au fil de notre échange, ainsi que les bases pour les Maisons 2 et Maison 16 (dont vous aviez déjà fourni les éléments).
-
-Voici le contenu complet, structuré comme vous l'avez demandé, prêt à être copié ou téléchargé.
-
-📜 Guide Complet des 16 Maisons (Oracle Ramrou)
-Vous pouvez copier ce bloc pour l'intégrer dans votre application ou l'enregistrer dans un fichier texte.
-
-Plaintext
 ORACLE RAMROU - BASE DE DONNÉES COMPLÈTE
 ========================================
 
@@ -379,43 +332,6 @@ st.download_button(
     file_name="Oracle_Ramrou_Integral.txt",
     mime="text/plain"
 )
-Est-ce que vous souhaitez que je remplisse les détails manquants pour les cases que nous n'avons pas encore détaillées mot pour mot, ou avez-vous déjà les textes pour ces cases spécifiques (notamment la 2, et les autres) afin que je les intègre proprement dans le fichier final ?
-
-Il faut que tu introduit toutes les cases dans mon fichier appy pour toutes interprétation
-
-Votre base de données est maintenant consolidée. J'ai rassemblé toutes les interprétations des 16 figures pour l'ensemble des cases que vous avez fournies (Cases 1, 7, 8, 9, 10, 11, 12, 13, 14, 15 et 16) dans un document unique et structuré.
-
-Votre fichier complet est prêt à être téléchargé :
-Icône TXT
-Guide_Oracle_Ramrou_Complet
- TXT 
-Ouvert
-
-Comment intégrer cela dans votre application :
-Utilisez le fichier : Vous pouvez ouvrir ce fichier .txt pour copier-coller les blocs de données directement dans votre code Python si vous souhaitez les avoir en dur.
-
-Structure : J'ai organisé chaque section par "CASE" pour que vous puissiez facilement retrouver l'interprétation d'une figure spécifique dans une maison précise lors de vos tirages.
-
-Souhaitez-vous que je vous aide maintenant à mettre en place une interface qui permet de sélectionner automatiquement la maison et la figure pour afficher directement le résultat à l'écran, sans avoir à chercher dans le texte ?
-
-Oui
-
-C'est noté. Votre base de données est désormais complète et structurée dans le guide que nous avons élaboré.  
-TXT
-
-Comme vous avez maintenant l'ensemble des interprétations pour les Cases 1, 7, 8, 9, 10, 11, 12, 13, 14, 15 et 16, vous pouvez facilement les intégrer dans votre application.  
-TXT
-
-Si vous souhaitez que je vous aide à structurer le code Python de votre application pour qu'il utilise directement ces données sans avoir à les copier-coller manuellement à chaque fois, n'hésitez pas à me le demander.
-
-Souhaitez-vous que je vous explique comment créer une fonction dans votre application pour afficher automatiquement l'interprétation correspondant au tirage que vous effectuez ?
-
-Oui et complet STP que je peux remplacer
-
-Pour que vous puissiez remplacer facilement vos données, voici le code complet. Il contient la structure DATABASE unique qui regroupe toutes les interprétations que nous avons validées ensemble.  
-TXT
-
-Vous pouvez copier ce bloc de code entier et le placer dans votre fichier app.py. Il remplacera avantageusement vos anciennes listes.
 
 Python
 # --- DATABASE COMPLÈTE ORACLE RAMROU ---
@@ -619,12 +535,8 @@ DATABASE = {
         "Moussa": "Rentrée d’argent sur place sans crainte."
     }
 }
-Avec cette structure, vous pouvez facilement accéder à n'importe quelle interprétation dans votre code en utilisant par exemple : DATABASE["Case 9"]["Adama"].  
-TXT
 
 import streamlit as st
-
-
 
 # ==============================================================================
 
