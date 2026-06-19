@@ -145,29 +145,6 @@ if st.button("🔮 ANALYSER LE TIRAGE COMPLET (M1-M16)"):
     st.subheader("⚖️ Verdict Final (M16)")
     st.success(DB_C16[theme[16]])
 
-    # Export complet
-    export = f"RAPPORT COMPLET\nM1: {DB_C1[theme[1]]}\n...\nM15: {DB_C15[theme[15]]}\nM16: {DB_C16[theme[16]]}"
-    st.download_button("📥 Télécharger le rapport intégral", data=export, file_name="Rapport_Oracle_Complet.txt")
-Note sur la lecture :
-La Maison 15 est le "Destin" (ou la Pars Fortunae). Si vous avez un blocage persistant dans les autres maisons (M6, M8, M12), une figure positive en M15 comme Djanvalimam (Sécurité) ou Malidjou (Espérance) indique que, malgré les difficultés, le destin favorise une issue heureuse par un chemin imprévu.
-
-Votre application est maintenant complète au niveau des données de base.
-
-Souhaitez-vous :
-
-Ajouter une page d'aide ou un "Guide d'interprétation" pour expliquer comment combiner les maisons ?
-
-Ajouter un "Journal des tirages" pour sauvegarder vos consultations dans une base de données locale ?
-
-Afficher le tirage sous forme de tableau de bord visuel avec les 16 maisons disposées géographiquement ?
-
-36 Case 16 Eléments Interprétations 1 - Djanvalimam 2 - Adama 3 - Malidjou 4 - Bayadou 5 -Tariqi 6 - Issa 7 - Lomara 8 – Mangoussi 9 - Kalalaho 10 - Massa Souleymane 11 - Badra Ali 12 - Noukoro 13 - Lacina 14 - Totiqi 15 - Mori Zoumana 16 - Moussa Si choix, Prendre femme de caractère moyen et laisser mauvaise femme avec mauvais compagnon Difficulté véc ue terminera sur facilité et aura de l’aide dans diffi- culté et résolution rapide de problème. Bonne fin dans les activités et joie Arrivée de joie et voie bonne. Guérison de malade et voyage dans quiétude. On aura ce qu’on désire avec insistance Voie qui se dévoile. Bienfait irréalisable pour le consultant L’issue de l’affaire e st bonne et bénéfique et engendre bénéfice. Acquisition difficile Vide. Malchance acquis. Angoisse, grande difficulté. A la fin, décès, dégât, honte L’affair e trainera mais gain de cause à la fin. Soulagement après un long temps Femme. Gain de considération et bienfait et ascension Bonne fin et aucune crainte des gens Recherche d’espoir pour atteindre succès. Laisser tomber cet es- poir mauvais Mauvaise fin d’affaire et mensonge et médisance (mensonge ré- pandue). Ce qu’il veut n’est pas profitable Sérénité et bonnes annonces et bienfaits multiples Rentrée d’argent sur place sans crainte.
-
-La boucle est bouclée. Avec l'intégration de la Maison 16 (Le Verdict du Juge), votre base de données est désormais complète. La Maison 16 est la synthèse finale, la sentence de l'Oracle qui tranche et conclut le tirage.
-
-Voici le code final complet, organisé pour être utilisé comme un outil de diagnostic géomantique professionnel.
-
-Python
 import streamlit as st
 
 # ==============================================================================
@@ -229,24 +206,7 @@ if st.button("🔮 GÉNÉRER L'ORDONNANCE DIVINATOIRE"):
     st.divider()
     # Logique de scellement
     st.info("L'analyse est terminée. Le tirage est scellé par la concordance des 16 maisons.")
-Félicitations
-Votre outil de géomancie est désormais pleinement opérationnel. Il intègre :
 
-La structure complète des 16 maisons.
-
-L'interprétation spécifique pour chaque figure (les 16 figures de base).
-
-Une interface moderne, scannable et prête à l'emploi.
-
-Avez-vous besoin d'aide pour déployer cette application sur le web, ou souhaitez-vous ajouter une fonctionnalité de sauvegarde automatique de vos tirages dans un fichier local pour constituer vos archives personnelles ?
-
-Donne moi un fichier téléchargeable de toutes les cases stp
-
-Pour vous permettre de conserver et d'utiliser l'intégralité de votre base de données géomantique, voici le code qui génère un fichier JSON complet contenant les 16 cases et toutes leurs interprétations.
-
-Vous pouvez utiliser le bouton ci-dessous pour télécharger ce fichier. Il est structuré de manière propre pour être importé dans n'importe quel logiciel ou pour servir de base de données à votre application.
-
-Python
 import streamlit as st
 import json
 
