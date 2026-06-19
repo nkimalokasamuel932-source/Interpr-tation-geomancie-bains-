@@ -1,27 +1,29 @@
 import streamlit as st
 from engine import OracleRamrouComplet
 
-# Initialisation
 oracle = OracleRamrouComplet()
-
-st.title("🔮 Oracle ")
+st.title("🔮 Oracle de geomancie - Consultation Biblique")
 
 # Saisie des figures
-theme = {}
-st.write("Veuillez sélectionner les 16 figures du thème :")
-cols = st.columns(4)
-for i in range(1, 17):
-    with cols[(i-1) % 4]:
-        theme[f'M{i}'] = st.selectbox(f"M{i}", list(oracle.db.keys()), key=f"M{i}")
+theme = {f'M{i}': st.selectbox(f"Maison {i}", list(oracle.db.keys())) for i in range(1, 17)}
 
-# Saisie du sujet
-sujet_input = st.text_input("Posez votre question :")
+sujet = st.text_input("Posez votre question :")
 
-# Bouton de résultat
-if st.button("Obtenir le verdict"):
-    if sujet_input:
-        # Appel de la fonction avec la bonne variable
-        resultat = oracle.generer_verdict_intelligent(sujet_input, theme)
-        st.markdown(resultat)
+if st.button("Obtenir le verdict détaillé"):
+    # 1. Calcul du verdict selon le sujet
+    if "mariage" in sujet.lower():
+        res = oracle.copuler(oracle.copuler(theme['M1'], theme['M7']), theme['M5'])
+        st.subheader(f"Verdict : {res}")
     else:
-        st.warning("Veuillez entrer une question.")
+        res = oracle.copuler(theme['M15'], theme['M16'])
+        st.subheader(f"Verdict : {res}")
+    
+    # 2. Affichage des détails techniques
+    st.write("---")
+    st.markdown(oracle.get_details(res))
+    
+    # 3. Explication des passations (les témoins)
+    st.write("---")
+    st.subheader("Analyse des Passations")
+    st.write(f"Témoin 1 (Passation) : {oracle.copuler(theme['M1'], theme['M2'])}")
+    st.write(f"Témoin 2 (Passation) : {oracle.copuler(theme['M15'], theme['M16'])}")
