@@ -1,1 +1,1 @@
-streamlit
+interprétation geomancie 
