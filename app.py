@@ -1,5 +1,11 @@
 import streamlit as st
 # ==============================================================================
+# 1. DÉFINITION DES FIGURES 
+# ==============================================================================
+# Cette liste doit être définie avant votre dictionnaire DB_TH
+FIGURES = [Djanvalimam", "Adama", "Malidjou", "Bayadou", "Tariqi", "Issa", 
+    "Lomara", "Mangoussi", "Kalalaho", "Massa Souleymane", "Badra Ali", 
+    "Noukoro", "Lacina", "Totiqi", "Mori Zoumana", "Moussa"]
 DB_CASES = {
     "Case 1": {
         "Djanvalimam": "Aggravation de maladie. Ce qui est perdu, lâ€™est dÃ©finitivement.",
