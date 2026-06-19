@@ -1,94 +1,66 @@
-import streamlit as st
+class OracleRamrouComplet:
+    def __init__(self):
+        # 1. Base de données unifiée : Figures, Sacrifices, Plantes, Spirituel
+        self.db = {
+            "Adama": {"pts": [1, 0, 1, 1], "sac": "Coq blanc", "plt": "Djeka", "psaume": "Psaume 1", "vrs": "Al-Fatiha", "nss": "Eau de rose"},
+            "Idriss": {"pts": [1, 1, 1, 1], "sac": "Poulet rouge", "plt": "Kinkeliba", "psaume": "Psaume 23", "vrs": "Ayat al-Kursi", "nss": "Eau bénite"},
+            "Almami": {"pts": [1, 1, 0, 0], "sac": "Chèvre noire", "plt": "N'golo", "psaume": "Psaume 35", "vrs": "Al-Ikhlas", "nss": "Eau safranée"},
+            "Badra": {"pts": [0, 1, 1, 1], "sac": "Cola rouge", "plt": "Zaban", "psaume": "Psaume 91", "vrs": "Al-Falaq", "nss": "Eau de pluie"},
+            "Ousmane": {"pts": [0, 1, 0, 1], "sac": "Bélier blanc", "plt": "Baobab", "psaume": "Psaume 121", "vrs": "An-Nas", "nss": "Eau pure"},
+            "Nouhou": {"pts": [1, 1, 1, 0], "sac": "Pigeon blanc", "plt": "Tamarin", "psaume": "Psaume 27", "vrs": "Al-Waqi'a", "nss": "Eau de source"},
+            "Moussa": {"pts": [1, 0, 0, 1], "sac": "Charbon", "plt": "Nébédaye", "psaume": "Psaume 51", "vrs": "Ya-Sin", "nss": "Eau de zam-zam"},
+            "Solomane": {"pts": [1, 0, 0, 0], "sac": "Sel gemme", "plt": "Karité", "psaume": "Psaume 130", "vrs": "Al-Mulk", "nss": "Eau de mer"},
+            "Mangoussi": {"pts": [0, 0, 0, 1], "sac": "Miel pur", "plt": "Goyavier", "psaume": "Psaume 103", "vrs": "Ar-Rahman", "nss": "Eau parfumée"},
+            "Bourama": {"pts": [0, 1, 1, 0], "sac": "Poulet noir", "plt": "N'péné", "psaume": "Psaume 34", "vrs": "Al-Qadr", "nss": "Eau de pluie"},
+            "Issa": {"pts": [0, 0, 1, 1], "sac": "Lait frais", "plt": "Fleur d'oranger", "psaume": "Psaume 25", "vrs": "Al-Kawthar", "nss": "Eau sucrée"},
+            "Alaou tala": {"pts": [1, 1, 0, 1], "sac": "Bougie blanche", "plt": "Encens oliban", "psaume": "Psaume 119", "vrs": "Al-Fajr", "nss": "Eau d'encens"},
+            "Laoussana": {"pts": [0, 1, 0, 0], "sac": "Pain", "plt": "Menthe", "psaume": "Psaume 19", "vrs": "Ad-Duha", "nss": "Eau de menthe"},
+            "Tonigui": {"pts": [0, 0, 1, 0], "sac": "Tissu rouge", "plt": "Piment", "psaume": "Psaume 7", "vrs": "Al-Lahab", "nss": "Eau chaude"},
+            "Lomara": {"pts": [1, 0, 0, 0], "sac": "Tissu noir", "plt": "Dattier", "psaume": "Psaume 38", "vrs": "At-Takathur", "nss": "Eau de datte"},
+            "Maldjou": {"pts": [0, 0, 0, 0], "sac": "Eau de source", "plt": "Citronnelle", "psaume": "Psaume 142", "vrs": "An-Nasr", "nss": "Eau citronnée"}
+        }
+        
+        # Table des délais (Transmission 95)
+        self.delais = {"Youssouf": 1, "Adama": 3, "Maldjou": 5, "Idriss": 10, "Tontigui": 15, "Laoussana": 21, "Oumar": 28, "Ayouba": 36, "Alaou tala": 45, "Solomane": 55, "Badra": 66, "Nouhou": 78, "Bourama": 91, "Issa": 105, "Moussa": 120, "Ousmane": 136}
 
-# ==============================================================================
-# 1. BASE DE CONNAISSANCES
-# ==============================================================================
-FIGURES = [
-    "Djanvalimam", "Adama", "Malidjou", "Bayadou", "Tariqi", "Issa", 
-    "Lomara", "Mangoussi", "Kalalaho", "Massa Souleymane", "Badra Ali", 
-    "Noukoro", "Lacina", "Totiqi", "Mori Zoumana", "Moussa"
-]
+    # 2. Logique de calcul géomantique
+    def copuler(self, fig1_nom, fig2_nom):
+        p1 = self.db.get(fig1_nom, {"pts": [0,0,0,0]})["pts"]
+        p2 = self.db.get(fig2_nom, {"pts": [0,0,0,0]})["pts"]
+        res_pts = [p1[i] ^ p2[i] for i in range(4)]
+        for nom, data in self.db.items():
+            if data["pts"] == res_pts: return nom
+        return "Inconnu"
 
-UNITES = {
-    "Djanvalimam": 8, "Adama": 5, "Malidjou": 6, "Bayadou": 7, 
-    "Tariqi": 5, "Issa": 6, "Lomara": 7, "Mangoussi": 6, 
-    "Kalalaho": 6, "Massa Souleymane": 7, "Badra Ali": 7, 
-    "Noukoro": 7, "Lacina": 6, "Totiqi": 6, "Mori Zoumana": 7, "Moussa": 8
-}
+    # 3. Moteurs de diagnostic experts
+    def generer_verdict(self, sujet, theme):
+        """Moteur central pour tout type de question."""
+        if sujet == "mariage":
+            res = self.copuler(self.copuler(theme['M1'], theme['M7']), theme['M5'])
+            return f"Verdict Mariage : {res}. Travail : {self.fiche_spirituelle(res)}"
+        
+        elif sujet == "delai":
+            f1 = self.copuler(theme['M5'], theme['M9'])
+            f2 = self.copuler(theme['M15'], theme['M16'])
+            res = self.copuler(f1, f2)
+            jours = self.delais.get(res, "indéfini")
+            return f"Réalisation en {jours} jours. {self.fiche_spirituelle(res)}"
+            
+        elif sujet == "vol":
+            if theme['M4'] == "Issa": return "Vol confirmé. " + self.fiche_spirituelle(theme['M4'])
+            return "Perte accidentelle."
+            
+        return "Sujet non reconnu."
 
-DB_SACRIFICES = {
-    "Djanvalimam": {"animaux": "Cabri coloris multiple, Chi saba sissè", "colas": "Marissa woro", "autres": "Poudre de fusil"},
-    "Adama": {"animaux": "Pintade", "colas": "Yèrè woro", "autres": "Womi"},
-    "Malidjou": {"animaux": "Bélier blanc, Tourou kèmè sissè", "colas": "Soho koungoro woro", "autres": "-"},
-    "Bayadou": {"animaux": "Bélier blanc, Coq blanc", "colas": "Cola blanc", "autres": "Womi"},
-    "Tariqi": {"animaux": "Bélier blanc, Coq blanc", "colas": "Da kamana woro", "autres": "-"},
-    "Issa": {"animaux": "Kolo sissè", "colas": "Dimi woro", "autres": "Arachide, Sel"},
-    "Lomara": {"animaux": "Bélier à cou rouge, Coq rouge", "colas": "Cola rouge", "autres": "-"},
-    "Mangoussi": {"animaux": "Mouton noir, Cabri noir, Poulet noir", "colas": "Bi kènè woro", "autres": "7m tissu noir"},
-    "Kalalaho": {"animaux": "Bélier blanc, Coq blanc adulte", "colas": "Cola blanc", "autres": "Takoula"},
-    "Massa Souleymane": {"animaux": "Wara saga blanc, Coq blanc", "colas": "Kaba woro", "autres": "Œuf"},
-    "Badra Ali": {"animaux": "Djara saga blanc, Coq blanc", "colas": "Gros cola blanc", "autres": "Côte d’animal, Sel"},
-    "Noukoro": {"animaux": "Cabri, Bougouri sissè, Chi saba sissè", "colas": "Marissa woro", "autres": "Poudre de tabac"},
-    "Lacina": {"animaux": "Brebis, Poule blanche", "colas": "Nama noro woro", "autres": "Eau, Argent (jumeaux)"},
-    "Totiqi": {"animaux": "Doni ta sissè", "colas": "Qolon woro", "autres": "5 carpes fraîches"},
-    "Mori Zoumana": {"animaux": "Bélier blanc, Poulet blanc", "colas": "Cola blanc", "autres": "Lait, Alcool"},
-    "Moussa": {"animaux": "Bélier blanc, Poulet blanc", "colas": "Cola blanc", "autres": "Mélange céréales, 8m tissu blanc"}
-}
+    # 4. Générateur de Fiche Spirituelle
+    def fiche_spirituelle(self, nom_fig):
+        d = self.db.get(nom_fig)
+        return f"\n[SACRIFICE: {d['sac']}] | [PLANTE: {d['plt']}] | [PSALMODIE: {d['psaume']} + {d['vrs']}] | [NASSI: {d['nss']}]"
 
-DB_PLANTES = {
-    fig: {"noms": "Consulter guide", "scientifiques": "-"} for fig in FIGURES
-}
-DB_PLANTES.update({
-    "Djanvalimam": {"noms": "Balanzan, Diatigui Faga", "scientifiques": "Acacia albida, Ficus sp."},
-    "Issa": {"noms": "Kèlètiguè yiri, Triqi", "scientifiques": "Combatum relitinum"},
-    "Mangoussi": {"noms": "Tourou Bara, Koto, Gala", "scientifiques": "Cochtorpermum trictérium"}
-})
+# --- UTILISATION ---
+oracle = OracleRamrouComplet()
+# Exemple : L'utilisateur fournit un thème rempli (M1 à M16)
+mon_theme = {'M1': 'Adama', 'M4': 'Issa', 'M5': 'Moussa', 'M7': 'Idriss', 'M9': 'Solomane', 'M15': 'Adama', 'M16': 'Badra'}
 
-# ==============================================================================
-# 2. INTERFACE
-# ==============================================================================
-st.set_page_config(page_title="Oracle Ramrou", layout="wide")
-
-st.title("🔮 Oracle Ramrou")
-st.markdown("### Cabinet de Haute Théurgie & Science du Tourab")
-
-with st.expander("🛡️ Charte de l'Utilisateur"):
-    st.write("""
-    1. **Humilité :** Le sacrifice est un levain pour la prière, non une monnaie d'échange pour forcer le destin.
-    2. **Autonomie :** Utilisez ces outils pour vérifier et comprendre, pas par dépendance.
-    3. **Sincérité :** La piété compte plus que l'ostentation.
-    """)
-
-# Sélection des 16 maisons
-theme = {}
-cols = st.columns(4)
-for i in range(1, 17):
-    with cols[(i-1) % 4]:
-        theme[i] = st.selectbox(f"Maison {i}", FIGURES, key=f"m{i}")
-
-if st.button("🔮 GÉNÉRER L'ORDONNANCE"):
-    st.divider()
-    
-    # Analyse de la Case 13 et 15
-    if theme.get(13) == "Massa Souleymane":
-        st.warning("⚠️ **Conseil (Case 13) :** Passage obligé. Gardez votre calme et ne soyez pas pressé.")
-    if theme.get(16) == "Moussa" and theme.get(15) == "Mori Zoumana":
-        st.error("⚠️ **Conseil (Case 15) :** Blocage en tout. Soyez patient et pardonnez.")
-
-    # Verdict
-    juge = theme[16]
-    st.subheader(f"⚖️ Verdict pour {juge}")
-    
-    c1, c2 = st.columns(2)
-    with c1:
-        st.write(f"**Temps de l'affaire :** {UNITES.get(juge, 0)} unités")
-        st.success(f"**Sacrifice :** {DB_SACRIFICES.get(juge, {}).get('animaux')}")
-    with c2:
-        st.info(f"**Plantes associées :** {DB_PLANTES.get(juge, {}).get('noms')}")
-        st.write("👉 *Usage : Infusion pour lavage 7 jours.*")
-
-    # Méfaits
-    if theme.get(6) != "Moussa" or theme.get(12) != "Moussa":
-        st.divider()
-        st.subheader("🔍 Analyse des méfaits")
-        st.write(f"Vérifiez l'élément {theme[6]} (M6) et {theme[12]} (M12) pour tout signe de malversation.")
+print(oracle.generer_verdict("mariage", mon_theme))
+print(oracle.generer_verdict("delai", mon_theme))
