@@ -18,7 +18,14 @@ class OracleRamrouComplet:
             "Lomara": {"pts": [1, 0, 0, 0], "sac": "Tissu noir", "plt": "Dattier", "arom": "Girofle", "huile": "HE de Girofle", "psaume": "38", "vrs": "Psaume 23:4", "nss": "Bain aux girofles", "prière": "Prière pour la méditation", "signification": "Protection nocturne, refuge, calme."},
             "Maldjou": {"pts": [0, 0, 0, 0], "sac": "Eau de source", "plt": "Citronnelle", "arom": "Eucalyptus", "huile": "HE d'Eucalyptus", "psaume": "142", "vrs": "Ésaïe 41:10", "nss": "Bain d'eucalyptus", "prière": "Prière pour la fin des maux", "signification": "Achèvement, guérison, repos final."}
         }
-
+    def get_guide_activation(self):
+        return (
+            "### Guide de préparation du Nassi (Rituel)\n"
+            "1. **Intention** : Tenez l'eau à deux mains, visualisez votre demande.\n"
+            "2. **Activation** : Récitez le Psaume attribué à haute voix.\n"
+            "3. **Souffle** : Assurez-vous que votre souffle touche la surface de l'eau.\n"
+            "4. **Scellement** : Récitez le verset biblique et faites un signe de croix."
+        )
     def copuler(self, f1, f2):
         p1, p2 = self.db[f1]["pts"], self.db[f2]["pts"]
         res = [p1[i] ^ p2[i] for i in range(4)]
