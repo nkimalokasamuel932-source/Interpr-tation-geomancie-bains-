@@ -49,3 +49,21 @@ def obtenir_analyse(tirage_figures):
         else:
             resultats[maison] = f"{maisons_definitions[maison]} : Figure non reconnue"
     return resultats
+    
+import sqlite3
+
+def init_db():
+    conn = sqlite3.connect('geomancie.db')
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS historique 
+                      (id INTEGER PRIMARY KEY, nom_consultant TEXT, tirage TEXT, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+    conn.commit()
+    conn.close()
+
+def sauvegarder_tirage(nom, tirage_dict):
+    conn = sqlite3.connect('geomancie.db')
+    cursor = conn.cursor()
+    tirage_str = str(tirage_dict)
+    cursor.execute("INSERT INTO historique (nom_consultant, tirage) VALUES (?, ?)", (nom, tirage_str))
+    conn.commit()
+    conn.close()
