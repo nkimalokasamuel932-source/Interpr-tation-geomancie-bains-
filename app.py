@@ -1,21 +1,10 @@
-import streamlit as st
-import engine
+st.subheader("Analyse structurée par Axes")
+axes = engine.obtenir_analyse_par_axes(tirage_saisi)
 
-engine.init_db()
-st.title("Scribe Géomantique")
-
-# Exemple de saisie simplifiée (adaptez selon vos besoins)
-nom = st.text_input("Nom du consultant")
-# (Ici votre interface de saisie des 16 maisons)
-# ...
-
-if st.button("Analyser"):
-    # Supposez que tirage_saisi soit votre dictionnaire
-    st.write("---")
-    st.subheader("Synthèse de l'Interprète")
-    for note in engine.analyser_axes_specifiques(tirage_saisi):
-        st.info(note)
-    
-    if st.button("Sauvegarder"):
-        engine.sauvegarder_tirage(nom, tirage_saisi)
-        st.success("Sauvegardé !")
+for axe, points in axes.items():
+    with st.expander(axe): # Cela crée des menus déroulants propres
+        if points:
+            for p in points:
+                st.write(p)
+        else:
+            st.write("Pas d'alerte spécifique sur cet axe.")
