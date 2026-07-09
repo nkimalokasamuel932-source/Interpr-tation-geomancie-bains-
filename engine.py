@@ -1,23 +1,15 @@
-# engine.py
+import sqlite3
 
 # Dictionnaire des significations des 16 Maisons
 maisons_definitions = {
-    "M1": "Consultant / Personnalité",
-    "M2": "Finances / Biens",
-    "M3": "Entourage / Communication",
-    "M4": "Foyer / Racines",
-    "M5": "Projets / Créativité",
-    "M6": "Travail / Santé",
-    "M7": "Partenaires / Contrats",
-    "M8": "Influences extérieures / Dettes",
-    "M9": "Savoir / Spiritualité",
-    "M10": "Carrière / Statut",
-    "M11": "Appuis / Espoirs",
-    "M12": "Épreuves cachées",
-    "M13": "Passé récent",
-    "M14": "Futur proche",
-    "M15": "Juge (Synthèse)",
-    "M16": "Témoin final (Confirmation)"
+    "M1": "Consultant / Personnalité", "M2": "Finances / Biens",
+    "M3": "Entourage / Communication", "M4": "Foyer / Racines",
+    "M5": "Projets / Créativité", "M6": "Travail / Santé",
+    "M7": "Partenaires / Contrats", "M8": "Influences extérieures / Dettes",
+    "M9": "Savoir / Spiritualité", "M10": "Carrière / Statut",
+    "M11": "Appuis / Espoirs", "M12": "Épreuves cachées",
+    "M13": "Passé récent", "M14": "Futur proche",
+    "M15": "Juge (Synthèse)", "M16": "Témoin final (Confirmation)"
 }
 
 # Dictionnaire des significations des 16 Figures
@@ -40,18 +32,6 @@ figures_definitions = {
     "Populus": "Collectif, foule, incertitude."
 }
 
-def obtenir_analyse(tirage_figures):
-    """Prend un dictionnaire {'M1': 'NomFigure'} et renvoie les interprétations."""
-    resultats = {}
-    for maison, figure in tirage_figures.items():
-        if figure in figures_definitions:
-            resultats[maison] = f"{maisons_definitions[maison]} -> {figure} : {figures_definitions[figure]}"
-        else:
-            resultats[maison] = f"{maisons_definitions[maison]} : Figure non reconnue"
-    return resultats
-    
-import sqlite3
-
 def init_db():
     conn = sqlite3.connect('geomancie.db')
     cursor = conn.cursor()
@@ -59,7 +39,8 @@ def init_db():
                       (id INTEGER PRIMARY KEY, nom_consultant TEXT, tirage TEXT, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
     conn.commit()
     conn.close()
-    def obtenir_analyse_par_axes(t):
+
+def obtenir_analyse_par_axes(t):
     """Regroupe les résultats par axes de lecture métier."""
     analyse_structuree = {
         "Axe de la Manifestation (Objectifs/Partenaires)": [],
@@ -69,19 +50,19 @@ def init_db():
     }
     
     # Remplissage de l'Axe de la Prospérité
-    if t.get("M2") == "Acquisitio": # Ousmane
-        analyse_structuree["Axe de la Prospérité (Finances/Projets)"].append("💰 La source de gain est active (Ousmane).")
+    if t.get("M2") == "Acquisitio": 
+        analyse_structuree["Axe de la Prospérité (Finances/Projets)"].append("💰 La source de gain est active (Acquisitio).")
     
-    # Règle sur l'Axe de la Vérité (Allahou Talla)
-    if t.get("M14") == "Albus": # Allahou Talla
+    # Règle sur l'Axe de la Vérité
+    if t.get("M14") == "Albus": 
         analyse_structuree["Axe de la Vérité (Verdict/Esprit)"].append("🙏 Dévotion forte : La prière compense les finances basses.")
         
-    # Règle sur l'Axe des Épreuves (Nouhou)
-    if "Populus" in [t.get("M15")]: # Nouhou
+    # Règle sur l'Axe des Épreuves 
+    if t.get("M15") == "Populus": 
         analyse_structuree["Axe du Quotidien (Épreuves/Surmontable)"].append("⚖️ Difficultés présentes mais surmontables par l'effort.")
 
-    # Règle sur l'Axe Relationnel (Djafal Almani)
-    if "Rubeus" in [t.get("M7"), t.get("M16")]: # Djafal Almani
+    # Règle sur l'Axe Relationnel 
+    if "Rubeus" in [t.get("M7"), t.get("M16")]: 
         analyse_structuree["Axe de la Manifestation (Objectifs/Partenaires)"].append("👁️ Risque de jalousie ou trahison d'un partenaire.")
         
     return analyse_structuree
@@ -89,7 +70,6 @@ def init_db():
 def sauvegarder_tirage(nom, tirage_dict):
     conn = sqlite3.connect('geomancie.db')
     cursor = conn.cursor()
-    tirage_str = str(tirage_dict)
-    cursor.execute("INSERT INTO historique (nom_consultant, tirage) VALUES (?, ?)", (nom, tirage_str))
+    cursor.execute("INSERT INTO historique (nom_consultant, tirage) VALUES (?, ?)", (nom, str(tirage_dict)))
     conn.commit()
     conn.close()
