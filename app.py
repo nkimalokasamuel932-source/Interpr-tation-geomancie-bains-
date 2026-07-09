@@ -1,60 +1,64 @@
 import streamlit as st
 import engine
 
-# 1. Initialisation de la base de données
+# Initialisation
 engine.init_db()
+st.set_page_config(layout="wide")
+st.title("Scribe Géomantique : Analyse Rapide")
 
-st.title("Scribe Géomantique : Analyse & Suivi")
+# 1. Mode de saisie
+st.sidebar.header("Mode de saisie")
+mode = st.sidebar.radio("Choisir le mode :", ["Saisie manuelle (Grille)", "Collage rapide"])
 
-# 2. Interface de saisie
-st.sidebar.header("Configuration du tirage")
-nom_consultant = st.text_input("Nom du consultant")
+tirage_saisi = {}
 
-# Vous pouvez ajouter ici vos menus déroulants pour les 16 maisons
-# Exemple simplifié pour la structure :
-st.subheader("Entrée des Figures")
-col1, col2 = st.columns(2)
-with col1:
-    m1 = st.selectbox("Maison 1", list(engine.noms_bambara.values()))
-    m2 = st.selectbox("Maison 2", list(engine.noms_bambara.values()))
-    # ... ajoutez les autres maisons ici ...
+if mode == "Collage rapide":
+    st.info("Collez vos 16 figures séparées par des virgules ou des retours à la ligne.")
+    texte_colle = st.text_area("Collez ici (ex: Laetitia, Tristitia, ...)")
+    if texte_colle:
+        lignes = texte_colle.replace('\n', ',').split(',')
+        figures_propres = [f.strip() for f in lignes if f.strip()]
+        for i in range(16):
+            if i < len(figures_propres):
+                tirage_saisi[f"M{i+1}"] = figures_propres[i]
 
-# Pour l'exemple, supposons que tirage_saisi soit un dictionnaire avec vos 16 maisons
-tirage_saisi = {"M1": m1, "M2": m2} # Complétez avec toutes les maisons
+else:
+    # Grille automatique
+    st.subheader("Saisie des 16 Maisons")
+    cols = st.columns(4)
+    for i in range(16):
+        with cols[i % 4]:
+            tirage_saisi[f"M{i+1}"] = st.selectbox(f"Maison {i+1}", list(engine.noms_bambara.keys()), key=f"M{i+1}")
 
-# 3. Analyse
-if st.button("Analyser le thème"):
-    st.subheader("Synthèse structurée par Axes")
-    
-    # Récupération de l'analyse par axes depuis engine.py
-    axes = engine.obtenir_analyse_par_axes(tirage_saisi)
-    
-    # Affichage avec des menus déroulants (expanders)
-    for axe, points in axes.items():
-        with st.expander(axe):
-            if points:
-                for p in points:
-                    st.write(p)
-            else:
-                st.write("Aucune tension ou événement particulier détecté sur cet axe.")
-    
-    # Affichage de la synthèse spécifique (Ex: Idriss, Issa, Allassan)
-    st.write("---")
-    st.subheader("Interprétation détaillée")
-    details = engine.analyser_axes_specifiques(tirage_saisi)
-    for note in details:
-        st.info(note)
-
-# 4. Sauvegarde
-if st.button("Sauvegarder ce tirage"):
-    if nom_consultant:
-        engine.sauvegarder_tirage(nom_consultant, tirage_saisi)
-        st.success(f"Tirage enregistré pour {nom_consultant} !")
+# 2. Analyse
+if st.button("Analyser le thème complet"):
+    if len(tirage_saisi) == 16:
+        st.write("---")
+        
+        # Affichage des axes
+        st.subheader("Synthèse structurée par Axes")
+        axes = engine.obtenir_analyse_par_axes(tirage_saisi)
+        for axe, points in axes.items():
+            with st.expander(axe, expanded=True):
+                if points:
+                    for p in points: st.write(p)
+                else: st.write("Aucune alerte spécifique.")
+        
+        # Interprétation narrative
+        st.write("---")
+        st.subheader("Analyse des Enchaînements")
+        details = engine.analyser_axes_specifiques(tirage_saisi)
+        for note in details:
+            st.info(note)
     else:
-        st.warning("Veuillez entrer le nom du consultant avant de sauvegarder.")
+        st.warning("Veuillez remplir toutes les maisons.")
 
-# 5. Voir l'historique
-if st.checkbox("Voir le dernier tirage en base"):
-    dernier = engine.recuperer_dernier_tirage()
-    if dernier:
-        st.write(f"Dernier tirage : {dernier[0]} - {dernier[1]}")
+# 3. Sauvegarde
+st.write("---")
+nom = st.text_input("Nom du consultant pour la sauvegarde")
+if st.button("Sauvegarder"):
+    if nom:
+        engine.sauvegarder_tirage(nom, tirage_saisi)
+        st.success("Tirage enregistré.")
+    else:
+        st.error("Entrez un nom.")
