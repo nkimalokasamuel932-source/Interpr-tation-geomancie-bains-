@@ -59,6 +59,32 @@ def init_db():
                       (id INTEGER PRIMARY KEY, nom_consultant TEXT, tirage TEXT, date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
     conn.commit()
     conn.close()
+    def obtenir_analyse_par_axes(t):
+    """Regroupe les résultats par axes de lecture métier."""
+    analyse_structuree = {
+        "Axe de la Manifestation (Objectifs/Partenaires)": [],
+        "Axe de la Prospérité (Finances/Projets)": [],
+        "Axe de la Vérité (Verdict/Esprit)": [],
+        "Axe du Quotidien (Épreuves/Surmontable)": []
+    }
+    
+    # Remplissage de l'Axe de la Prospérité
+    if t.get("M2") == "Acquisitio": # Ousmane
+        analyse_structuree["Axe de la Prospérité (Finances/Projets)"].append("💰 La source de gain est active (Ousmane).")
+    
+    # Règle sur l'Axe de la Vérité (Allahou Talla)
+    if t.get("M14") == "Albus": # Allahou Talla
+        analyse_structuree["Axe de la Vérité (Verdict/Esprit)"].append("🙏 Dévotion forte : La prière compense les finances basses.")
+        
+    # Règle sur l'Axe des Épreuves (Nouhou)
+    if "Populus" in [t.get("M15")]: # Nouhou
+        analyse_structuree["Axe du Quotidien (Épreuves/Surmontable)"].append("⚖️ Difficultés présentes mais surmontables par l'effort.")
+
+    # Règle sur l'Axe Relationnel (Djafal Almani)
+    if "Rubeus" in [t.get("M7"), t.get("M16")]: # Djafal Almani
+        analyse_structuree["Axe de la Manifestation (Objectifs/Partenaires)"].append("👁️ Risque de jalousie ou trahison d'un partenaire.")
+        
+    return analyse_structuree
 
 def sauvegarder_tirage(nom, tirage_dict):
     conn = sqlite3.connect('geomancie.db')
