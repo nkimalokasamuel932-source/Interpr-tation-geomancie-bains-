@@ -1,35 +1,12 @@
 import sqlite3
 
-# Dictionnaire des significations des 16 Maisons
-maisons_definitions = {
-    "M1": "Consultant / Personnalité", "M2": "Finances / Biens",
-    "M3": "Entourage / Communication", "M4": "Foyer / Racines",
-    "M5": "Projets / Créativité", "M6": "Travail / Santé",
-    "M7": "Partenaires / Contrats", "M8": "Influences extérieures / Dettes",
-    "M9": "Savoir / Spiritualité", "M10": "Carrière / Statut",
-    "M11": "Appuis / Espoirs", "M12": "Épreuves cachées",
-    "M13": "Passé récent", "M14": "Futur proche",
-    "M15": "Juge (Synthèse)", "M16": "Témoin final (Confirmation)"
-}
-
-# Dictionnaire des significations des 16 Figures
-figures_definitions = {
-    "Laetitia": "Joie, réussite, énergie expansive.",
-    "Tristitia": "Tristesse, blocage, repli.",
-    "Fortuna Major": "Grande fortune, autorité.",
-    "Fortuna Minor": "Petite fortune, aide ponctuelle.",
-    "Acquisitio": "Gain, succès matériel.",
-    "Amissio": "Perte, dissipation.",
-    "Caput Draconis": "Début, ouverture.",
-    "Cauda Draconis": "Fin, clôture, retrait.",
-    "Conjunctio": "Union, contrat.",
-    "Carcer": "Prison, retard.",
-    "Puella": "Douceur, harmonie.",
-    "Puer": "Impétuosité, énergie.",
-    "Albus": "Paix, sagesse, clarté.",
-    "Rubeus": "Passion, danger, intensité.",
-    "Via": "Mouvement, changement.",
-    "Populus": "Collectif, foule, incertitude."
+# Dictionnaire des figures
+noms_bambara = {
+    "Laetitia": "Laya", "Tristitia": "Taratigué", "Fortuna Major": "Gouroussou",
+    "Fortuna Minor": "Gouroussou-ni", "Acquisitio": "Ousmane", "Amissio": "Mangousi",
+    "Caput Draconis": "Allassan", "Cauda Draconis": "Oussoufou", "Conjunctio": "Solomana",
+    "Carcer": "Issa", "Puella": "Laoussana", "Puer": "Bara",
+    "Albus": "Allahou-Talla", "Rubeus": "Djafal Almani", "Via": "Younouss", "Populus": "Ibrahim"
 }
 
 def init_db():
@@ -40,36 +17,34 @@ def init_db():
     conn.commit()
     conn.close()
 
-def obtenir_analyse_par_axes(t):
-    """Regroupe les résultats par axes de lecture métier."""
-    analyse_structuree = {
-        "Axe de la Manifestation (Objectifs/Partenaires)": [],
-        "Axe de la Prospérité (Finances/Projets)": [],
-        "Axe de la Vérité (Verdict/Esprit)": [],
-        "Axe du Quotidien (Épreuves/Surmontable)": []
-    }
-    
-    # Remplissage de l'Axe de la Prospérité
-    if t.get("M2") == "Acquisitio": 
-        analyse_structuree["Axe de la Prospérité (Finances/Projets)"].append("💰 La source de gain est active (Acquisitio).")
-    
-    # Règle sur l'Axe de la Vérité
-    if t.get("M14") == "Albus": 
-        analyse_structuree["Axe de la Vérité (Verdict/Esprit)"].append("🙏 Dévotion forte : La prière compense les finances basses.")
-        
-    # Règle sur l'Axe des Épreuves 
-    if t.get("M15") == "Populus": 
-        analyse_structuree["Axe du Quotidien (Épreuves/Surmontable)"].append("⚖️ Difficultés présentes mais surmontables par l'effort.")
-
-    # Règle sur l'Axe Relationnel 
-    if "Rubeus" in [t.get("M7"), t.get("M16")]: 
-        analyse_structuree["Axe de la Manifestation (Objectifs/Partenaires)"].append("👁️ Risque de jalousie ou trahison d'un partenaire.")
-        
-    return analyse_structuree
-
 def sauvegarder_tirage(nom, tirage_dict):
     conn = sqlite3.connect('geomancie.db')
     cursor = conn.cursor()
     cursor.execute("INSERT INTO historique (nom_consultant, tirage) VALUES (?, ?)", (nom, str(tirage_dict)))
     conn.commit()
     conn.close()
+
+def obtenir_analyse_par_axes(t):
+    analyse = {
+        "Axe Manifestation (Partenaires)": [],
+        "Axe Prospérité (Finances)": [],
+        "Axe Vérité (Prière)": [],
+        "Axe Quotidien (Épreuves)": []
+    }
+    # Exemple d'intégration de vos règles
+    if t.get("M7") == "Rubeus" or t.get("M16") == "Rubeus":
+        analyse["Axe Manifestation (Partenaires)"].append("👁️ Risque de jalousie/trahison d'un partenaire.")
+    if t.get("M14") == "Albus":
+        analyse["Axe Vérité (Prière)"].append("🙏 Prière et dévotion forte malgré finances basses.")
+    if t.get("M15") == "Populus":
+        analyse["Axe Quotidien (Épreuves)"].append("⚖️ Difficultés surmontables par l'effort.")
+    return analyse
+
+def analyser_axes_specifiques(t):
+    synthese = []
+    # Règle Idriss-Issa-Allassan
+    if t.get("M8") == "Idriss" and t.get("M4") == "Carcer":
+        synthese.append("📬 Nouvelle extérieure concernant le patrimoine.")
+        if t.get("M6") == "Caput Draconis":
+            synthese.append("⚠️ Déception ou perte liée à cette nouvelle.")
+    return synthese
