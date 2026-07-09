@@ -1,6 +1,14 @@
 import streamlit as st
 import engine
 
+def obtenir_analyse(tirage_figures):
+    resultats = {}
+    for maison, figure in tirage_figures.items():
+        if figure in figures_definitions:
+            resultats[maison] = f"{maisons_definitions[maison]} -> {figure} : {figures_definitions[figure]}"
+        else:
+            resultats[maison] = f"{maisons_definitions[maison]} : Figure non reconnue"
+    return resultats
 # Initialisation
 engine.init_db()
 st.set_page_config(layout="wide")
